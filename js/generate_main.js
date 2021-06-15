@@ -38,7 +38,7 @@ const EnumPageType = {
     POLICY: 'POLICY_PAGE'
 };
 
-(function () {
+(function (window) {
     class DataService {
         landing_token;
 
@@ -172,6 +172,9 @@ const EnumPageType = {
         content_builder = new ElementContentBuilder();
 
         constructor() {
+        }
+
+        initialMainPage = () => {
             this._getElementConfigs().then();
         }
 
@@ -228,6 +231,8 @@ const EnumPageType = {
         }
     }
 
+    window.LandingElementConfig = LandingElementConfig;
+})(window);
 
-    const landing_element_config = new LandingElementConfig();
-})();
+const landing_element_config = new LandingElementConfig();
+landing_element_config.initialMainPage();
