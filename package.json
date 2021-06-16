@@ -1,23 +1,23 @@
 {
   "name": "js-content-builder",
   "version": "1.0.0",
-  "description": "",
-  "main": "js/generate_main.js",
+  "description": "Generate html element for Builder Tool",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build-min": "minify js/generate_main.js > dist/generate_main.min.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/linhdd-dev/js-content-builder.git"
   },
-  "author": "linhdd-dev",
-  "license": "MIT",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/linhdd-dev/js-content-builder/issues"
   },
   "homepage": "https://github.com/linhdd-dev/js-content-builder#readme",
-  "dependencies": {
+  "devDependencies": {
     "minify": "^7.0.2"
   }
 }
