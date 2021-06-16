@@ -205,7 +205,8 @@ const EnumLandingBlockElementName = {
                 this.store_variant_group.push({
                     group_element: group_el,
                     variant_group: _group_id,
-                    variant_value_selected: null
+                    variant_value_selected: null,
+					has_child_disabled: false
                 });
             })
         }
@@ -269,11 +270,14 @@ const EnumLandingBlockElementName = {
                 }
 
                 if (_is_variant_include_selected_attr) {
-                    _arr_variant_out_of_stock.push(v.attributes.find(attr => this.store_group_selected_id.indexOf(attr.id) === -1).value.id);
+                    _arr_variant_out_of_stock.push(v.attributes.find(attr => this.store_group_selected_id.indexOf(attr.id) === -1)?.value?.id);
                 }
             })
+			
+			if (!_arr_variant_out_of_stock.length) return;
 
             const _group_not_select_option = this._queryProductVariantOptionElements(_group_not_select.group_element);
+			this.store_variant_group.forEach(group => group.has_child_disabled = group.variant_group === _group_not_select.variant_group);
             const _option_must_disable = Array.from(_group_not_select_option).filter(e => _arr_variant_out_of_stock.includes(parseInt(e.getAttribute('data-variant-value'))));
             _option_must_disable.forEach(e => e.classList.add('disabled'))
         }
@@ -283,9 +287,7 @@ const EnumLandingBlockElementName = {
                 if (v.variant_group === group_variant_id) {
                     v.variant_value_selected = value_selected;
                 }
-            })
-
-            let _group_not_select = this.store_variant_group.find(group => group.variant_value_selected === null).group_element;
+            });
 
             if (value_selected && !this.store_group_selected_id.includes(group_variant_id)) {
                 this.store_group_selected_id.push(group_variant_id);
@@ -296,9 +298,11 @@ const EnumLandingBlockElementName = {
             }
 
             if (this.store_group_selected_id.length === this.store_variant_group.length - 1) {
-                console.log(this._queryProductVariantOptionElements(_group_not_select));
+				const _group_not_select = this.store_variant_group.find(group => group.variant_value_selected === null)?.group_element;
+				const _group_has_child_disabled = this.store_variant_group.find(group => group.has_child_disabled === true)?.group_element;
+                
                 this._removeElementClass(
-                    Array.from(this._queryProductVariantOptionElements(_group_not_select)),
+                    Array.from(this._queryProductVariantOptionElements(_group_has_child_disabled || _group_not_select)),
                     'disabled'
                 )
             }
