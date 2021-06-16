@@ -57,7 +57,7 @@ const EnumPageType = {
                     }
                 }
                 xmlHttp.open('GET', url, true); // true for asynchronous
-                xmlHttp.setRequestHeader('Authorization', this.landing_token)
+                xmlHttp.setRequestHeader('Authorization', this.landing_token);
                 xmlHttp.send();
             })
         }
@@ -200,7 +200,6 @@ const EnumPageType = {
         }
 
         _renderElement = (el_config) => {
-            const _wrapperEl = document.getElementById('omp_wrapper');
             const dynamic_elements = el_config.dynamic_elements;
             const statics_elements = el_config.statics_elements;
 

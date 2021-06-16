@@ -1,7 +1,8 @@
 <html>
 <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="omp-key" content="goHvcq7SKt7WCawj2rUczX9WA">
+    <meta name="omp-key" content="CmGLLXPN8JBgw2JjwJMaqrsJo">
     <style type="text/css">:root {
         --omp-font-size: 16px;
         --omp-body-width: 420px;
@@ -53,11 +54,20 @@
 
     #omp_wrapper {
         width: 100vw;
-        min-height: calc(100vh + 10rem);
+        height: 100vh;
         max-width: var(--omp-body-width);
         margin: auto;
         background-color: #ffffff;
-        padding-top: var(--omp-landing-header-height);
+        padding: var(--omp-landing-header-height) 0;
+        overflow-y: auto;
+    }
+
+    #omp_wrapper p {
+        margin-top: 0 !important;
+    }
+
+    #omp_wrapper small {
+        font-size: 85%;
     }
 
     #omp_wrapper [id^=OMP_] {
@@ -91,7 +101,6 @@
 
     #omp_wrapper .omp-landing-block--content {
         width: 100%;
-        height: calc(100% - var(--omp-block-title-height));
         background-color: #fff;
     }
 
@@ -151,20 +160,20 @@
         z-index: 10;
     }
 
-    #omp_wrapper #OMP_MENU_FOOTER .omp-menu-wrapper {
+    #OMP_MENU_FOOTER .omp-menu-wrapper {
         display: flex;
         justify-content: space-between;
         padding: 0.5rem;
     }
 
-    #omp_wrapper #OMP_MENU_FOOTER .omp-menu-wrapper .omp-menu-item {
+    #OMP_MENU_FOOTER .omp-menu-wrapper .omp-menu-item {
         width: 30%;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    #omp_wrapper #OMP_MENU_FOOTER .omp-menu-wrapper .omp-menu-item .omp-menu-item--content {
+    #OMP_MENU_FOOTER .omp-menu-wrapper .omp-menu-item .omp-menu-item--content {
         padding: 0.5rem;
         cursor: pointer;
         text-align: center;
@@ -172,7 +181,7 @@
     }
 
     #OMP_MENU_FOOTER .omp-menu-wrapper .omp-menu-item .omp-menu-item--content.active {
-        color: #28a745;
+        color: #28a745 !important;
     }
 
     #OMP_MENU_FOOTER .omp-menu-wrapper .omp-menu-item i {
@@ -293,7 +302,7 @@
         color: var(--omp-green);
     }
 
-    .product-detail--select-product :is(.p-first-variant, .p-second-variant) {
+    .product-detail--select-product .product-variant {
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
@@ -305,11 +314,17 @@
         border-radius: 2px;
         background-color: var(--omp-silver);
         margin-right: calc(var(--omp-space) * 2);
+        margin-bottom: var(--omp-space);
+        font-size: 0.73rem;
     }
 
     .product-detail--select-product .p-variant-item.active {
         background-color: var(--omp-green);
         color: #ffffff;
+    }
+
+    .product-detail--select-product .p-variant-item.disabled {
+        opacity: 0.5;
     }
 
     .product-detail--select-product .omp-container:first-child p {
@@ -566,7 +581,6 @@
     }
 
     .omp-product-card .omp-product-card__bottom .omp-product-card--price small {
-        font-size: 12px;
         font-style: normal;
         letter-spacing: 0.05px;
         color: #b8b8b8;
@@ -623,6 +637,35 @@
     .omp-mb-6 {
         margin-bottom: 1.5rem !important;
     }
+
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        color: #212529;
+        text-align: center;
+        vertical-align: middle;
+        -webkit-user-select: none;
+        user-select: none;
+        background-color: transparent;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 0.81rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #27AE60;
+        border-color: #27AE60;
+    }
+
+    .btn-danger {
+        color: #fff;
+        background-color: #ee2020;
+        border-color: #ee2020;
+    }
     </style>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preload"
@@ -631,12 +674,8 @@
 </head>
 <body>
 <div id="omp_wrapper">
-    <div id="OMP_HEADER"></div>
-    <div id="OMP_MENU_FOOTER"></div>
-    <div id="OMP_OUTSTANDING_PRODUCT_1"></div>
+    <div id="OMP_PRODUCT_DETAIL"></div>
 </div>
-<script type="text/javascript"
-        src="https://cdn.jsdelivr.net/gh/linhdd-dev/js-content-builder@master/dist/generate_main.min.js"></script>
-<script type="text/javascript" src="https://cdn.omipage.com/cart-embed/omipage-cart-embed.min.js"></script>
+<script type="text/javascript" src="js/generate_detail.js"></script>
 </body>
 </html>
