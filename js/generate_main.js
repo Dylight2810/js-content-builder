@@ -1,3 +1,5 @@
+'use strict';
+
 const API_URL = {
     ELEMENT_CONFIG: 'http://dev.omipage.com/api/v1/landings/',
     COLLECTION_PRODUCTS: 'http://dev.omipage.com/api/v1/products/simple/'
@@ -66,7 +68,7 @@ const EnumPageType = {
         }
 
         getCollectionDataAsync = async (collection_id) => {
-            const request_url = `${API_URL.COLLECTION_PRODUCTS}/?collection_id=${collection_id}&is_parent=true`;
+            const request_url = `${API_URL.COLLECTION_PRODUCTS}?collection_id=${collection_id}&is_parent=true`;
             return await this._createGetRequest(request_url);
         }
 
@@ -96,7 +98,7 @@ const EnumPageType = {
                             <div  class="omp-menu-wrapper">
                                 <div  class="omp-menu-item ng-star-inserted">
                                     <div  class="omp-menu-item--content active">
-                                        <p class="mb-0">
+                                        <p>
                                             <i class="bi bi-house"></i>
                                         </p>
                                         <span>Trang chủ</span>
@@ -104,7 +106,7 @@ const EnumPageType = {
                                 </div>
                                 <div  class="omp-menu-item ng-star-inserted">
                                     <div class="omp-menu-item--content">
-                                        <p class="mb-0">
+                                        <p>
                                             <i class="bi bi-cart4"></i>
                                         </p>
                                         <span>Giỏ hàng</span>
@@ -112,7 +114,7 @@ const EnumPageType = {
                                 </div>
                                 <div  class="omp-menu-item ng-star-inserted">
                                     <div  class="omp-menu-item--content">
-                                        <p class="mb-0">
+                                        <p>
                                             <i class="bi bi-heart"></i>
                                         </p>
                                         <span>Yêu thích</span>
@@ -206,7 +208,7 @@ const EnumPageType = {
                switch (e.element_id) {
                    case EnumLandingBlockElementName.LANDING_HEADER:
                        const _header = document.getElementById(e.element_id)
-                       _header.innerHTML = this.content_builder._headerElementBuilder('My Shop', '');
+                       _header.innerHTML = this.content_builder._headerElementBuilder('My Shop', 'https://storage.googleapis.com/omisell-cloud/omipage/logoulashop.png');
                        break
                    case EnumLandingBlockElementName.LANDING_MENU_FOOTER:
                        const _footer = document.getElementById(e.element_id)
