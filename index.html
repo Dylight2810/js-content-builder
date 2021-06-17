@@ -313,18 +313,13 @@
         padding: var(--omp-space);
         border-radius: 2px;
         background-color: var(--omp-silver);
-        margin-right: calc(var(--omp-space) * 2);
+        margin-right: var(--omp-space);
         margin-bottom: var(--omp-space);
-        font-size: 0.73rem;
     }
 
     .product-detail--select-product .p-variant-item.active {
         background-color: var(--omp-green);
         color: #ffffff;
-    }
-
-    .product-detail--select-product .p-variant-item.disabled {
-        opacity: 0.5;
     }
 
     .product-detail--select-product .omp-container:first-child p {
@@ -666,6 +661,10 @@
         background-color: #ee2020;
         border-color: #ee2020;
     }
+
+    h5, .h5 {
+        font-size: 1.0125rem;
+    }
     </style>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preload"
@@ -674,9 +673,12 @@
 </head>
 <body>
 <div id="omp_wrapper">
-    <div id="OMP_PRODUCT_DETAIL">
-    </div>
+    <div id="OMP_HEADER"></div>
+    <div id="OMP_MENU_FOOTER"></div>
+    <div id="OMP_OUTSTANDING_PRODUCT_1"></div>
 </div>
-<script type="text/javascript" src="js/generate_detail.js"></script>
+<script type="text/javascript"
+        src="js/generate_main.js"></script>
+<script type="text/javascript" src="https://cdn.omipage.com/cart-embed/omipage-cart-embed.min.js"></script>
 </body>
 </html>

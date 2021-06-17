@@ -183,6 +183,7 @@ const EnumPageType = {
         _getElementConfigs = async () => {
             const configs = await this.data_service.getPageElementsConfigAsync(35);
             const obj_configs = JSON.parse(configs);
+            console.log(configs);
             this._handleGetPageElementConfig(obj_configs);
         }
 
@@ -191,8 +192,9 @@ const EnumPageType = {
                 return;
             }
             const elements_config = configs.elements.find(e => e.page_id === EnumPageType.HOME);
+            console.log(elements_config);
 
-            if (!elements_config && !elements_config.page_elements) {
+            if (!elements_config || !elements_config.page_elements) {
                 return;
             }
 
