@@ -35,9 +35,9 @@ const EnumLandingBlockElementName = {
 };
 
 const EnumPageType = {
-    HOME: 'HOME_PAGE',
-    PRODUCT_DETAIL: 'PRODUCT_DETAIL_PAGE',
-    POLICY: 'POLICY_PAGE'
+    HOME: 'home',
+    PRODUCT_DETAIL: 'product_detail',
+    POLICY: 'policy_page'
 };
 
 (function (window) {

@@ -9,6 +9,18 @@ const EnumLandingBlockElementName = {
     LANDING_PRODUCT_DETAIL: 'OMP_PRODUCT_DETAIL'
 };
 
+const OMPElementAttributeName = 'data-omp-element';
+
+const EnumPDElementAttributeValue = {
+    PRODUCT_IMAGE: 'product-image',
+    PRODUCT_NAME: 'product-name',
+    PRODUCT_LISTED_PRICE: 'product-listed-price',
+    PRODUCT_PRICE: 'product-price',
+    PRODUCT_SELECT_VARIANT: 'variant-select',
+    PRODUCT_QUANTITY: 'select-quantity',
+    PRODUCT_DESCRIPTION: 'product-description',
+};
+
 (function (window) {
     class DataService {
         landing_token;
@@ -46,55 +58,16 @@ const EnumLandingBlockElementName = {
         constructor() {
         }
 
-        _detailPageHeaderBuilder = () => {
-            return `<div class="omp-landing-detail--header">
-                        <div class="header-container">
-                            <div class="back-icon">
-                                <i class="bi bi-arrow-left"></i>
-                            </div>
-                            <div class="header-title">Chi tiết sản phẩm</div>
-                            <div class="header-space"></div>
-                        </div>
-                    </div>`;
+        _queryElementsByAttribute = (parent_node, attribute_name, attribute_value) => {
+            return parent_node.querySelectorAll(`div[${attribute_name}=${attribute_value}]`)[0]
         }
 
-        _productImageContentBuilder = (image_url) => {
-            return `<div class="omp-product-detail--image">
-                        <div class="product-image--wrapper">
-                            <img src="${image_url}" alt="Product image">
-                        </div>
-                    </div>`;
+        _queryElementsByClass = (parent_node, class_name) => {
+            return parent_node.querySelectorAll(`div[class=${class_name}]`)[0]
         }
 
-        _productMetaDataBuilder = (product_name, price, price_sale, currency) => {
-            return `<div class="product-detail--meta-data">
-                        <div class="omp-container">
-                            <div class="p-name-price">
-                                <h5>${product_name}</h5>
-                                <h5 class="price-sale">
-                                    ${price_sale} ${currency}
-                                    <span class="normal-price">${price} ${currency}</span>
-                                </h5>
-                            </div>
-                            <div class="p-favorite-action">
-                                <i class="bi bi-heart"></i>
-                            </div>
-                        </div>
-                        <div class="omp-container">
-                            <div class="product--rating-stars">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </div>
-    
-                            <div class="product--rating-results">
-                                <span class="rating-result--number">5.0</span>
-                                <span class="rating-result--text">Đánh giá tốt</span>
-                            </div>
-                        </div>
-                    </div>`;
+        _queryElementsLikeClassName = (parent_node, class_name) => {
+            return parent_node.querySelectorAll(`div[class^=${class_name}]`)
         }
 
         _productSelectProductBuilder = (variant_option) => {
@@ -126,62 +99,13 @@ const EnumLandingBlockElementName = {
                         ${select_variant_tpl}
                     </div>`;
         }
-
-        _productSelectQuantityBuilder = () => {
-            return `<div class="product-detail--select-quantity">
-                        <div class="omp-container display-flex omp-mb-3">
-                            <p class="omp-mb-0">Chọn số lượng</p>
-                            <div class="p-quantity">
-                                <div class="p-quantity-button">-</div>
-                                <div class="p-quantity-button p-quantity-number">1</div>
-                                <div class="p-quantity-button">+</div>
-                            </div>
-                        </div>
-    
-                        <div class="omp-container display-flex omp-mb-2">
-                            <button class="btn btn-primary">
-                                Thêm vào giỏ hàng
-                            </button>
-                            <button class="btn btn-danger">
-                                Mua ngay
-                            </button>
-                        </div>
-                    </div>`;
-        }
-
-        _productDescriptionBuilder = () => {
-            const a = 'Mô tả sản phẩm';
-            return `<div class="product-detail--description">
-                        <div class="omp-container display-flex omp-mb-3">
-                            <p class="omp-mb-0">${a}</p>
-                            <div class="p-description">
-                                Hiển thị nội dung mô tả sản phẩm mà bạn đã nhập khi tạo hoặc đồng bộ sản phẩm từ Omisell
-                            </div>
-                        </div>
-                    </div>`;
-        }
-
-        _productInformationBuilder = (product) => {
-            return `<div class="omp-product-detail--information">
-                        ${this._productMetaDataBuilder(product.name, product.price, product.listed_price, product.currency)}
-                        ${this._productSelectProductBuilder(product.options)}
-                        ${this._productSelectQuantityBuilder()}
-                        ${this._productDescriptionBuilder()}
-                    </div>`;
-        }
-
-        _productBlockContentBuilder = (product) => {
-            return `<div class="omp-landing-block--content">
-                        ${this._productImageContentBuilder(product.avatar_image)}
-                        ${this._productInformationBuilder(product)}
-                    </div>`;
-        }
     }
 
     class SelectVariantButton {
+        element_content_builder = new ElementContentBuilder();
+        product_detail = null;
         store_group_selected_id = [];
         store_variant_group = [];
-        product_detail = null;
 
         constructor(product) {
             const self = this;
@@ -189,11 +113,54 @@ const EnumLandingBlockElementName = {
         }
 
         _queryProductVariantGroupElements = () => {
-            return document.querySelectorAll('div[class=product-variant]')
+            return this.element_content_builder._queryElementsByClass(document, 'product-variant');
         }
 
         _queryProductVariantOptionElements = (group_el) => {
-            return group_el.querySelectorAll('div[class^=p-variant-item]')
+            return this.element_content_builder._queryElementsLikeClassName(group_el, 'p-variant-item');
+        }
+
+        _verifyIncludesArr = (parent_arr, child_arr) => {
+            if (!parent_arr || !parent_arr.length || !child_arr || !child_arr.length) return false;
+
+            return child_arr.reduce((_v, e) => _v && parent_arr.includes(e), true);
+        }
+
+        _findSelectedVariant = () => {
+            let _variant_selected = null;
+            const _arr_variant_selected = this.store_variant_group.reduce((_v, group) => _v.push(`${group.variant_group_id}-${group.variant_value_selected}`), [])
+            this.product_detail.variants.forEach(v => {
+                if (v.variant_attributes_id) {
+                    if (this._verifyIncludesArr(v.variant_attributes_id, _arr_variant_selected)) {
+                        _variant_selected = v;
+                    }
+                }
+            });
+
+            return _variant_selected;
+        }
+
+        _findVariantOutOfStock = (_arr_group_selected, group_need_find) => {
+            const _arr_variant_out_of_stock = [];
+            const _arr_variant_selected = [];
+
+            _arr_group_selected.forEach(group => _arr_variant_selected.push(`${group.variant_group_id}-${group.variant_value_selected}`));
+
+            this.product_detail.variants.forEach(v => {
+                if (v.fulfillable) return;
+
+                let _is_variant_include_selected_attr = false;
+
+                if (v.variant_attributes_id) {
+                    _is_variant_include_selected_attr = this._verifyIncludesArr(v.variant_attributes_id, _arr_variant_selected);
+                }
+
+                if (_is_variant_include_selected_attr) {
+                    _arr_variant_out_of_stock.push(v.attributes.find(attr => attr.id === group_need_find.variant_group_id)?.value?.id);
+                }
+            })
+
+            return _arr_variant_out_of_stock;
         }
 
         handleSelectEvent = () => {
@@ -204,11 +171,121 @@ const EnumLandingBlockElementName = {
                 this._addSelectVariantEvent(group_el, _group_id);
                 this.store_variant_group.push({
                     group_element: group_el,
-                    variant_group: _group_id,
+                    variant_group_id: _group_id,
                     variant_value_selected: null,
 					has_child_disabled: false
                 });
             })
+        }
+
+        _addDisabledClassForVariantOption = (_arr_group_selected, variant_group) => {
+            const _arr_variant_out_of_stock = this._findVariantOutOfStock(_arr_group_selected, variant_group);
+            if (!_arr_variant_out_of_stock.length) return;
+
+            const _group_not_select_option = this._queryProductVariantOptionElements(variant_group.group_element);
+            this.store_variant_group.forEach(group => {
+                if (group.variant_group_id === variant_group.variant_group_id) {
+                    group.has_child_disabled = true;
+                }
+            });
+            const _option_must_disable = Array.from(_group_not_select_option).filter(e => _arr_variant_out_of_stock.includes(parseInt(e.getAttribute('data-variant-value'))));
+            _option_must_disable.forEach(e => e.classList.add('disabled'));
+        }
+
+        _updateProductInfoFollowVariantSelected = (variant) => {
+            if (!variant) return;
+
+            // Update product Image
+            const product_image_el = this.element_content_builder._queryElementsByAttribute(document, OMPElementAttributeName, EnumPDElementAttributeValue.PRODUCT_IMAGE);
+            product_image_el.innerHTML = `<img src="${variant.images[0]}" alt="ProductImage">`;
+
+            // Update product name
+            const product_name_el = this.element_content_builder._queryElementsByAttribute(document, OMPElementAttributeName, EnumPDElementAttributeValue.PRODUCT_NAME);
+            product_name_el.innerHTML = `${variant.full_name}`;
+
+            // Update product price
+            const product_price_el = this.element_content_builder._queryElementsByAttribute(document, OMPElementAttributeName, EnumPDElementAttributeValue.PRODUCT_PRICE);
+            product_price_el.innerHTML = `${variant.price}`;
+
+            // Update product listed price
+            const product_listed_price_el = this.element_content_builder._queryElementsByAttribute(document, OMPElementAttributeName, EnumPDElementAttributeValue.PRODUCT_LISTED_PRICE);
+            product_listed_price_el.innerHTML = `${variant.listed_price}`;
+
+            // Update product description
+            const product_description_el = this.element_content_builder._queryElementsByAttribute(document, OMPElementAttributeName, EnumPDElementAttributeValue.PRODUCT_DESCRIPTION);
+            product_description_el.innerHTML = `${variant.description}`;
+        }
+
+        _updateDisableSelectStatus = () => {
+            let _arr_group_selected = [];
+            let _group_not_select;
+
+            this.store_variant_group.forEach(group => {
+                if (group.variant_value_selected !== null) {
+                    _arr_group_selected.push(group);
+                } else {
+                    _group_not_select = group;
+                }
+            });
+
+            if (_arr_group_selected.length === this.store_variant_group.length - 1) {
+                this._addDisabledClassForVariantOption(_arr_group_selected, _group_not_select);
+            }
+
+            if (_arr_group_selected.length === this.store_variant_group.length) {
+                this.store_variant_group.forEach(group => {
+                    _arr_group_selected = this.store_variant_group.filter(g => g.variant_group_id !== group.variant_group_id);
+                    this._addDisabledClassForVariantOption(_arr_group_selected, group);
+                });
+                this._updateProductInfoFollowVariantSelected(this._findSelectedVariant());
+            }
+        }
+
+        _removeElementClass = (arr_element, class_name) => {
+            if (!arr_element || !arr_element.length) {
+                return
+            }
+
+            arr_element.forEach(e => {
+                if (e.classList.contains(class_name)) {
+                    e.classList.remove(class_name)
+                }
+            });
+        }
+
+        _updateVariantSelectedValue = (group_variant_id, value_selected) => {
+            this.store_variant_group.forEach(v => {
+                if (v.variant_group_id === group_variant_id) {
+                    v.variant_value_selected = value_selected;
+                }
+            });
+
+            if (value_selected && !this.store_group_selected_id.includes(group_variant_id)) {
+                this.store_group_selected_id.push(group_variant_id);
+            }
+
+            if (!value_selected) {
+                this.store_group_selected_id = this.store_group_selected_id.filter(id => id !== group_variant_id);
+            }
+
+            if (this.store_group_selected_id.length >= this.store_variant_group.length - 1) {
+				const _group_not_select = this.store_variant_group.find(group => group.variant_value_selected === null)?.group_element;
+				const _group_has_child_disabled = this.store_variant_group.filter(group => group.has_child_disabled === true);
+
+				if (_group_has_child_disabled.length) {
+                    _group_has_child_disabled.forEach(group => {
+                        this._removeElementClass(
+                            Array.from(this._queryProductVariantOptionElements(group.group_element)),
+                            'disabled'
+                        )
+                    })
+                } else {
+                    this._removeElementClass(
+                        Array.from(this._queryProductVariantOptionElements(_group_not_select)),
+                        'disabled'
+                    )
+                }
+            }
         }
 
         _addSelectVariantEvent = (group_variant_el, group_variant_id) => {
@@ -231,93 +308,12 @@ const EnumLandingBlockElementName = {
                 }
 
                 this._updateVariantSelectedValue(group_variant_id, _selected_value);
-
                 this._updateDisableSelectStatus();
             };
 
             arr_select_variant_btn.forEach(e => {
                 e.addEventListener('click', _eventHandler);
             })
-        }
-
-        _updateDisableSelectStatus = () => {
-            let _arr_variant_out_of_stock = [];
-            let _arr_group_selected = [];
-            let _group_not_select;
-
-            this.store_variant_group.forEach(group => {
-                if (group.variant_value_selected !== null) {
-                    _arr_group_selected.push(group);
-                } else {
-                    _group_not_select = group;
-                }
-            });
-
-            if (_arr_group_selected.length < this.store_variant_group.length - 1) return
-
-            this.product_detail.variants.forEach(v => {
-                if (v.fulfillable) {
-                    console.log(v.variant_attributes_id);
-                    return
-                }
-
-                let _is_variant_include_selected_attr = false;
-
-                if (v && v.variant_attributes_id) {
-                    _is_variant_include_selected_attr = _arr_group_selected.reduce((_v, group) => {
-                        return v.variant_attributes_id.includes(`${group.variant_group}-${group.variant_value_selected}`)
-                    }, false);
-                }
-
-                if (_is_variant_include_selected_attr) {
-                    _arr_variant_out_of_stock.push(v.attributes.find(attr => this.store_group_selected_id.indexOf(attr.id) === -1)?.value?.id);
-                }
-            })
-			
-			if (!_arr_variant_out_of_stock.length) return;
-
-            const _group_not_select_option = this._queryProductVariantOptionElements(_group_not_select.group_element);
-			this.store_variant_group.forEach(group => group.has_child_disabled = group.variant_group === _group_not_select.variant_group);
-            const _option_must_disable = Array.from(_group_not_select_option).filter(e => _arr_variant_out_of_stock.includes(parseInt(e.getAttribute('data-variant-value'))));
-            _option_must_disable.forEach(e => e.classList.add('disabled'))
-        }
-
-        _updateVariantSelectedValue = (group_variant_id, value_selected) => {
-            this.store_variant_group.forEach(v => {
-                if (v.variant_group === group_variant_id) {
-                    v.variant_value_selected = value_selected;
-                }
-            });
-
-            if (value_selected && !this.store_group_selected_id.includes(group_variant_id)) {
-                this.store_group_selected_id.push(group_variant_id);
-            }
-
-            if (!value_selected) {
-                this.store_group_selected_id = this.store_group_selected_id.filter(id => id !== group_variant_id);
-            }
-
-            if (this.store_group_selected_id.length === this.store_variant_group.length - 1) {
-				const _group_not_select = this.store_variant_group.find(group => group.variant_value_selected === null)?.group_element;
-				const _group_has_child_disabled = this.store_variant_group.find(group => group.has_child_disabled === true)?.group_element;
-                
-                this._removeElementClass(
-                    Array.from(this._queryProductVariantOptionElements(_group_has_child_disabled || _group_not_select)),
-                    'disabled'
-                )
-            }
-        }
-
-        _removeElementClass = (arr_element, class_name) => {
-            if (!arr_element || !arr_element.length) {
-                return
-            }
-
-            arr_element.forEach(e => {
-                if (e.classList.contains(class_name)) {
-                    e.classList.remove(class_name)
-                }
-            });
         }
     }
 
@@ -331,7 +327,7 @@ const EnumLandingBlockElementName = {
         }
 
         initPage = () => {
-            const product_sku = 'SHIS-D2';
+            const product_sku = 'MACPRO10000';
             this._getProductDetailById(product_sku).then();
         }
 
@@ -340,8 +336,8 @@ const EnumLandingBlockElementName = {
             const product_detail = this._addVariantAttributesId(JSON.parse(response));
 
             // Generate product detail element content
-            const product_detail_el = document.getElementById(EnumLandingBlockElementName.LANDING_PRODUCT_DETAIL);
-            product_detail_el.innerHTML = `${this.content_builder._detailPageHeaderBuilder()}${this.content_builder._productBlockContentBuilder(product_detail)}`;
+            const select_product_el = this.content_builder._queryElementsByAttribute(document, OMPElementAttributeName, EnumPDElementAttributeValue.PRODUCT_SELECT_VARIANT);
+            select_product_el.innerHTML = this.content_builder._productSelectProductBuilder(product_detail.options);
 
             // Handle select variant event
             this.select_variant_button = new SelectVariantButton(product_detail);
@@ -354,16 +350,15 @@ const EnumLandingBlockElementName = {
             }
 
             product.variants.forEach(v => {
-                let _attr_id = '';
+                let _attr_id = [];
                 if (v.attributes && v.attributes.length) {
-                    v.attributes.forEach((attr, index) => {
-                        _attr_id += index === v.attributes.length - 1 ? `${attr.id}-${attr.value.id}` : `${attr.id}-${attr.value.id}_`;
+                    v.attributes.forEach(attr => {
+                        _attr_id.push(`${attr.id}-${attr.value.id}`);
                     })
                 }
                 v.variant_attributes_id = _attr_id;
             })
 
-            console.log(product)
             return product;
         }
     }
