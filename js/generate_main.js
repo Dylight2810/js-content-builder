@@ -136,12 +136,12 @@ const EnumPageType = {
                 innerHtml += `<div class="omp-col-6 omp-product-wrapper">
                                 <div class="omp-product-card">
                                     <div class="omp-product-card__top">
-                                    <span class="product-card--premium">Hot</span>
-                                    <img alt="" class="mb-2" src="${p.avatar_image}">
+                                        <span class="product-card--premium">Hot</span>
+                                        <img alt="" class="mb-2" src="${p.avatar_image}">
                                     </div>
                                     <div class="omp-product-card__bottom">
-                                        <div class="omp-product-card--category">${p.sku}</div>
                                         <div class="omp-product-card--name">${p.name}</div>
+                                        <div class="omp-product-card--category">${p.sku}</div>
                                         <div class="product--rating-stars">
                                             <i class="bi bi-star-fill"></i>
                                             <i class="bi bi-star-fill"></i>
@@ -167,6 +167,180 @@ const EnumPageType = {
                         </div>
                     </div>`
         }
+
+        _bestSellingProductContentBuilder = (title, arr_product) => {
+            if (!arr_product.length) {
+                return '';
+            }
+
+            let innerHtml = '';
+
+            arr_product.forEach(p => {
+                innerHtml += `<div class="omp-col-6 omp-product-wrapper">
+                                <div class="omp-product-card">
+                                    <div class="omp-product-card__top">
+                                    <span class="product-card--premium">Hot</span>
+                                    <img alt="" class="mb-2" src="${p.avatar_image}">
+                                    </div>
+                                    <div class="omp-product-card__bottom">
+                                        <div class="omp-product-card--name">${p.name}</div>
+                                        <div class="omp-product-card--category">${p.sku}</div>
+                                        <div class="product--rating-stars">
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                        </div>
+                                        <div class="omp-product-card--price">
+                                            <span class="mr-1">${p.listed_price} ${p.currency}</span>
+                                            <small>
+                                                <del>${p.price} ${p.currency}</del>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`
+            });
+
+            return `<div class="omp-landing-block--title">${title}</div>
+                    <div class="omp-landing-block--content">
+                        <div class="omp-wp__outstanding-product">
+                            <div class="omp-row">${innerHtml}</div>
+                        </div>
+                    </div>`
+        }
+
+        _newProductContentBuilder = (title, arr_product) => {
+            if (!arr_product.length) {
+                return '';
+            }
+
+            let innerHtml = '';
+
+            arr_product.forEach(p => {
+                innerHtml += `<div class="omp-col-6 omp-product-wrapper">
+                                <div class="omp-product-card">
+                                    <div class="omp-product-card__top">
+                                    <span class="product-card--premium">Hot</span>
+                                    <img alt="" class="mb-2" src="${p.avatar_image}">
+                                    </div>
+                                    <div class="omp-product-card__bottom">
+                                        <div class="omp-product-card--name">${p.name}</div>
+                                        <div class="omp-product-card--category">${p.sku}</div>
+                                        <div class="product--rating-stars">
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                        </div>
+                                        <div class="omp-product-card--price">
+                                            <span class="mr-1">${p.listed_price} ${p.currency}</span>
+                                            <small>
+                                                <del>${p.price} ${p.currency}</del>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`
+            });
+
+            return `<div class="omp-landing-block--title">${title}</div>
+                    <div class="omp-landing-block--content">
+                        <div class="omp-wp__outstanding-product">
+                            <div class="omp-row">${innerHtml}</div>
+                        </div>
+                    </div>`
+        }
+
+        _flashSaleProductContentBuilder = (title, arr_product) => {
+            if (!arr_product.length) {
+                return '';
+            }
+
+            let innerHtml = '';
+
+            arr_product.forEach(p => {
+                innerHtml += `<div class="omp-col-6 omp-product-wrapper">
+                                <div class="omp-product-card">
+                                    <div class="omp-product-card__top">
+                                    <span class="product-card--premium">Hot</span>
+                                    <img alt="" class="mb-2" src="${p.avatar_image}">
+                                    </div>
+                                    <div class="omp-product-card__bottom">
+                                        <div class="omp-product-card--name">${p.name}</div>
+                                        <div class="omp-product-card--category">${p.sku}</div>
+                                        <div class="product--rating-stars">
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                        </div>
+                                        <div class="omp-product-card--price">
+                                            <span class="mr-1">${p.listed_price} ${p.currency}</span>
+                                            <small>
+                                                <del>${p.price} ${p.currency}</del>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`
+            });
+
+            return `<div class="omp-landing-block--title">${title}</div>
+                    <div class="omp-landing-block--content">
+                        <div class="omp-wp__outstanding-product">
+                            <div class="omp-row">${innerHtml}</div>
+                        </div>
+                    </div>`
+        }
+
+        _bannerImageProductContentBuilder = (title, arr_product) => {
+            if (!arr_product.length) {
+                return '';
+            }
+
+            let innerHtml = '';
+
+            return `<div class="omp-landing-block--title">${title}</div>
+                    <div class="omp-landing-block--content">
+                        <div class="omp-wp__outstanding-product">
+                            <div class="omp-row">${innerHtml}</div>
+                        </div>
+                    </div>`
+        }
+
+        _bannerTwoImageProductContentBuilder = (title, arr_product) => {
+            if (!arr_product.length) {
+                return '';
+            }
+
+            let innerHtml = '';
+
+            return `<div class="omp-landing-block--title">${title}</div>
+                    <div class="omp-landing-block--content">
+                        <div class="omp-wp__outstanding-product">
+                            <div class="omp-row">${innerHtml}</div>
+                        </div>
+                    </div>`
+        }
+
+        _bannerVideoProductContentBuilder = (title, arr_product) => {
+            if (!arr_product.length) {
+                return '';
+            }
+
+            let innerHtml = '';
+
+            return `<div class="omp-landing-block--title">${title}</div>
+                    <div class="omp-landing-block--content">
+                        <div class="omp-wp__outstanding-product">
+                            <div class="omp-row">${innerHtml}</div>
+                        </div>
+                    </div>`
+        }
     }
 
     class LandingElementConfig {
@@ -183,7 +357,6 @@ const EnumPageType = {
         _getElementConfigs = async () => {
             const configs = await this.data_service.getPageElementsConfigAsync(35);
             const obj_configs = JSON.parse(configs);
-            console.log(configs);
             this._handleGetPageElementConfig(obj_configs);
         }
 
@@ -192,7 +365,6 @@ const EnumPageType = {
                 return;
             }
             const elements_config = configs.elements.find(e => e.page_id === EnumPageType.HOME);
-            console.log(elements_config);
 
             if (!elements_config || !elements_config.page_elements) {
                 return;
@@ -229,7 +401,12 @@ const EnumPageType = {
             if (element_config.config && element_config.config.collection) {
                 const response = await this.data_service.getCollectionDataAsync(element_config.config.collection.id);
                 const products_of_collection = JSON.parse(response).results;
-                _el.innerHTML = this.content_builder._outstandingProductContentBuilder(element_config.element_title, products_of_collection);
+
+                switch (element_config.element_name) {
+                    case EnumLandingBlockElementName.DESIGN_OUTSTANDING_PRODUCT:
+                        _el.innerHTML = this.content_builder._outstandingProductContentBuilder(element_config.element_title, products_of_collection);
+                        break;
+                }
             }
         }
     }
