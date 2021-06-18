@@ -535,7 +535,7 @@ const EnumPDElementAttributeValue = {
 
         _addVariantAttributesId = (product) => {
             if (!product || !product.variants || !product.variants.length) {
-                return null
+                return product;
             }
 
             product.variants.forEach(v => {
