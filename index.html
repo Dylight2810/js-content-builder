@@ -7,6 +7,12 @@
     <link rel="preload"
           href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <meta property="og:url" content="/products/macbook-pro.30.215">
+    <meta property="og:type" content="product">
+    <meta property="og:title" content="Macbook PRO">
+    <meta property="og:description" content="Đây là description, description, description, description, description">
+    <meta property="og:image"
+          content="https://danhgiacongnghe.net/wp-content/uploads/2021/01/macbook-air-m1-2020-3.jpg">
     <style type="text/css">:root {
         --omp-font-size: 16px;
         --omp-body-width: 420px;
@@ -119,7 +125,7 @@
         position: fixed;
         top: 0;
         width: 100vw;
-        max-width: var(--omp-body-width);
+        max-width: var(--omp-body-max-width);
         height: var(--omp-landing-header-height);
         margin-bottom: 0 !important;
         box-shadow: 0 3px 8px 0 rgba(159, 168, 184, 0.24);
@@ -149,9 +155,9 @@
         font-size: 1rem;
     }
 
-    #omp_wrapper #OMP_MENU_FOOTER {
+    #OMP_MENU_FOOTER {
         width: 100vw;
-        max-width: var(--omp-body-width);
+        max-width: var(--omp-body-max-width);
         position: fixed;
         bottom: 0;
         height: var(--omp-landing-footer-height);
@@ -201,9 +207,10 @@
     }
 
     #omp_wrapper #OMP_PRODUCT_DETAIL .omp-landing-detail--header {
+        width: 100vw;
         position: fixed;
         top: 0;
-        width: var(--omp-body-width);
+        max-width: var(--omp-body-max-width);
         height: var(--omp-landing-header-height);
         margin-bottom: 0 !important;
         box-shadow: 0 3px 8px 0 rgba(159, 168, 184, 0.24);
@@ -249,8 +256,8 @@
     }
 
     #omp_wrapper #OMP_PRODUCT_DETAIL .omp-product-detail--image .product-image--wrapper img {
-        width: calc(var(--omp-product-image-height) / 2);
-        height: calc(var(--omp-product-image-height) / 2);
+        width: calc(var(--omp-product-image-height) * 0.8);
+        height: calc(var(--omp-product-image-height) * 0.8);
         margin-bottom: var(--omp-space);
     }
 
@@ -687,8 +694,8 @@
 
     .btn-danger {
         color: #fff;
-        background-color: #ee2020;
-        border-color: #ee2020;
+        background-color: var(--omp-orange);
+        border-color: var(--omp-orange);
     }
 
     h5, .h5 {
@@ -828,10 +835,131 @@
 </head>
 <body>
 <div id="omp_wrapper">
-    <div id="OMP_HEADER"></div>
-    <div id="OMP_MENU_FOOTER"></div>
-    <div id="OMP_OUTSTANDING_PRODUCT_1"></div>
-    <div id="OMP_ALL_PRODUCTS"></div>
+    <div id="OMP_PRODUCT_DETAIL">
+        <div class="omp-landing-detail--header">
+            <div class="header-container">
+                <div class="back-icon">
+                    <i class="bi bi-arrow-left"></i>
+                </div>
+                <div class="header-title">Chi tiết sản phẩm</div>
+                <div class="header-space"></div>
+            </div>
+        </div>
+        <div class="omp-landing-block--content">
+            <div class="omp-product-detail--image">
+                <div class="product-image--wrapper" data-omp-element="product-image">
+                    <img src="https://danhgiacongnghe.net/wp-content/uploads/2021/01/macbook-air-m1-2020-3.jpg"
+                         alt="Product image">
+                </div>
+            </div>
+            <div class="omp-product-detail--information">
+                <div class="product-detail--meta-data">
+                    <div class="omp-container">
+                        <div class="p-name-price">
+                            <h5 data-omp-element="product-name">Macbook PRO</h5>
+                            <h5 class="price-sale">
+                                <span data-omp-element="product-listed-price">1,050,000</span>
+                                <span class="normal-price" data-omp-element="product-price">1,050,000.00</span>
+                            </h5>
+                        </div>
+                        <div class="p-favorite-action">
+                            <i class="bi bi-heart"></i>
+                        </div>
+                    </div>
+                    <div class="omp-container">
+                        <div class="product--rating-stars">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+
+                        <div class="product--rating-results">
+                            <span class="rating-result--number">5.0</span>
+                            <span class="rating-result--text">Đánh giá tốt</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-detail--select-product" data-omp-element="variant-select">
+                    <div class="product-detail--select-product">
+                        <div class="omp-container">
+                            <p class="omp-mb-0">CPU</p>
+                            <div class="product-variant" data-variant="5">
+                                <div class="p-variant-item active" data-variant-value="27">
+                                    i7
+                                </div>
+                                <div class="p-variant-item" data-variant-value="26">
+                                    i5
+                                </div>
+                                <div class="p-variant-item" data-variant-value="20">
+                                    i3
+                                </div>
+                            </div>
+                        </div>
+                        <div class="omp-container">
+                            <p class="omp-mb-0">RAM</p>
+                            <div class="product-variant" data-variant="6">
+                                <div class="p-variant-item" data-variant-value="25">
+                                    16GB
+                                </div>
+                                <div class="p-variant-item active" data-variant-value="21">
+                                    8GB
+                                </div>
+                            </div>
+                        </div>
+                        <div class="omp-container">
+                            <p class="omp-mb-0">Disk</p>
+                            <div class="product-variant" data-variant="7">
+                                <div class="p-variant-item" data-variant-value="24">
+                                    SSD - 512GB
+                                </div>
+                                <div class="p-variant-item active" data-variant-value="23">
+                                    SSD - 256GB
+                                </div>
+                                <div class="p-variant-item" data-variant-value="22">
+                                    SSD - 140GB
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-detail--select-quantity" data-omp-element="group-button-action">
+                    <div class="omp-container display-flex omp-mb-3">
+                        <p class="omp-mb-0">Chọn số lượng</p>
+                        <div class="p-quantity">
+                            <div class="p-quantity-button" data-omp-element="decrease-quantity">-</div>
+                            <div class="p-quantity-button p-quantity-number" data-omp-element="quantity-value">1</div>
+                            <div class="p-quantity-button" data-omp-element="increase-quantity">+</div>
+                        </div>
+                    </div>
+
+                    <div class="omp-container display-flex omp-mb-2">
+                        <button class="btn btn-primary" data-action="add_to_cart" data-sku="MACPRO10000"
+                                data-quantity="1" data-name="Macbook PRO" data-price="1050000"
+                                data-discounted-price="1050000"
+                                data-image="https://danhgiacongnghe.net/wp-content/uploads/2021/01/macbook-air-m1-2020-3.jpg">
+                            Thêm vào giỏ hàng
+                        </button>
+                        <button class="btn btn-danger" data-action="checkout" data-sku="MACPRO10000" data-quantity="1"
+                                data-name="Macbook PRO" data-price="1050000" data-discounted-price="1050000"
+                                data-image="https://danhgiacongnghe.net/wp-content/uploads/2021/01/macbook-air-m1-2020-3.jpg"
+                                data-buy-now="true">
+                            Mua ngay
+                        </button>
+                    </div>
+                </div>
+                <div class="product-detail--description">
+                    <div class="omp-container display-flex omp-mb-3">
+                        <p class="omp-mb-0">Mô tả sản phẩm</p>
+                        <div class="p-description" data-omp-element="product-description">
+                            <p>Đây là description, description, description, description, description
+                            </p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="omp-loading">
     <div class="omp-loading--spinner">
@@ -850,7 +978,7 @@
     </div>
 </div>
 <script type="text/javascript"
-        src="js/generate_main.js"></script>
-<script type="text/javascript" src="https://cdn.omipage.com/cart-embed/omipage-cart-embed.min.js"></script>
+        src="js/generate_detail.js"></script>
+<script type="text/javascript" src="//cdn.omipage.com/cart-embed/omipage-cart-embed.min.js"></script>
 </body>
 </html>

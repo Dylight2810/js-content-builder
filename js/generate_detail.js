@@ -91,7 +91,7 @@ const EnumPDElementAttributeValue = {
         }
 
         _queryElementsByAttribute = (parent_node, attribute_name, attribute_value) => {
-            return parent_node.querySelectorAll(`div[${attribute_name}=${attribute_value}]`)[0];
+            return parent_node.querySelectorAll(`[${attribute_name}=${attribute_value}]`)[0];
         }
 
         _queryElementsByClass = (parent_node, class_name) => {
@@ -220,7 +220,7 @@ const EnumPDElementAttributeValue = {
 
         _findSelectedVariant = () => {
             let _variant_selected = null;
-            const _arr_variant_selected = this.store_variant_group.reduce((_v, group) => _v.push(`${group.variant_group_id}-${group.variant_value_selected}`), [])
+            const _arr_variant_selected = this.store_variant_group.reduce((_v, group) => [..._v, `${group.variant_group_id}-${group.variant_value_selected}`], [])
             this.product_detail.variants.forEach(v => {
                 if (v.variant_attributes_id) {
                     if (this._verifyIncludesArr(v.variant_attributes_id, _arr_variant_selected)) {
@@ -502,7 +502,7 @@ const EnumPDElementAttributeValue = {
         initPage = () => {
             const _arr_url_split = window.location.href.split('.');
             const _product_id = _arr_url_split[_arr_url_split.length - 1];
-            this._getProductDetailById(_product_id).then();
+            this._getProductDetailById(215).then();
         }
 
         _getProductDetailById = async (product_id) => {
