@@ -1,7 +1,7 @@
 'use strict';
 
 const API_URL = {
-    PRODUCT_DETAIL: 'http://dev.omipage.com/api/v1/products/',
+    PRODUCT_DETAIL: 'https://dev.omipage.com/api/v1/products/',
 };
 
 const EnumLandingBlockElementName = {
@@ -205,7 +205,7 @@ const EnumPDElementAttributeValue = {
         }
 
         _queryProductVariantGroupElements = () => {
-            return this.element_content_builder._queryElementsByClass(document, 'product-variant');
+            return this.element_content_builder._queryElementsLikeClassName(document, 'product-variant');
         }
 
         _queryProductVariantOptionElements = (group_el) => {
