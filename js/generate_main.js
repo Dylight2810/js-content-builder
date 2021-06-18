@@ -5,6 +5,8 @@ const API_URL = {
     COLLECTION_PRODUCTS: 'http://dev.omipage.com/api/v1/products/simple/'
 };
 
+const API_LIST_PAGE_SIZE = 10;
+
 const EnumLandingBlockElementName = {
     NONE: '',
     // Landing Header
@@ -41,6 +43,26 @@ const EnumPageType = {
 };
 
 (function (window) {
+    class GlobalEvent {
+        constructor() {
+        }
+
+        _addScrollEvent = (scroll_element, call_back) => {
+            let _last_scroll_top = 0;
+            const _eventHandler = (e) => {
+                if ((e.target.scrollTop + e.target.clientHeight) > e.target.scrollHeight - 5) {
+                    if (e.target.scrollTop > _last_scroll_top) {
+                        call_back(true);
+                    }
+                }
+
+                _last_scroll_top = e.target.scrollTop
+            }
+
+            scroll_element.addEventListener('scroll', _eventHandler);
+        }
+    }
+
     class DataService {
         landing_token;
 
@@ -72,6 +94,12 @@ const EnumPageType = {
             return await this._createGetRequest(request_url);
         }
 
+        getLandingProductAsync = async (page) => {
+            const request_url = `${API_URL.COLLECTION_PRODUCTS}?page=${page}&page_size=${API_LIST_PAGE_SIZE}&is_parent=true`;
+            return await this._createGetRequest(request_url);
+        }
+
+
         _getLandingToken = () => {
             const _meta_el = document.querySelectorAll('meta[name="omp-key"]')[0];
             this.landing_token = `Landing ${_meta_el.getAttribute('content')}`;
@@ -79,7 +107,36 @@ const EnumPageType = {
     }
 
     class ElementContentBuilder {
+        landing_domain = document.location.origin;
+        loading_element = null
+
         constructor() {
+            const self = this;
+            self.loading_element = document.getElementsByClassName('omp-loading')[0];
+        }
+
+        _showLoading = () => {
+            if (!this.loading_element.classList.contains('show')) {
+                this.loading_element.classList.add('show');
+            }
+        }
+
+        _hideLoading = () => {
+            if (this.loading_element.classList.contains('show')) {
+                this.loading_element.classList.remove('show');
+            }
+        }
+
+        _queryElementsByClass = (parent_node, class_name) => {
+            return parent_node.querySelectorAll(`div[class=${class_name}]`)[0]
+        }
+
+        _queryElementsById = (parent_node, id_name) => {
+            return parent_node.getElementById(`${id_name}`)
+        }
+
+        _queryElementsLikeClassName = (parent_node, class_name) => {
+            return parent_node.querySelectorAll(`div[class^=${class_name}]`)
         }
 
         _headerElementBuilder = (landing_name, image_url) => {
@@ -125,16 +182,12 @@ const EnumPageType = {
                     </div>`
         }
 
-        _outstandingProductContentBuilder = (title, arr_product) => {
-            if (!arr_product.length) {
-                return '';
-            }
-
+        _renderListProduct = (arr_product) => {
             let innerHtml = '';
 
             arr_product.forEach(p => {
                 innerHtml += `<div class="omp-col-6 omp-product-wrapper">
-                                <div class="omp-product-card">
+                                <a class="omp-product-card" href="${this.landing_domain}${p.link}">
                                     <div class="omp-product-card__top">
                                         <span class="product-card--premium">Hot</span>
                                         <img alt="" class="mb-2" src="${p.avatar_image}">
@@ -156,9 +209,34 @@ const EnumPageType = {
                                             </small>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>`
             });
+
+            return innerHtml;
+        }
+
+        _allProductContentBuilder = (arr_product) => {
+            if (!arr_product.length) {
+                return '';
+            }
+
+            const innerHtml = this._renderListProduct(arr_product);
+
+            return `<div class="omp-landing-block--title">TẤT CẢ SẢN PHẨM</div>
+                    <div class="omp-landing-block--content">
+                        <div class="omp-wp__all-products">
+                            <div class="omp-row">${innerHtml}</div>
+                        </div>
+                    </div>`
+        }
+
+        _outstandingProductContentBuilder = (title, arr_product) => {
+            if (!arr_product.length) {
+                return '';
+            }
+
+            const innerHtml = this._renderListProduct(arr_product);
 
             return `<div class="omp-landing-block--title">${title}</div>
                     <div class="omp-landing-block--content">
@@ -176,31 +254,7 @@ const EnumPageType = {
             let innerHtml = '';
 
             arr_product.forEach(p => {
-                innerHtml += `<div class="omp-col-6 omp-product-wrapper">
-                                <div class="omp-product-card">
-                                    <div class="omp-product-card__top">
-                                    <span class="product-card--premium">Hot</span>
-                                    <img alt="" class="mb-2" src="${p.avatar_image}">
-                                    </div>
-                                    <div class="omp-product-card__bottom">
-                                        <div class="omp-product-card--name">${p.name}</div>
-                                        <div class="omp-product-card--category">${p.sku}</div>
-                                        <div class="product--rating-stars">
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                        </div>
-                                        <div class="omp-product-card--price">
-                                            <span class="mr-1">${p.listed_price} ${p.currency}</span>
-                                            <small>
-                                                <del>${p.price} ${p.currency}</del>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>`
+                innerHtml += ``
             });
 
             return `<div class="omp-landing-block--title">${title}</div>
@@ -219,31 +273,7 @@ const EnumPageType = {
             let innerHtml = '';
 
             arr_product.forEach(p => {
-                innerHtml += `<div class="omp-col-6 omp-product-wrapper">
-                                <div class="omp-product-card">
-                                    <div class="omp-product-card__top">
-                                    <span class="product-card--premium">Hot</span>
-                                    <img alt="" class="mb-2" src="${p.avatar_image}">
-                                    </div>
-                                    <div class="omp-product-card__bottom">
-                                        <div class="omp-product-card--name">${p.name}</div>
-                                        <div class="omp-product-card--category">${p.sku}</div>
-                                        <div class="product--rating-stars">
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                        </div>
-                                        <div class="omp-product-card--price">
-                                            <span class="mr-1">${p.listed_price} ${p.currency}</span>
-                                            <small>
-                                                <del>${p.price} ${p.currency}</del>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>`
+                innerHtml += ``
             });
 
             return `<div class="omp-landing-block--title">${title}</div>
@@ -262,31 +292,7 @@ const EnumPageType = {
             let innerHtml = '';
 
             arr_product.forEach(p => {
-                innerHtml += `<div class="omp-col-6 omp-product-wrapper">
-                                <div class="omp-product-card">
-                                    <div class="omp-product-card__top">
-                                    <span class="product-card--premium">Hot</span>
-                                    <img alt="" class="mb-2" src="${p.avatar_image}">
-                                    </div>
-                                    <div class="omp-product-card__bottom">
-                                        <div class="omp-product-card--name">${p.name}</div>
-                                        <div class="omp-product-card--category">${p.sku}</div>
-                                        <div class="product--rating-stars">
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                        </div>
-                                        <div class="omp-product-card--price">
-                                            <span class="mr-1">${p.listed_price} ${p.currency}</span>
-                                            <small>
-                                                <del>${p.price} ${p.currency}</del>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>`
+                innerHtml += ``
             });
 
             return `<div class="omp-landing-block--title">${title}</div>
@@ -344,8 +350,11 @@ const EnumPageType = {
     }
 
     class LandingElementConfig {
+        total_product_in_landing = 0;
+        all_product_current_page = 1;
         data_service = new DataService();
         content_builder = new ElementContentBuilder();
+        global_event = new GlobalEvent();
 
         constructor() {
         }
@@ -354,10 +363,32 @@ const EnumPageType = {
             this._getElementConfigs().then();
         }
 
-        _getElementConfigs = async () => {
-            const configs = await this.data_service.getPageElementsConfigAsync(35);
-            const obj_configs = JSON.parse(configs);
-            this._handleGetPageElementConfig(obj_configs);
+        _renderAllProductBlock = async (page) => {
+            const response = await this.data_service.getLandingProductAsync(page);
+            const response_obj = JSON.parse(response);
+            this.total_product_in_landing = response_obj.count;
+            const _products = response_obj.results;
+
+            if (_products && _products.length) {
+                this.all_product_current_page++;
+                const _all_product_element = this.content_builder._queryElementsById(document, EnumLandingBlockElementName.LANDING_ALL_PRODUCTS);
+                _all_product_element.innerHTML = this.content_builder._allProductContentBuilder(_products);
+            }
+        }
+
+        _renderMoreProductOfLanding = async (page) => {
+            const response = await this.data_service.getLandingProductAsync(page);
+            const response_obj = JSON.parse(response);
+            const _products = response_obj.results;
+
+            if (_products && _products.length) {
+                this.all_product_current_page++;
+                const _all_product_element = this.content_builder._queryElementsById(document, EnumLandingBlockElementName.LANDING_ALL_PRODUCTS);
+                const _product_wrapper = this.content_builder._queryElementsByClass(_all_product_element, 'omp-row');
+                _product_wrapper.innerHTML += this.content_builder._renderListProduct(_products);
+            }
+
+            return new Promise((resolve, reject) => resolve(true));
         }
 
         _handleGetPageElementConfig = (configs) => {
@@ -378,24 +409,25 @@ const EnumPageType = {
             const statics_elements = el_config.statics_elements;
 
             statics_elements.forEach(e => {
-               switch (e.element_id) {
-                   case EnumLandingBlockElementName.LANDING_HEADER:
-                       const _header = document.getElementById(e.element_id)
-                       _header.innerHTML = this.content_builder._headerElementBuilder('My Shop', 'https://storage.googleapis.com/omisell-cloud/omipage/logoulashop.png');
-                       break
-                   case EnumLandingBlockElementName.LANDING_MENU_FOOTER:
-                       const _footer = document.getElementById(e.element_id)
-                       _footer.innerHTML = this.content_builder._footerElementBuilder();
-                       break
-               }
+                switch (e.element_id) {
+                    case EnumLandingBlockElementName.LANDING_HEADER:
+                        const _header = document.getElementById(e.element_id)
+                        _header.innerHTML = this.content_builder._headerElementBuilder('My Shop', 'https://storage.googleapis.com/omisell-cloud/omipage/logoulashop.png');
+                        break
+                    case EnumLandingBlockElementName.LANDING_MENU_FOOTER:
+                        const _footer = document.getElementById(e.element_id)
+                        _footer.innerHTML = this.content_builder._footerElementBuilder();
+                        break
+                }
             });
 
-            dynamic_elements.forEach(e => {
-                this._renderProductElement(e).then();
+            dynamic_elements.forEach((e, index) => {
+                const _is_last_dynamic_element = index === dynamic_elements.length - 1;
+                this._renderProductElement(e, _is_last_dynamic_element).then();
             });
         }
 
-        _renderProductElement = async (element_config) => {
+        _renderProductElement = async (element_config, is_last_dynamic_element) => {
             const _el = document.getElementById(element_config.element_id);
 
             if (element_config.config && element_config.config.collection) {
@@ -404,10 +436,40 @@ const EnumPageType = {
 
                 switch (element_config.element_name) {
                     case EnumLandingBlockElementName.DESIGN_OUTSTANDING_PRODUCT:
-                        _el.innerHTML = this.content_builder._outstandingProductContentBuilder(element_config.element_title, products_of_collection);
+                        _el.innerHTML = this.content_builder._outstandingProductContentBuilder(
+                            element_config.element_title,
+                            products_of_collection
+                        );
                         break;
                 }
             }
+
+            if (is_last_dynamic_element) {
+                this._renderAllProductBlock(this.all_product_current_page).then();
+            }
+        }
+
+        _getElementConfigs = async () => {
+            this.content_builder._showLoading();
+            const configs = await this.data_service.getPageElementsConfigAsync(35);
+            const obj_configs = JSON.parse(configs);
+            await this._handleGetPageElementConfig(obj_configs);
+            this.content_builder._hideLoading();
+
+            const _loadMoreProduct = async () => {
+                if (this.all_product_current_page * API_LIST_PAGE_SIZE > this.total_product_in_landing) {
+                    return;
+                }
+
+                this.content_builder._showLoading();
+                await this._renderMoreProductOfLanding(this.all_product_current_page);
+                this.content_builder._hideLoading();
+            }
+
+            this.global_event._addScrollEvent(
+                this.content_builder._queryElementsById(document, 'omp_wrapper'),
+                _loadMoreProduct
+            );
         }
     }
 

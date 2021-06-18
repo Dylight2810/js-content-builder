@@ -43,8 +43,8 @@ const EnumPDElementAttributeValue = {
             })
         }
 
-        getProductDetailById = async (product_sku) => {
-            const request_url = `${API_URL.PRODUCT_DETAIL}${product_sku}/`;
+        getProductDetailById = async (product_id) => {
+            const request_url = `${API_URL.PRODUCT_DETAIL}${product_id}/`;
             return await this._createGetRequest(request_url);
         }
 
@@ -55,19 +55,35 @@ const EnumPDElementAttributeValue = {
     }
 
     class ElementContentBuilder {
+        loading_element = null
+
         constructor() {
+            const self = this;
+            self.loading_element = document.getElementsByClassName('omp-loading')[0];
+        }
+
+        _showLoading = () => {
+            if (!this.loading_element.classList.contains('show')) {
+                this.loading_element.classList.add('show');
+            }
+        }
+
+        _hideLoading = () => {
+            if (this.loading_element.classList.contains('show')) {
+                this.loading_element.classList.remove('show');
+            }
         }
 
         _queryElementsByAttribute = (parent_node, attribute_name, attribute_value) => {
-            return parent_node.querySelectorAll(`div[${attribute_name}=${attribute_value}]`)[0]
+            return parent_node.querySelectorAll(`div[${attribute_name}=${attribute_value}]`)[0];
         }
 
         _queryElementsByClass = (parent_node, class_name) => {
-            return parent_node.querySelectorAll(`div[class=${class_name}]`)[0]
+            return parent_node.querySelectorAll(`div[class=${class_name}]`)[0];
         }
 
         _queryElementsLikeClassName = (parent_node, class_name) => {
-            return parent_node.querySelectorAll(`div[class^=${class_name}]`)
+            return parent_node.querySelectorAll(`div[class^=${class_name}]`);
         }
 
         _productSelectProductBuilder = (variant_option) => {
@@ -327,12 +343,13 @@ const EnumPDElementAttributeValue = {
         }
 
         initPage = () => {
-            const product_sku = 'MACPRO10000';
-            this._getProductDetailById(product_sku).then();
+            const _arr_url_split = window.location.href.split('.');
+            const _product_id = _arr_url_split[_arr_url_split.length - 1];
+            this._getProductDetailById(_product_id).then();
         }
 
-        _getProductDetailById = async (product_sku) => {
-            const response = await this.data_service.getProductDetailById(product_sku);
+        _getProductDetailById = async (product_id) => {
+            const response = await this.data_service.getProductDetailById(product_id);
             const product_detail = this._addVariantAttributesId(JSON.parse(response));
 
             // Generate product detail element content
