@@ -379,7 +379,7 @@ const EnumPDElementAttributeValue = {
                             'disabled'
                         )
                     })
-                } else {
+                } else if (_group_not_select) {
                     this._removeElementClass(
                         Array.from(this._queryProductVariantOptionElements(_group_not_select)),
                         'disabled'
