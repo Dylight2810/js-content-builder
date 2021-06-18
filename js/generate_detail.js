@@ -313,7 +313,7 @@ const EnumPDElementAttributeValue = {
             product_description_el.innerHTML = `${variant.description}`;
 
             // Rerender product button action
-            this.group_quantity_button._updateGroupButtonAttribute(variant);
+            this.element_content_builder._updateGroupButtonAttribute(variant);
         }
 
         _updateDisableSelectStatus = () => {
