@@ -9,7 +9,17 @@ const EnumLandingBlockElementName = {
     LANDING_PRODUCT_DETAIL: 'OMP_PRODUCT_DETAIL'
 };
 
-const OMPElementAttributeName = 'data-omp-element';
+const EnumElementAttributeName = {
+    DATA_OMP_ELEMENT: 'data-omp-element',
+    DATA_ACTION: 'data-action',
+    DATA_SKU: 'data-sku',
+    DATA_QUANTITY: 'data-quantity',
+    DATA_NAME: 'data-name',
+    DATA_PRICE: 'data-price',
+    DATA_DISCOUNTED_PRICE: 'data-discounted-price',
+    DATA_IMAGE: 'data-image',
+    DATA_BUY_NOW: 'data-buy-now'
+};
 
 const EnumPDElementAttributeValue = {
     PRODUCT_IMAGE: 'product-image',
@@ -19,6 +29,12 @@ const EnumPDElementAttributeValue = {
     PRODUCT_SELECT_VARIANT: 'variant-select',
     PRODUCT_QUANTITY: 'select-quantity',
     PRODUCT_DESCRIPTION: 'product-description',
+    PRODUCT_GROUP_BUTTON_ACTION: 'group-button-action',
+    PRODUCT_QUANTITY_INCREASE: 'increase-quantity',
+    PRODUCT_QUANTITY_DECREASE: 'decrease-quantity',
+    PRODUCT_QUANTITY_VALUE: 'quantity-value',
+    ADD_TO_CART: 'add_to_cart',
+    CHECKOUT: 'checkout'
 };
 
 (function (window) {
@@ -115,17 +131,77 @@ const EnumPDElementAttributeValue = {
                         ${select_variant_tpl}
                     </div>`;
         }
+
+        _productButtonActionBuilder = (product, quantity) => {
+            if (!product) {
+                return ''
+            }
+            return `<div class="omp-container display-flex omp-mb-3">
+                        <p class="omp-mb-0">Chọn số lượng</p>
+                        <div class="p-quantity">
+                            <div class="p-quantity-button" data-omp-element="${EnumPDElementAttributeValue.PRODUCT_QUANTITY_DECREASE}">-</div>
+                            <div class="p-quantity-button p-quantity-number" data-omp-element="${EnumPDElementAttributeValue.PRODUCT_QUANTITY_DECREASE}">1</div>
+                            <div class="p-quantity-button" data-omp-element="${EnumPDElementAttributeValue.PRODUCT_QUANTITY_INCREASE}">+</div>
+                        </div>
+                    </div>
+
+                    <div class="omp-container display-flex omp-mb-2">
+                        <button class="btn btn-primary"
+                            data-action="add_to_cart"
+                            data-sku="${product.sku}"
+                            data-quantity="${quantity}"
+                            data-name="${product.name}"
+                            data-price="${product.listed_price}"
+                            data-discounted-price="${product.price}"
+                            data-image="${product.images[0]}">
+                            Thêm vào giỏ hàng
+                        </button>
+                        <button class="btn btn-danger"
+                            data-action="checkout"
+                            data-sku="${product.sku}"
+                            data-quantity="${quantity}"
+                            data-name="${product.name}"
+                            data-price="${product.listed_price}"
+                            data-discounted-price="${product.price}"
+                            data-image="${product.images[0]}"
+                            data-buy-now="true">
+                            Mua ngay
+                        </button>
+                    </div>`
+        }
+
+        _updateGroupButtonAttribute = (product) => {
+            if (!product) return;
+
+            const _updateAttributeValue = (btn_el) => {
+                btn_el.setAttribute(EnumElementAttributeName.DATA_SKU, product.sku);
+                btn_el.setAttribute(EnumElementAttributeName.DATA_QUANTITY, product.quantity);
+                btn_el.setAttribute(EnumElementAttributeName.DATA_NAME, product.name);
+                btn_el.setAttribute(EnumElementAttributeName.DATA_PRICE, product.listed_price);
+                btn_el.setAttribute(EnumElementAttributeName.DATA_DISCOUNTED_PRICE, product.price);
+                btn_el.setAttribute(EnumElementAttributeName.DATA_IMAGE, product.images[0]);
+            }
+
+            const _add_to_cart_btn = this._queryElementsByAttribute(document, EnumElementAttributeName.DATA_ACTION, EnumPDElementAttributeValue.ADD_TO_CART);
+            _updateAttributeValue(_add_to_cart_btn);
+
+            const _buy_now_btn = this._queryElementsByAttribute(document, EnumElementAttributeName.DATA_ACTION, EnumPDElementAttributeValue.CHECKOUT);
+            _updateAttributeValue(_buy_now_btn);
+        }
     }
 
     class SelectVariantButton {
-        element_content_builder = new ElementContentBuilder();
+        element_content_builder;
+        group_quantity_button;
         product_detail = null;
         store_group_selected_id = [];
         store_variant_group = [];
 
-        constructor(product) {
+        constructor(product, content_builder, group_quantity) {
             const self = this;
             self.product_detail = product;
+            self.element_content_builder = content_builder;
+            self.group_quantity_button = group_quantity;
         }
 
         _queryProductVariantGroupElements = () => {
@@ -179,21 +255,6 @@ const EnumPDElementAttributeValue = {
             return _arr_variant_out_of_stock;
         }
 
-        handleSelectEvent = () => {
-            const arr_group_variant = this._queryProductVariantGroupElements();
-
-            arr_group_variant.forEach(group_el => {
-                const _group_id = parseInt(group_el.getAttribute('data-variant'))
-                this._addSelectVariantEvent(group_el, _group_id);
-                this.store_variant_group.push({
-                    group_element: group_el,
-                    variant_group_id: _group_id,
-                    variant_value_selected: null,
-					has_child_disabled: false
-                });
-            })
-        }
-
         _addDisabledClassForVariantOption = (_arr_group_selected, variant_group) => {
             const _arr_variant_out_of_stock = this._findVariantOutOfStock(_arr_group_selected, variant_group);
             if (!_arr_variant_out_of_stock.length) return;
@@ -212,24 +273,47 @@ const EnumPDElementAttributeValue = {
             if (!variant) return;
 
             // Update product Image
-            const product_image_el = this.element_content_builder._queryElementsByAttribute(document, OMPElementAttributeName, EnumPDElementAttributeValue.PRODUCT_IMAGE);
+            const product_image_el = this.element_content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                EnumPDElementAttributeValue.PRODUCT_IMAGE
+            );
             product_image_el.innerHTML = `<img src="${variant.images[0]}" alt="ProductImage">`;
 
             // Update product name
-            const product_name_el = this.element_content_builder._queryElementsByAttribute(document, OMPElementAttributeName, EnumPDElementAttributeValue.PRODUCT_NAME);
+            const product_name_el = this.element_content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                EnumPDElementAttributeValue.PRODUCT_NAME
+            );
             product_name_el.innerHTML = `${variant.full_name}`;
 
             // Update product price
-            const product_price_el = this.element_content_builder._queryElementsByAttribute(document, OMPElementAttributeName, EnumPDElementAttributeValue.PRODUCT_PRICE);
+            const product_price_el = this.element_content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                EnumPDElementAttributeValue.PRODUCT_PRICE
+            );
             product_price_el.innerHTML = `${variant.price}`;
 
             // Update product listed price
-            const product_listed_price_el = this.element_content_builder._queryElementsByAttribute(document, OMPElementAttributeName, EnumPDElementAttributeValue.PRODUCT_LISTED_PRICE);
+            const product_listed_price_el = this.element_content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                EnumPDElementAttributeValue.PRODUCT_LISTED_PRICE
+            );
             product_listed_price_el.innerHTML = `${variant.listed_price}`;
 
             // Update product description
-            const product_description_el = this.element_content_builder._queryElementsByAttribute(document, OMPElementAttributeName, EnumPDElementAttributeValue.PRODUCT_DESCRIPTION);
+            const product_description_el = this.element_content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                EnumPDElementAttributeValue.PRODUCT_DESCRIPTION
+            );
             product_description_el.innerHTML = `${variant.description}`;
+
+            // Rerender product button action
+            this.group_quantity_button._updateGroupButtonAttribute(variant);
         }
 
         _updateDisableSelectStatus = () => {
@@ -285,10 +369,10 @@ const EnumPDElementAttributeValue = {
             }
 
             if (this.store_group_selected_id.length >= this.store_variant_group.length - 1) {
-				const _group_not_select = this.store_variant_group.find(group => group.variant_value_selected === null)?.group_element;
-				const _group_has_child_disabled = this.store_variant_group.filter(group => group.has_child_disabled === true);
+                const _group_not_select = this.store_variant_group.find(group => group.variant_value_selected === null)?.group_element;
+                const _group_has_child_disabled = this.store_variant_group.filter(group => group.has_child_disabled === true);
 
-				if (_group_has_child_disabled.length) {
+                if (_group_has_child_disabled.length) {
                     _group_has_child_disabled.forEach(group => {
                         this._removeElementClass(
                             Array.from(this._queryProductVariantOptionElements(group.group_element)),
@@ -331,13 +415,86 @@ const EnumPDElementAttributeValue = {
                 e.addEventListener('click', _eventHandler);
             })
         }
+
+        handleSelectEvent = () => {
+            const arr_group_variant = this._queryProductVariantGroupElements();
+
+            arr_group_variant.forEach(group_el => {
+                const _group_id = parseInt(group_el.getAttribute('data-variant'))
+                this._addSelectVariantEvent(group_el, _group_id);
+                this.store_variant_group.push({
+                    group_element: group_el,
+                    variant_group_id: _group_id,
+                    variant_value_selected: null,
+                    has_child_disabled: false
+                });
+            })
+        }
     }
 
+    class GroupQuantityButtonAction {
+        element_content_builder;
+
+        constructor(content_builder) {
+            const self = this;
+            self.element_content_builder = content_builder;
+        }
+
+        _addIncreaseProductQuantityEvent = (total_quantity) => {
+            const _increase_btn = this.element_content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                EnumPDElementAttributeValue.PRODUCT_QUANTITY_INCREASE
+            );
+            const _quantity_el = this.element_content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                EnumPDElementAttributeValue.PRODUCT_QUANTITY_VALUE
+            );
+            const _eventHandler = () => {
+                const _quantity_v = parseInt(_quantity_el.innerHTML);
+
+                if (_quantity_v >= total_quantity) return;
+
+                _quantity_el.innerHTML = _quantity_v + 1;
+            }
+
+            _increase_btn.addEventListener('click', _eventHandler);
+        }
+
+        _addDecreaseProductQuantityEvent = () => {
+            const _decrease_btn = this.element_content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                EnumPDElementAttributeValue.PRODUCT_QUANTITY_DECREASE
+            );
+            const _quantity_el = this.element_content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                EnumPDElementAttributeValue.PRODUCT_QUANTITY_VALUE
+            );
+            const _eventHandler = () => {
+                const _quantity_v = parseInt(_quantity_el.innerHTML);
+
+                if (_quantity_v < 1) return;
+
+                _quantity_el.innerHTML = _quantity_v - 1;
+            }
+
+            _decrease_btn.addEventListener('click', _eventHandler);
+        }
+
+        addGroupProductQuantityEvent = (total_quantity) => {
+            this._addIncreaseProductQuantityEvent(total_quantity);
+            this._addDecreaseProductQuantityEvent();
+        }
+    }
 
     class ProductDetail {
         data_service = new DataService();
         content_builder = new ElementContentBuilder();
         select_variant_button = null;
+        group_quantity_button = null;
 
         constructor() {
         }
@@ -353,12 +510,27 @@ const EnumPDElementAttributeValue = {
             const product_detail = this._addVariantAttributesId(JSON.parse(response));
 
             // Generate product detail element content
-            const select_product_el = this.content_builder._queryElementsByAttribute(document, OMPElementAttributeName, EnumPDElementAttributeValue.PRODUCT_SELECT_VARIANT);
-            select_product_el.innerHTML = this.content_builder._productSelectProductBuilder(product_detail.options);
+            const select_product_el = this.content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                EnumPDElementAttributeValue.PRODUCT_SELECT_VARIANT
+            );
+
+            if (product_detail.options && product_detail.options.length) {
+                select_product_el.innerHTML = this.content_builder._productSelectProductBuilder(product_detail.options);
+            }
+
+            select_product_el.innerHTML += this.content_builder._productButtonActionBuilder(product_detail, 1);
 
             // Handle select variant event
-            this.select_variant_button = new SelectVariantButton(product_detail);
-            this.select_variant_button.handleSelectEvent();
+            this.group_quantity_button = new GroupQuantityButtonAction(this.content_builder);
+
+            if (product_detail.options && product_detail.options.length) {
+                this.select_variant_button = new SelectVariantButton(product_detail, this.content_builder, this.group_quantity_button);
+                this.select_variant_button.handleSelectEvent();
+            } else {
+                this.group_quantity_button.addGroupProductQuantityEvent(product_detail.fulfillable);
+            }
         }
 
         _addVariantAttributesId = (product) => {
