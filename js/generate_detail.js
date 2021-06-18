@@ -140,7 +140,7 @@ const EnumPDElementAttributeValue = {
                         <p class="omp-mb-0">Chọn số lượng</p>
                         <div class="p-quantity">
                             <div class="p-quantity-button" data-omp-element="${EnumPDElementAttributeValue.PRODUCT_QUANTITY_DECREASE}">-</div>
-                            <div class="p-quantity-button p-quantity-number" data-omp-element="${EnumPDElementAttributeValue.PRODUCT_QUANTITY_DECREASE}">1</div>
+                            <div class="p-quantity-button p-quantity-number" data-omp-element="${EnumPDElementAttributeValue.PRODUCT_QUANTITY_VALUE}">1</div>
                             <div class="p-quantity-button" data-omp-element="${EnumPDElementAttributeValue.PRODUCT_QUANTITY_INCREASE}">+</div>
                         </div>
                     </div>
@@ -520,7 +520,14 @@ const EnumPDElementAttributeValue = {
                 select_product_el.innerHTML = this.content_builder._productSelectProductBuilder(product_detail.options);
             }
 
-            select_product_el.innerHTML += this.content_builder._productButtonActionBuilder(product_detail, 1);
+            // Generate product quantity group element content
+            const group_quantity_btn = this.content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                EnumPDElementAttributeValue.PRODUCT_GROUP_BUTTON_ACTION
+            );
+
+            group_quantity_btn.innerHTML = this.content_builder._productButtonActionBuilder(product_detail, 1);
 
             // Handle select variant event
             this.group_quantity_button = new GroupQuantityButtonAction(this.content_builder);
