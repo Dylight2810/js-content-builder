@@ -205,7 +205,7 @@ const EnumPDElementAttributeValue = {
         }
 
         _queryProductVariantGroupElements = () => {
-            return this.element_content_builder._queryElementsByClass(document, 'product-variant');
+            return this.element_content_builder._queryElementsLikeClassName(document, 'product-variant');
         }
 
         _queryProductVariantOptionElements = (group_el) => {
