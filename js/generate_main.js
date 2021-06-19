@@ -182,7 +182,7 @@ const EnumPageType = {
             let innerHtml = '';
 
             arr_product.forEach(p => {
-                innerHtml += `<div class="omp-col-6 omp-product-wrapper">
+                innerHtml += `<div class="omp-product-col omp-product-wrapper">
                                 <a class="omp-product-card" href="${this.landing_domain}${p.link}">
                                     <div class="omp-product-card__top">
                                         <span class="product-card--premium">Hot</span>
