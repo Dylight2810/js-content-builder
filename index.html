@@ -7,12 +7,14 @@
     <link rel="preload"
           href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <meta property="og:url" content="/products/macbook-pro.30.215">
+    <title>Landing 2 - Sản phẩm test Checkout 001</title>
+    <meta property="og:url" content="/products/san-pham-test-checkout-001.30.8">
     <meta property="og:type" content="product">
-    <meta property="og:title" content="Macbook PRO">
-    <meta property="og:description" content="Đây là description, description, description, description, description">
+    <meta property="og:title" content="Sản phẩm test Checkout 001">
+    <meta property="og:description"
+          content="ô tả sản phẩm bao gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm bao gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm bao gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm bao gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kí">
     <meta property="og:image"
-          content="https://danhgiacongnghe.net/wp-content/uploads/2021/01/macbook-air-m1-2020-3.jpg">
+          content="https://storage.googleapis.com/omisell-dev/products/images/501/vn/2ec3065e226c5663d4dc08c7518bb744.png">
     <style type="text/css">:root {
         --omp-font-size: 16px;
         --omp-body-width: 420px;
@@ -325,11 +327,16 @@
         background-color: var(--omp-silver);
         margin-right: var(--omp-space);
         margin-bottom: var(--omp-space);
+        cursor: pointer;
     }
 
     .product-detail--select-product .p-variant-item.active {
         background-color: var(--omp-green);
         color: #ffffff;
+    }
+
+    .product-detail--select-product .p-variant-item.disabled {
+        opacity: 0.5;
     }
 
     .product-detail--select-product .omp-container:first-child p {
@@ -373,6 +380,10 @@
     .p-quantity .p-quantity-number {
         width: 3rem;
         text-align: right;
+    }
+
+    .p-quantity:not(:nth-child(2)) {
+        cursor: pointer;
     }
 
     .product-detail--description .p-description {
@@ -832,6 +843,38 @@
         }
     }
     </style>
+    <script style="display: none;">var tvt = tvt || {};
+    tvt.captureVariables = function (a) {
+        for (var b =
+            new Date, c = {}, d = Object.keys(a || {}), e = 0, f; f = d[e]; e++) if (a.hasOwnProperty(f) && "undefined" != typeof a[f]) try {
+            var g = [];
+            c[f] = JSON.stringify(a[f], function (l, t) {
+                try {
+                    if ("function" !== typeof t) {
+                        if ("object" === typeof t && null !== t) {
+                            if (t instanceof HTMLElement || t instanceof Node || -1 != g.indexOf(t)) return;
+                            g.push(t)
+                        }
+                        return t
+                    }
+                } catch (A) {
+                }
+            })
+        } catch (l) {
+        }
+        a = document.createEvent("CustomEvent");
+        a.initCustomEvent("TvtRetrievedVariablesEvent", !0, !0, {variables: c, date: b});
+        window.dispatchEvent(a)
+    };
+    window.setTimeout(function () {
+        tvt.captureVariables({
+            'dataLayer.hide': (function (a) {
+                a = a.split(".");
+                for (var b = window, c = 0; c < a.length && (b = b[a[c]], b); c++) ;
+                return b
+            })('dataLayer.hide'), 'gaData': window['gaData'], 'dataLayer': window['dataLayer']
+        })
+    }, 2000);</script>
 </head>
 <body>
 <div id="omp_wrapper">
@@ -848,7 +891,7 @@
         <div class="omp-landing-block--content">
             <div class="omp-product-detail--image">
                 <div class="product-image--wrapper" data-omp-element="product-image">
-                    <img src="https://danhgiacongnghe.net/wp-content/uploads/2021/01/macbook-air-m1-2020-3.jpg"
+                    <img src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/2ec3065e226c5663d4dc08c7518bb744.png"
                          alt="Product image">
                 </div>
             </div>
@@ -856,10 +899,10 @@
                 <div class="product-detail--meta-data">
                     <div class="omp-container">
                         <div class="p-name-price">
-                            <h5 data-omp-element="product-name">Macbook PRO</h5>
+                            <h5 data-omp-element="product-name">Sản phẩm test Checkout 001</h5>
                             <h5 class="price-sale">
-                                <span data-omp-element="product-listed-price">1,050,000</span>
-                                <span class="normal-price" data-omp-element="product-price">1,050,000.00</span>
+                                <span data-omp-element="product-listed-price">1,111,110</span>
+                                <span class="normal-price" data-omp-element="product-price">1,111,110.00</span>
                             </h5>
                         </div>
                         <div class="p-favorite-action">
@@ -886,7 +929,7 @@
                         <div class="omp-container">
                             <p class="omp-mb-0">CPU</p>
                             <div class="product-variant" data-variant="5">
-                                <div class="p-variant-item active" data-variant-value="27">
+                                <div class="p-variant-item" data-variant-value="27">
                                     i7
                                 </div>
                                 <div class="p-variant-item" data-variant-value="26">
@@ -903,7 +946,7 @@
                                 <div class="p-variant-item" data-variant-value="25">
                                     16GB
                                 </div>
-                                <div class="p-variant-item active" data-variant-value="21">
+                                <div class="p-variant-item" data-variant-value="21">
                                     8GB
                                 </div>
                             </div>
@@ -914,7 +957,7 @@
                                 <div class="p-variant-item" data-variant-value="24">
                                     SSD - 512GB
                                 </div>
-                                <div class="p-variant-item active" data-variant-value="23">
+                                <div class="p-variant-item" data-variant-value="23">
                                     SSD - 256GB
                                 </div>
                                 <div class="p-variant-item" data-variant-value="22">
@@ -953,8 +996,16 @@
                     <div class="omp-container display-flex omp-mb-3">
                         <p class="omp-mb-0">Mô tả sản phẩm</p>
                         <div class="p-description" data-omp-element="product-description">
-                            <p>Đây là description, description, description, description, description
-                            </p></div>
+                            <p>ô tả sản phẩm bao gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả
+                                sản phẩm bao gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản
+                                phẩm bao gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm
+                                bao gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm bao
+                                gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm bao gồm
+                                điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm bao gồm điểm
+                                khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm bao gồm điểm khác
+                                biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm bao gồm điểm khác biệt,
+                                thông số kỹ thuật, chất liệu, kích thước, thờ</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -979,6 +1030,25 @@
 </div>
 <script type="text/javascript"
         src="js/generate_detail.js"></script>
-<script type="text/javascript" src="//cdn.omipage.com/cart-embed/omipage-cart-embed.min.js"></script>
+<script type="text/javascript" src="https://cdn.omipage.com/cart-embed/omipage-cart-embed.min.js"></script>
+<div id="omp-cart-popup">
+    <div class="omp-cart-popup-content">
+        <div class="omp-cart-close" onclick="omipage.close_cart_popup()">
+            <button>X</button>
+        </div>
+        <p class="omp-text-center ">
+            <img src="https://storage.googleapis.com/omisell-cloud/omipage/cart_empty.png" width="300px" alt=""
+                 class="mx-auto">
+        </p>
+        <p class="omp-text-center ">
+            Giỏ hàng của bạn trống
+        </p>
+
+
+        <div class="omp-cart-action">
+            <button onclick="omipage.close_cart_popup()">Quay lại</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>

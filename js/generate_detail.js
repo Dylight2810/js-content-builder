@@ -520,24 +520,14 @@ const EnumPDElementAttributeValue = {
                 select_product_el.innerHTML = this.content_builder._productSelectProductBuilder(product_detail.options);
             }
 
-            // Generate product quantity group element content
-            const group_quantity_btn = this.content_builder._queryElementsByAttribute(
-                document,
-                EnumElementAttributeName.DATA_OMP_ELEMENT,
-                EnumPDElementAttributeValue.PRODUCT_GROUP_BUTTON_ACTION
-            );
-
-            group_quantity_btn.innerHTML = this.content_builder._productButtonActionBuilder(product_detail, 1);
-
             // Handle select variant event
             this.group_quantity_button = new GroupQuantityButtonAction(this.content_builder);
 
             if (product_detail.options && product_detail.options.length) {
                 this.select_variant_button = new SelectVariantButton(product_detail, this.content_builder, this.group_quantity_button);
                 this.select_variant_button.handleSelectEvent();
-            } else {
-                this.group_quantity_button.addGroupProductQuantityEvent(product_detail.fulfillable);
             }
+            this.group_quantity_button.addGroupProductQuantityEvent(product_detail.fulfillable);
         }
 
         _addVariantAttributesId = (product) => {

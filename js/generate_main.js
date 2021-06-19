@@ -140,42 +140,38 @@ const EnumPageType = {
         }
 
         _headerElementBuilder = (landing_name, image_url) => {
-            return `<div  id="OMP_HEADER">
-                        <div  class="omp-header-block--content">
-                            <img  alt="Landing Logo" src="${image_url}">
-                            <div  class="omp-header--landing-name">${landing_name}</div>
-                            <div  class="omp-header--space"></div>
-                        </div>
+            return `<div class="omp-header-block--content">
+                        <img  alt="Landing Logo" src="${image_url}">
+                        <div  class="omp-header--landing-name">${landing_name}</div>
+                        <div  class="omp-header--space"></div>
                     </div>`
         }
 
         _footerElementBuilder = () => {
-            return `<div  id="OMP_MENU_FOOTER">
-                        <div  class="omp-header-block--content">
-                            <div  class="omp-menu-wrapper">
-                                <div  class="omp-menu-item ng-star-inserted">
-                                    <div  class="omp-menu-item--content active">
-                                        <p>
-                                            <i class="bi bi-house"></i>
-                                        </p>
-                                        <span>Trang chủ</span>
-                                    </div>
+            return `<div class="omp-header-block--content">
+                        <div  class="omp-menu-wrapper">
+                            <div  class="omp-menu-item ng-star-inserted">
+                                <div  class="omp-menu-item--content active">
+                                    <p>
+                                        <i class="bi bi-house"></i>
+                                    </p>
+                                    <span>Trang chủ</span>
                                 </div>
-                                <div  class="omp-menu-item ng-star-inserted">
-                                    <div class="omp-menu-item--content">
-                                        <p>
-                                            <i class="bi bi-cart4"></i>
-                                        </p>
-                                        <span>Giỏ hàng</span>
-                                    </div>
+                            </div>
+                            <div  class="omp-menu-item ng-star-inserted">
+                                <div class="omp-menu-item--content">
+                                    <p>
+                                        <i class="bi bi-cart4"></i>
+                                    </p>
+                                    <span>Giỏ hàng</span>
                                 </div>
-                                <div  class="omp-menu-item ng-star-inserted">
-                                    <div  class="omp-menu-item--content">
-                                        <p>
-                                            <i class="bi bi-heart"></i>
-                                        </p>
-                                        <span>Yêu thích</span>
-                                    </div>
+                            </div>
+                            <div  class="omp-menu-item ng-star-inserted">
+                                <div  class="omp-menu-item--content">
+                                    <p>
+                                        <i class="bi bi-heart"></i>
+                                    </p>
+                                    <span>Yêu thích</span>
                                 </div>
                             </div>
                         </div>
