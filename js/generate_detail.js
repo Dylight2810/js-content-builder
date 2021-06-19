@@ -127,9 +127,7 @@ const EnumPDElementAttributeValue = {
                                        </div>`;
             });
 
-            return `<div class="product-detail--select-product">
-                        ${select_variant_tpl}
-                    </div>`;
+            return `${select_variant_tpl}`;
         }
 
         _productButtonActionBuilder = (product, quantity) => {
