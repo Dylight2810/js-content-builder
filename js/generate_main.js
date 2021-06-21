@@ -446,11 +446,9 @@ const EnumPageType = {
         }
 
         _getElementConfigs = async () => {
-            this.content_builder._showLoading();
             const configs = await this.data_service.getPageElementsConfigAsync(35);
             const obj_configs = JSON.parse(configs);
             await this._handleGetPageElementConfig(obj_configs);
-            this.content_builder._hideLoading();
 
             const _loadMoreProduct = async () => {
                 if (this.all_product_current_page * API_LIST_PAGE_SIZE > this.total_product_in_landing) {
