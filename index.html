@@ -2,19 +2,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{description}}">
+    <meta name="keywords" content="{{keywords}}">
     <meta name="omp-key" content="CmGLLXPN8JBgw2JjwJMaqrsJo">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preload"
           href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <title>Landing 2 - Sản phẩm test Checkout 001</title>
-    <meta property="og:url" content="/products/san-pham-test-checkout-001.30.8">
+    <title>Macbook PRO</title>
+    <meta property="og:url" content="/products/macbook-pro.30.215">
     <meta property="og:type" content="product">
-    <meta property="og:title" content="Sản phẩm test Checkout 001">
-    <meta property="og:description"
-          content="ô tả sản phẩm bao gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm bao gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm bao gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm bao gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kí">
+    <meta property="og:title" content="Macbook PRO">
+    <meta property="og:description" content="Đây là description, description, description, description, description">
     <meta property="og:image"
-          content="https://storage.googleapis.com/omisell-dev/products/images/501/vn/2ec3065e226c5663d4dc08c7518bb744.png">
+          content="https://danhgiacongnghe.net/wp-content/uploads/2021/01/macbook-air-m1-2020-3.jpg">
     <style type="text/css">:root {
         --omp-font-size: 16px;
         --omp-body-width: 420px;
@@ -24,7 +25,7 @@
         --omp-landing-footer-height: 5rem;
         --omp-banner-height: 10rem;
         --omp-product-image-height: 15rem;
-        --omp-product-height: 20rem;
+        --omp-product-height: 21rem;
         --omp-carousel-product-height: 16rem;
         --omp-product-width: 9rem;
         --omp-block-title-height: 2rem;
@@ -45,6 +46,12 @@
         --omp-text-placeholder: #adadad;
         --omp-yellow-rgb: 255 193 7;
         --omp-green-rgb: 23 175 57;
+    }
+
+    @media (max-width: 576px) {
+        :root {
+            --omp-product-height: 17rem !important;
+        }
     }
 
     html {
@@ -268,7 +275,7 @@
     .product-detail--select-quantity,
     .product-detail--description {
         background-color: #ffffff;
-        padding: var(--omp-space);
+        padding: calc(var(--omp-space) * 2) var(--omp-space);
         margin-bottom: var(--omp-space);
     }
 
@@ -282,8 +289,12 @@
         flex-wrap: wrap;
     }
 
+    .product-detail--meta-data .p-name-price {
+        padding-bottom: var(--omp-space);
+    }
+
     .product-detail--meta-data .p-name-price > h5 {
-        padding: var(--omp-space) 0;
+        margin: var(--omp-space) 0 !important;
     }
 
     .product-detail--meta-data .p-name-price .price-sale {
@@ -312,6 +323,10 @@
     .product--rating-results .rating-result--text {
         padding: calc(var(--omp-space) / 2);
         color: var(--omp-green);
+    }
+
+    .product-detail--select-product.invalid-product {
+        box-shadow: inset 0 0 2px 1px #ff6d6d;
     }
 
     .product-detail--select-product .product-variant {
@@ -359,6 +374,7 @@
     }
 
     .p-quantity .p-quantity-button {
+        cursor: pointer;
         padding: calc(var(--omp-space) / 2) var(--omp-space);
         border: 1px solid var(--omp-silver);
     }
@@ -407,11 +423,6 @@
         height: fit-content;
     }
 
-    [id^=OMP_ALL_PRODUCTS] .omp-wp__all-products .omp-product-wrapper .omp-product-card {
-        max-height: var(--omp-product-height);
-        overflow: hidden;
-    }
-
     .omp-banner-carousel {
         height: 100%;
     }
@@ -453,11 +464,6 @@
 
     [id^=OMP_OUTSTANDING_PRODUCT] .omp-wp__outstanding-product .omp-product-wrapper {
         padding: var(--omp-space);
-    }
-
-    [id^=OMP_OUTSTANDING_PRODUCT] .omp-wp__outstanding-product .omp-product-wrapper .omp-product-card {
-        max-height: var(--omp-product-height);
-        overflow: hidden;
     }
 
     [id^=OMP_BEST_SELLING_PRODUCT] .omp-wp__best-selling-product {
@@ -536,11 +542,16 @@
         box-shadow: rgba(159, 168, 184, 0.24) 0 1px 8px 0;
     }
 
+    :is([id^=OMP_ALL_PRODUCTS], [id^=OMP_OUTSTANDING_PRODUCT]) .omp-product-card {
+        height: var(--omp-product-height);
+        overflow: hidden;
+    }
+
     .omp-product-card .omp-product-card__top {
         border-top-right-radius: 8px;
         border-top-left-radius: 8px;
         width: 100%;
-        margin-bottom: 5px;
+        margin-bottom: var(--omp-space);
         position: relative;
     }
 
@@ -568,17 +579,16 @@
     }
 
     .omp-product-card .omp-product-card__bottom {
-        padding: 8px;
+        padding: var(--omp-space);
     }
 
     .omp-product-card .omp-product-card__bottom .omp-product-card--category {
         width: 100%;
-        font-size: 10px;
         font-weight: 500;
         color: #4fbfa9;
         text-overflow: ellipsis;
         overflow: hidden;
-        margin-bottom: 3px;
+        margin-bottom: var(--omp-space);
         max-width: 100%;
         max-height: 100%;
     }
@@ -586,25 +596,24 @@
     .omp-product-card .omp-product-card__bottom .omp-product-card--name {
         font-weight: 500;
         color: #1e1e23;
-        font-size: 12px;
         max-width: 100%;
         max-height: 1rem;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
-        margin-bottom: 4px;
+        margin-bottom: calc(var(--omp-space) / 2);
     }
 
     .omp-product-card .omp-product-card__bottom .product--rating-stars {
         width: 100%;
         max-width: 100%;
         max-height: 100%;
-        margin-bottom: 4px;
+        margin-bottom: var(--omp-space);
         font-size: 12px;
     }
 
     .product--rating-stars i {
-        margin-right: calc(var(--omp-space) / 2);
+        margin-right: calc(var(--omp-space) / 5);
         color: var(--omp-yellow);
     }
 
@@ -637,7 +646,7 @@
         flex-wrap: wrap;
     }
 
-    .omp-row .omp-col-6 {
+    .omp-row .omp-product-col {
         max-width: 50%;
     }
 
@@ -648,8 +657,21 @@
         padding-left: var(--omp-space);
     }
 
-    #omp_wrapper > :is(h1, h2, h3, h4, h5, h6) {
-        margin: 0 !important;
+    @media (max-width: 567px) {
+        .omp-row .omp-product-col {
+            max-width: 50% !important;
+        }
+    }
+
+    @media (min-width: 568px) {
+        .omp-row .omp-product-col {
+            width: 25%;
+            max-width: 25%;
+        }
+    }
+
+    #omp_wrapper :is(h1, h2, h3, h4, h5, h6) {
+        margin: 0;
     }
 
     .omp-mb-0 {
@@ -682,6 +704,7 @@
 
     .btn {
         display: inline-block;
+        cursor: pointer;
         font-weight: 400;
         color: #212529;
         text-align: center;
@@ -843,38 +866,6 @@
         }
     }
     </style>
-    <script style="display: none;">var tvt = tvt || {};
-    tvt.captureVariables = function (a) {
-        for (var b =
-            new Date, c = {}, d = Object.keys(a || {}), e = 0, f; f = d[e]; e++) if (a.hasOwnProperty(f) && "undefined" != typeof a[f]) try {
-            var g = [];
-            c[f] = JSON.stringify(a[f], function (l, t) {
-                try {
-                    if ("function" !== typeof t) {
-                        if ("object" === typeof t && null !== t) {
-                            if (t instanceof HTMLElement || t instanceof Node || -1 != g.indexOf(t)) return;
-                            g.push(t)
-                        }
-                        return t
-                    }
-                } catch (A) {
-                }
-            })
-        } catch (l) {
-        }
-        a = document.createEvent("CustomEvent");
-        a.initCustomEvent("TvtRetrievedVariablesEvent", !0, !0, {variables: c, date: b});
-        window.dispatchEvent(a)
-    };
-    window.setTimeout(function () {
-        tvt.captureVariables({
-            'dataLayer.hide': (function (a) {
-                a = a.split(".");
-                for (var b = window, c = 0; c < a.length && (b = b[a[c]], b); c++) ;
-                return b
-            })('dataLayer.hide'), 'gaData': window['gaData'], 'dataLayer': window['dataLayer']
-        })
-    }, 2000);</script>
 </head>
 <body>
 <div id="omp_wrapper">
@@ -891,7 +882,7 @@
         <div class="omp-landing-block--content">
             <div class="omp-product-detail--image">
                 <div class="product-image--wrapper" data-omp-element="product-image">
-                    <img src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/2ec3065e226c5663d4dc08c7518bb744.png"
+                    <img src="https://danhgiacongnghe.net/wp-content/uploads/2021/01/macbook-air-m1-2020-3.jpg"
                          alt="Product image">
                 </div>
             </div>
@@ -899,10 +890,10 @@
                 <div class="product-detail--meta-data">
                     <div class="omp-container">
                         <div class="p-name-price">
-                            <h5 data-omp-element="product-name">Sản phẩm test Checkout 001</h5>
+                            <h5 data-omp-element="product-name">Macbook PRO</h5>
                             <h5 class="price-sale">
-                                <span data-omp-element="product-listed-price">1,111,110</span>
-                                <span class="normal-price" data-omp-element="product-price">1,111,110.00</span>
+                                <span data-omp-element="product-listed-price">1,050,000</span>
+                                <span class="normal-price" data-omp-element="product-price">1,050,000.00</span>
                             </h5>
                         </div>
                         <div class="p-favorite-action">
@@ -925,44 +916,42 @@
                     </div>
                 </div>
                 <div class="product-detail--select-product" data-omp-element="variant-select">
-                    <div class="product-detail--select-product">
-                        <div class="omp-container">
-                            <p class="omp-mb-0">CPU</p>
-                            <div class="product-variant" data-variant="5">
-                                <div class="p-variant-item" data-variant-value="27">
-                                    i7
-                                </div>
-                                <div class="p-variant-item" data-variant-value="26">
-                                    i5
-                                </div>
-                                <div class="p-variant-item" data-variant-value="20">
-                                    i3
-                                </div>
+                    <div class="omp-container">
+                        <p class="omp-mb-0">CPU</p>
+                        <div class="product-variant" data-variant="5">
+                            <div class="p-variant-item" data-variant-value="27">
+                                i7
+                            </div>
+                            <div class="p-variant-item" data-variant-value="26">
+                                i5
+                            </div>
+                            <div class="p-variant-item" data-variant-value="20">
+                                i3
                             </div>
                         </div>
-                        <div class="omp-container">
-                            <p class="omp-mb-0">RAM</p>
-                            <div class="product-variant" data-variant="6">
-                                <div class="p-variant-item" data-variant-value="25">
-                                    16GB
-                                </div>
-                                <div class="p-variant-item" data-variant-value="21">
-                                    8GB
-                                </div>
+                    </div>
+                    <div class="omp-container">
+                        <p class="omp-mb-0">RAM</p>
+                        <div class="product-variant" data-variant="6">
+                            <div class="p-variant-item" data-variant-value="25">
+                                16GB
+                            </div>
+                            <div class="p-variant-item" data-variant-value="21">
+                                8GB
                             </div>
                         </div>
-                        <div class="omp-container">
-                            <p class="omp-mb-0">Disk</p>
-                            <div class="product-variant" data-variant="7">
-                                <div class="p-variant-item" data-variant-value="24">
-                                    SSD - 512GB
-                                </div>
-                                <div class="p-variant-item" data-variant-value="23">
-                                    SSD - 256GB
-                                </div>
-                                <div class="p-variant-item" data-variant-value="22">
-                                    SSD - 140GB
-                                </div>
+                    </div>
+                    <div class="omp-container">
+                        <p class="omp-mb-0">Disk</p>
+                        <div class="product-variant" data-variant="7">
+                            <div class="p-variant-item" data-variant-value="24">
+                                SSD - 512GB
+                            </div>
+                            <div class="p-variant-item" data-variant-value="23">
+                                SSD - 256GB
+                            </div>
+                            <div class="p-variant-item" data-variant-value="22">
+                                SSD - 140GB
                             </div>
                         </div>
                     </div>
@@ -978,16 +967,10 @@
                     </div>
 
                     <div class="omp-container display-flex omp-mb-2">
-                        <button class="btn btn-primary" data-action="add_to_cart" data-sku="MACPRO10000"
-                                data-quantity="1" data-name="Macbook PRO" data-price="1050000"
-                                data-discounted-price="1050000"
-                                data-image="https://danhgiacongnghe.net/wp-content/uploads/2021/01/macbook-air-m1-2020-3.jpg">
+                        <button class="btn btn-primary" data-action="add_to_cart">
                             Thêm vào giỏ hàng
                         </button>
-                        <button class="btn btn-danger" data-action="checkout" data-sku="MACPRO10000" data-quantity="1"
-                                data-name="Macbook PRO" data-price="1050000" data-discounted-price="1050000"
-                                data-image="https://danhgiacongnghe.net/wp-content/uploads/2021/01/macbook-air-m1-2020-3.jpg"
-                                data-buy-now="true">
+                        <button class="btn btn-danger" data-action="checkout">
                             Mua ngay
                         </button>
                     </div>
@@ -996,16 +979,8 @@
                     <div class="omp-container display-flex omp-mb-3">
                         <p class="omp-mb-0">Mô tả sản phẩm</p>
                         <div class="p-description" data-omp-element="product-description">
-                            <p>ô tả sản phẩm bao gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả
-                                sản phẩm bao gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản
-                                phẩm bao gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm
-                                bao gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm bao
-                                gồm điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm bao gồm
-                                điểm khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm bao gồm điểm
-                                khác biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm bao gồm điểm khác
-                                biệt, thông số kỹ thuật, chất liệu, kích thước, thờô tả sản phẩm bao gồm điểm khác biệt,
-                                thông số kỹ thuật, chất liệu, kích thước, thờ</p>
-                        </div>
+                            <p>Đây là description, description, description, description, description
+                            </p></div>
                     </div>
                 </div>
             </div>
@@ -1032,23 +1007,6 @@
         src="js/generate_detail.js"></script>
 <script type="text/javascript" src="https://cdn.omipage.com/cart-embed/omipage-cart-embed.min.js"></script>
 <div id="omp-cart-popup">
-    <div class="omp-cart-popup-content">
-        <div class="omp-cart-close" onclick="omipage.close_cart_popup()">
-            <button>X</button>
-        </div>
-        <p class="omp-text-center ">
-            <img src="https://storage.googleapis.com/omisell-cloud/omipage/cart_empty.png" width="300px" alt=""
-                 class="mx-auto">
-        </p>
-        <p class="omp-text-center ">
-            Giỏ hàng của bạn trống
-        </p>
-
-
-        <div class="omp-cart-action">
-            <button onclick="omipage.close_cart_popup()">Quay lại</button>
-        </div>
-    </div>
 </div>
 </body>
 </html>
