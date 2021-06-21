@@ -130,50 +130,12 @@ const EnumPDElementAttributeValue = {
             return `${select_variant_tpl}`;
         }
 
-        _productButtonActionBuilder = (product, quantity) => {
-            if (!product) {
-                return ''
-            }
-            return `<div class="omp-container display-flex omp-mb-3">
-                        <p class="omp-mb-0">Chọn số lượng</p>
-                        <div class="p-quantity">
-                            <div class="p-quantity-button" data-omp-element="${EnumPDElementAttributeValue.PRODUCT_QUANTITY_DECREASE}">-</div>
-                            <div class="p-quantity-button p-quantity-number" data-omp-element="${EnumPDElementAttributeValue.PRODUCT_QUANTITY_VALUE}">1</div>
-                            <div class="p-quantity-button" data-omp-element="${EnumPDElementAttributeValue.PRODUCT_QUANTITY_INCREASE}">+</div>
-                        </div>
-                    </div>
-
-                    <div class="omp-container display-flex omp-mb-2">
-                        <button class="btn btn-primary"
-                            data-action="add_to_cart"
-                            data-sku="${product.sku}"
-                            data-quantity="${quantity}"
-                            data-name="${product.name}"
-                            data-price="${product.listed_price}"
-                            data-discounted-price="${product.price}"
-                            data-image="${product.images[0]}">
-                            Thêm vào giỏ hàng
-                        </button>
-                        <button class="btn btn-danger"
-                            data-action="checkout"
-                            data-sku="${product.sku}"
-                            data-quantity="${quantity}"
-                            data-name="${product.name}"
-                            data-price="${product.listed_price}"
-                            data-discounted-price="${product.price}"
-                            data-image="${product.images[0]}"
-                            data-buy-now="true">
-                            Mua ngay
-                        </button>
-                    </div>`
-        }
-
         _updateGroupButtonAttribute = (product) => {
             if (!product) return;
 
             const _updateAttributeValue = (btn_el) => {
                 btn_el.setAttribute(EnumElementAttributeName.DATA_SKU, product.sku);
-                btn_el.setAttribute(EnumElementAttributeName.DATA_QUANTITY, product.quantity);
+                btn_el.setAttribute(EnumElementAttributeName.DATA_QUANTITY, 1);
                 btn_el.setAttribute(EnumElementAttributeName.DATA_NAME, product.name);
                 btn_el.setAttribute(EnumElementAttributeName.DATA_PRICE, product.listed_price);
                 btn_el.setAttribute(EnumElementAttributeName.DATA_DISCOUNTED_PRICE, product.price);
@@ -504,6 +466,7 @@ const EnumPDElementAttributeValue = {
         }
 
         _getProductDetailById = async (product_id) => {
+            this.content_builder._showLoading();
             const response = await this.data_service.getProductDetailById(product_id);
             const product_detail = this._addVariantAttributesId(JSON.parse(response));
 
@@ -526,6 +489,7 @@ const EnumPDElementAttributeValue = {
                 this.select_variant_button.handleSelectEvent();
             }
             this.group_quantity_button.addGroupProductQuantityEvent(product_detail.fulfillable);
+            this.content_builder._hideLoading();
         }
 
         _addVariantAttributesId = (product) => {
