@@ -663,7 +663,7 @@ const EnumNotifyType = {
             this.content_builder._showLoading();
             const _arr_url_split = window.location.href.split('.');
             const _product_id = _arr_url_split[_arr_url_split.length - 1];
-            this._getProductDetailById(8).then();
+            this._getProductDetailById(_product_id).then();
         }
     }
 
