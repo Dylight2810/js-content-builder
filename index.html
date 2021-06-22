@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <link rel="icon" type="image/x-icon"
           href="https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324.jpg?w=80&amp;h=80">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <meta name="description" content="Đây là mô tả">
     <meta name="keywords" content="quan ao, quan ao mua he, gia re">
     <meta name="omp_key" content="CmGLLXPN8JBgw2JjwJMaqrsJo">
@@ -26,7 +26,7 @@
         --omp-landing-footer-height: 5rem;
         --omp-banner-height: 10rem;
         --omp-product-image-height: 15rem;
-        --omp-product-list-img-height: 10rem;
+        --omp-product-list-img-height: 11rem;
         --omp-product-height: 17rem;
         --omp-carousel-product-height: 16rem;
         --omp-product-width: 9rem;
@@ -59,8 +59,9 @@
     }
 
     html {
+        height: 100vh;
         font-size: 16px;
-        overflow-y: hidden;
+        overflow-y: auto;
     }
 
     body {
@@ -70,6 +71,7 @@
         font-family: Roboto, -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", "Helvetica Neue", sans-serif !important;
         box-sizing: border-box;
         margin: 0;
+        position: relative;
     }
 
     *, *::before, *::after {
@@ -78,10 +80,16 @@
 
     #omp_wrapper {
         width: 100vw;
-        height: 100vh;
         max-width: var(--omp-body-max-width);
         margin: auto;
         background-color: #ffffff;
+        padding: var(--omp-landing-header-height) 0;
+    }
+
+    #omp_wrapper :not(input):not(textarea) {
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
     }
 
     #omp_wrapper p {
@@ -240,12 +248,12 @@
         justify-content: space-between;
     }
 
-    #omp_wrapper #OMP_PRODUCT_DETAIL .omp-landing-detail--header .back-icon {
+    #omp_wrapper #OMP_PRODUCT_DETAIL .omp-landing-detail--header .header-back-icon {
         font-size: 1.2rem;
         color: var(--omp-dark-light);
     }
 
-    .back-icon i:before {
+    .header-back-icon i:before {
         font-weight: 500 !important;
     }
 
@@ -755,6 +763,46 @@
         font-size: 1.0125rem;
     }
 
+    .omp-notify--backdrop {
+        visibility: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: #4F4F4F;
+        opacity: 0.2;
+        z-index: 100000;
+    }
+
+    .omp-notify--backdrop.show {
+        visibility: visible;
+    }
+
+    .omp-notify-content {
+        visibility: hidden;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 0.5rem;
+        background-color: #000000;
+        text-align: center;
+        color: #ffffff;
+        font-size: 1rem;
+        opacity: 0.68;
+        white-space: nowrap;
+        border-radius: 10px;
+    }
+
+    .omp-notify-content.show {
+        visibility: visible;
+    }
+
+    .omp-notify-content i:before {
+        font-size: 1.5rem !important;
+    }
+
     .omp-loading {
         visibility: hidden;
         position: fixed;
@@ -895,6 +943,24 @@
         min-height: var(--omp-skeleton-size);
     }
 
+    .skeleton-item::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transform: translateX(-100%);
+        background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0));
+        animation: shimmer 2s infinite;
+        content: "";
+    }
+
+    @keyframes shimmer {
+        100% {
+            transform: translateX(100%);
+        }
+    }
+
     .omp-header-block--content .skeleton-item:nth-child(2) {
         width: calc(var(--omp-skeleton-size) * 10);
     }
@@ -957,64 +1023,6 @@
 
     #OMP_PRODUCT_DETAIL .product-detail--select-quantity .omp-container:nth-child(2) .skeleton-item {
         width: calc(50% - var(--omp-space));
-    }
-
-    .skeleton-item::after {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        transform: translateX(-100%);
-        background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0));
-        animation: shimmer 2s infinite;
-        content: "";
-    }
-
-    @keyframes shimmer {
-        100% {
-            transform: translateX(100%);
-        }
-    }
-
-    .omp-notify--backdrop {
-        visibility: hidden;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        background-color: #4F4F4F;
-        opacity: 0.2;
-        z-index: 100000;
-    }
-
-    .omp-notify--backdrop.show {
-        visibility: visible;
-    }
-
-    .omp-notify-content {
-        visibility: hidden;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 0.5rem;
-        background-color: #000000;
-        text-align: center;
-        color: #ffffff;
-        font-size: 1rem;
-        opacity: 0.68;
-        white-space: nowrap;
-        border-radius: 10px;
-    }
-
-    .omp-notify-content.show {
-        visibility: visible;
-    }
-
-    .omp-notify-content i:before {
-        font-size: 1.5rem !important;
     }
     </style>
 </head>
@@ -1122,7 +1130,6 @@
     <p>
         <i class="bi bi-info-circle"></i>
     </p>
-
     <p>Vui lòng chọn mẫu mã</p>
 </div>
 <script type="text/javascript"

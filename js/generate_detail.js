@@ -134,69 +134,6 @@ const EnumPDElementAttributeValue = {
             return parent_node.querySelectorAll(`div[class^=${class_name}]`);
         }
 
-        _productSkeletonLoadingBuilder = () => {
-            return `<div class="omp-landing-detail--header">
-                        <div class="header-container">
-                            <div class="skeleton-item"></div>
-                            <div class="skeleton-item"></div>
-                            <div class="header-space"></div>
-                        </div>
-                    </div>
-                    <div class="omp-landing-block--content">
-                        <div class="omp-product-detail--image">
-                            <div class="product-image--wrapper">
-                                <div class="skeleton-item"></div>
-                            </div>
-                        </div>
-                        <div class="omp-product-detail--information">
-                            <div class="product-detail--meta-data">
-                                <div class="omp-container">
-                                    <div class="p-name-price">
-                                        <div class="skeleton-item"></div>
-                                    </div>
-                                </div>
-                                <div class="omp-container">
-                                    <div class="product--rating-stars">
-                                        <div class="skeleton-item"></div>
-                                    </div>
-                                    
-                                    <div class="product--rating-results">
-                                        <div class="skeleton-item"></div>
-                                        <div class="skeleton-item"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-detail--select-product">
-                                <div class="omp-container">
-                                    <div class="skeleton-item"></div>
-                                    <div class="skeleton-item"></div>
-                                </div>
-                            </div>
-                            <div class="product-detail--description">
-                                <div class="omp-container display-flex omp-mb-3">
-                                    <div class="skeleton-item"></div>
-                                    <div class="skeleton-item"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="omp-landing-detail--footer">
-                        <div class="product-detail--select-quantity">
-                            <div class="omp-container display-flex omp-mb-3">
-                                <div class="skeleton-item"></div>
-                                <div class="p-quantity">
-                                    <div class="skeleton-item"></div>
-                                </div>
-                            </div>
-            
-                            <div class="omp-container display-flex">
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                            </div>
-                        </div>
-                    </div>`
-        }
-
         _productSelectProductBuilder = (variant_option) => {
             if (!variant_option || !variant_option.length) {
                 return '';
@@ -640,14 +577,8 @@ const EnumPDElementAttributeValue = {
         content_builder = new ElementContentBuilder();
         select_variant_button = null;
         group_quantity_button = null;
-        product_wrapper_innerHtml = '';
 
         constructor() {
-        }
-
-        _addSkeletonLoading = () => {
-            this.product_wrapper_innerHtml = this.content_builder.product_wrapper_el.innerHTML;
-            this.content_builder.product_wrapper_el.innerHTML = this.content_builder._productSkeletonLoadingBuilder();
         }
 
         _addVariantAttributesId = (product) => {
@@ -676,8 +607,6 @@ const EnumPDElementAttributeValue = {
                 return;
             }
 
-            this.content_builder.product_wrapper_el.innerHTML = this.product_wrapper_innerHtml;
-
             // Generate product detail element content
             const select_product_el = this.content_builder._queryElementsByAttribute(
                 document,
@@ -703,13 +632,14 @@ const EnumPDElementAttributeValue = {
             }
             this.group_quantity_button.addGroupProductQuantityEvent(product_detail.fulfillable);
             this.content_builder._addBackToPreviousButtonAction();
+            this.content_builder._hideLoading();
         }
 
         initPage = () => {
-            this._addSkeletonLoading();
+            this.content_builder._showLoading();
             const _arr_url_split = window.location.href.split('.');
             const _product_id = _arr_url_split[_arr_url_split.length - 1];
-            this._getProductDetailById(215).then();
+            this._getProductDetailById(_product_id).then();
         }
     }
 
