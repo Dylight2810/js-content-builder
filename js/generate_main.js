@@ -1,6 +1,7 @@
 'use strict';
 
 const API_URL = {
+    LANDING_CONFIG: 'https://dev.omipage.com/api/v1/landings/config/',
     ELEMENT_CONFIG: 'https://dev.omipage.com/api/v1/landings/',
     COLLECTION_PRODUCTS: 'https://dev.omipage.com/api/v1/products/simple/'
 };
@@ -99,6 +100,10 @@ const EnumPageType = {
             return await this._createGetRequest(request_url);
         }
 
+        getLandingConfigAsync = async () => {
+            const request_url = `${API_URL.LANDING_CONFIG}`;
+            return await this._createGetRequest(request_url);
+        }
 
         _getLandingToken = () => {
             const _meta_el = document.querySelectorAll('meta[name="omp_key"]')[0];
@@ -386,7 +391,7 @@ const EnumPageType = {
             return new Promise((resolve, reject) => resolve(true));
         }
 
-        _handleGetPageElementConfig = (configs) => {
+        _handleGetPageElementConfig = async (configs) => {
             if (!configs || !configs.elements || !configs.elements.length) {
                 return;
             }
@@ -396,10 +401,13 @@ const EnumPageType = {
                 return;
             }
 
-            this._renderElement(elements_config.page_elements);
+            const response = await this.data_service.getLandingConfigAsync();
+            const _landing_config = JSON.parse(response);
+
+            this._renderElement(_landing_config, elements_config.page_elements).then();
         }
 
-        _renderElement = async (el_config) => {
+        _renderElement = async (landing_config, el_config) => {
             const dynamic_elements = el_config.dynamic_elements;
             const statics_elements = el_config.statics_elements;
 
@@ -412,7 +420,7 @@ const EnumPageType = {
                 switch (e.element_id) {
                     case EnumLandingBlockElementName.LANDING_HEADER:
                         const _header = document.getElementById(e.element_id)
-                        _header.innerHTML = this.content_builder._headerElementBuilder('My Shop', 'https://storage.googleapis.com/omisell-cloud/omipage/logoulashop.png');
+                        _header.innerHTML = this.content_builder._headerElementBuilder(landing_config?.name, landing_config?.config?.logo);
                         break
                     case EnumLandingBlockElementName.LANDING_MENU_FOOTER:
                         const _footer = document.getElementById(e.element_id)
