@@ -101,7 +101,7 @@ const EnumPageType = {
 
 
         _getLandingToken = () => {
-            const _meta_el = document.querySelectorAll('meta[name="omp-key"]')[0];
+            const _meta_el = document.querySelectorAll('meta[name="omp_key"]')[0];
             this.landing_token = `Landing ${_meta_el.getAttribute('content')}`;
         }
     }
