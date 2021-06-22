@@ -37,6 +37,11 @@ const EnumPDElementAttributeValue = {
     CHECKOUT: 'checkout'
 };
 
+const EnumNotifyType = {
+    SELECT_PRODUCT: 1,
+    ADDED_TO_CART: 2
+};
+
 (function (window) {
     class DataService {
         landing_token;
@@ -102,7 +107,19 @@ const EnumPDElementAttributeValue = {
             }
         }
 
-        _openNotify = () => {
+        _openNotify = (notify_type) => {
+            let notify_content = '';
+            switch (notify_type) {
+                case EnumNotifyType.SELECT_PRODUCT:
+                    notify_content = `<p><i class="bi bi-info-circle"></i></p><p>Vui lòng chọn mẫu mã.</p>`
+                    break;
+                case EnumNotifyType.ADDED_TO_CART:
+                    notify_content = `<p><i class="bi bi-check2"></i></p><p>Đã thêm vào giỏ hàng.</p>`
+                    break;
+            }
+
+            this.notify_content_el.innerHTML = notify_content;
+
             if (!this.notify_backdrop_el.classList.contains('show')) {
                 this.notify_backdrop_el.classList.add('show');
             }
@@ -515,7 +532,7 @@ const EnumPDElementAttributeValue = {
         }
 
         _actionForInvalidProduct = () => {
-            this.element_content_builder._openNotify();
+            this.element_content_builder._openNotify(EnumNotifyType.SELECT_PRODUCT);
             this.element_content_builder._addInvalidClass(this.select_product_el, 'invalid-product');
             this.element_content_builder._scrollToElement(this.select_product_el);
         }
@@ -555,9 +572,14 @@ const EnumPDElementAttributeValue = {
         }
 
         _addProductAddToCartAndCheckoutBtnEvent = () => {
-            const _eventHandler = () => {
+            const _eventHandler = (e) => {
                 if (!this.add_to_cart_btn.getAttribute(EnumElementAttributeName.DATA_SKU)) {
                     this._actionForInvalidProduct();
+                    return;
+                }
+
+                if (e.target.getAttribute(EnumElementAttributeName.DATA_ACTION) === EnumPDElementAttributeValue.ADD_TO_CART) {
+                    this.element_content_builder._openNotify(EnumNotifyType.ADDED_TO_CART);
                 }
             }
 
@@ -629,6 +651,8 @@ const EnumPDElementAttributeValue = {
                     select_product_el
                 );
                 this.select_variant_button.handleSelectEvent();
+            } else {
+                this.content_builder._updateGroupButtonAttribute(product_detail);
             }
             this.group_quantity_button.addGroupProductQuantityEvent(product_detail.fulfillable);
             this.content_builder._addBackToPreviousButtonAction();
@@ -639,7 +663,7 @@ const EnumPDElementAttributeValue = {
             this.content_builder._showLoading();
             const _arr_url_split = window.location.href.split('.');
             const _product_id = _arr_url_split[_arr_url_split.length - 1];
-            this._getProductDetailById(_product_id).then();
+            this._getProductDetailById(8).then();
         }
     }
 

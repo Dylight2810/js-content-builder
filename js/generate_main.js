@@ -164,7 +164,7 @@ const EnumPageType = {
                                 </div>
                             </div>
                             <div  class="omp-menu-item ng-star-inserted">
-                                <div class="omp-menu-item--content">
+                                <div class="omp-menu-item--content" onclick="omipage.open_cart_popup()">
                                     <p>
                                         <i class="bi bi-cart4"></i>
                                     </p>
