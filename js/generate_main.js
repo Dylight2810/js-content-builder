@@ -191,7 +191,7 @@ const EnumPageType = {
                                 <a class="omp-product-card" href="${this.landing_domain}${p.link}">
                                     <div class="omp-product-card__top">
                                         <span class="product-card--premium">Hot</span>
-                                        <img alt="" class="mb-2" src="${p.avatar_image}">
+                                        <img alt="${p.avatar_image}" class="mb-2" src="${p.avatar_image}">
                                     </div>
                                     <div class="omp-product-card__bottom">
                                         <div class="omp-product-card--name">${p.name}</div>

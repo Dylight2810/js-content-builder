@@ -41,7 +41,7 @@ const EnumPDElementAttributeValue = {
     class DataService {
         landing_token;
 
-        constructor(select_product_el) {
+        constructor() {
             this._getLandingToken();
         }
 
@@ -49,8 +49,12 @@ const EnumPDElementAttributeValue = {
             return new Promise((resolve, reject) => {
                 const xmlHttp = new XMLHttpRequest();
                 xmlHttp.onreadystatechange = () => {
-                    if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                        return resolve(xmlHttp.responseText);
+                    if (xmlHttp.readyState === 4) {
+                        if (xmlHttp.status === 200) {
+                            return resolve(xmlHttp.responseText);
+                        } else {
+                            return resolve(null);
+                        }
                     }
                 }
                 xmlHttp.open('GET', url, true); // true for asynchronous
@@ -72,9 +76,13 @@ const EnumPDElementAttributeValue = {
 
     class ElementContentBuilder {
         loading_element = null;
+        page_wrapper_el = null;
+        product_wrapper_el = null;
 
-        constructor(select_product_el) {
+        constructor() {
             const self = this;
+            self.page_wrapper_el = document.getElementById('omp_wrapper');
+            self.product_wrapper_el = document.getElementById(EnumLandingBlockElementName.LANDING_PRODUCT_DETAIL);
             self.loading_element = document.getElementsByClassName('omp-loading')[0];
         }
 
@@ -100,6 +108,69 @@ const EnumPDElementAttributeValue = {
 
         _queryElementsLikeClassName = (parent_node, class_name) => {
             return parent_node.querySelectorAll(`div[class^=${class_name}]`);
+        }
+
+        _productSkeletonLoadingBuilder = () => {
+            return `<div class="omp-landing-detail--header">
+                        <div class="header-container">
+                            <div class="skeleton-item"></div>
+                            <div class="skeleton-item"></div>
+                            <div class="header-space"></div>
+                        </div>
+                    </div>
+                    <div class="omp-landing-block--content">
+                        <div class="omp-product-detail--image">
+                            <div class="product-image--wrapper">
+                                <div class="skeleton-item"></div>
+                            </div>
+                        </div>
+                        <div class="omp-product-detail--information">
+                            <div class="product-detail--meta-data">
+                                <div class="omp-container">
+                                    <div class="p-name-price">
+                                        <div class="skeleton-item"></div>
+                                    </div>
+                                </div>
+                                <div class="omp-container">
+                                    <div class="product--rating-stars">
+                                        <div class="skeleton-item"></div>
+                                    </div>
+                                    
+                                    <div class="product--rating-results">
+                                        <div class="skeleton-item"></div>
+                                        <div class="skeleton-item"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-detail--select-product">
+                                <div class="omp-container">
+                                    <div class="skeleton-item"></div>
+                                    <div class="skeleton-item"></div>
+                                </div>
+                            </div>
+                            <div class="product-detail--description">
+                                <div class="omp-container display-flex omp-mb-3">
+                                    <div class="skeleton-item"></div>
+                                    <div class="skeleton-item"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="omp-landing-detail--footer">
+                        <div class="product-detail--select-quantity">
+                            <div class="omp-container display-flex omp-mb-3">
+                                <div class="skeleton-item"></div>
+                                <div class="p-quantity">
+                                    <div class="skeleton-item"></div>
+                                </div>
+                            </div>
+            
+                            <div class="omp-container display-flex">
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                            </div>
+                        </div>
+                    </div>`
         }
 
         _productSelectProductBuilder = (variant_option) => {
@@ -176,6 +247,22 @@ const EnumPDElementAttributeValue = {
 
             const _buy_now_btn = this._queryElementsByAttribute(document, EnumElementAttributeName.DATA_ACTION, EnumPDElementAttributeValue.CHECKOUT);
             _removeAttribute(_buy_now_btn);
+        }
+
+        _scrollToElement = (el) => {
+            const _el_screen_position = el.getBoundingClientRect();
+            this.page_wrapper_el.scrollTo({
+                top: _el_screen_position.top,
+                behavior: 'smooth'
+            });
+        }
+
+        _addBackToPreviousButtonAction = () => {
+            const _back_btn = this._queryElementsByClass(document, 'header-back-icon');
+
+            _back_btn.addEventListener('click', () => {
+                window.history.back();
+            })
         }
     }
 
@@ -431,6 +518,7 @@ const EnumPDElementAttributeValue = {
         increase_btn;
         decrease_btn;
         add_to_cart_btn;
+        checkout_btn;
         quantity_element;
         select_product_el;
 
@@ -458,14 +546,18 @@ const EnumPDElementAttributeValue = {
                 EnumElementAttributeName.DATA_ACTION,
                 EnumPDElementAttributeValue.ADD_TO_CART
             );
+            self.checkout_btn = self.element_content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_ACTION,
+                EnumPDElementAttributeValue.CHECKOUT
+            );
         }
 
         _addIncreaseProductQuantityEvent = (total_quantity) => {
-
-
             const _eventHandler = () => {
                 if (!this.add_to_cart_btn.getAttribute(EnumElementAttributeName.DATA_SKU)) {
                     this.element_content_builder._addInvalidClass(this.select_product_el, 'invalid-product');
+                    this.element_content_builder._scrollToElement(this.select_product_el);
                     return;
                 }
 
@@ -482,7 +574,8 @@ const EnumPDElementAttributeValue = {
         _addDecreaseProductQuantityEvent = () => {
             const _eventHandler = () => {
                 if (!this.add_to_cart_btn.getAttribute(EnumElementAttributeName.DATA_SKU)) {
-                    this.element_content_builder._removeInvalidClass(this.select_product_el, 'invalid-product');
+                    this.element_content_builder._addInvalidClass(this.select_product_el, 'invalid-product');
+                    this.element_content_builder._scrollToElement(this.select_product_el);
                     return;
                 }
 
@@ -496,9 +589,22 @@ const EnumPDElementAttributeValue = {
             this.decrease_btn.addEventListener('click', _eventHandler);
         }
 
+        _addProductAddToCartAndCheckoutBtnEvent = () => {
+            const _eventHandler = () => {
+                if (!this.add_to_cart_btn.getAttribute(EnumElementAttributeName.DATA_SKU)) {
+                    this.element_content_builder._addInvalidClass(this.select_product_el, 'invalid-product');
+                    this.element_content_builder._scrollToElement(this.select_product_el);
+                }
+            }
+
+            this.add_to_cart_btn.addEventListener('click', _eventHandler);
+            this.checkout_btn.addEventListener('click', _eventHandler);
+        }
+
         addGroupProductQuantityEvent = (total_quantity) => {
             this._addIncreaseProductQuantityEvent(total_quantity);
             this._addDecreaseProductQuantityEvent();
+            this._addProductAddToCartAndCheckoutBtnEvent();
         }
     }
 
@@ -507,20 +613,43 @@ const EnumPDElementAttributeValue = {
         content_builder = new ElementContentBuilder();
         select_variant_button = null;
         group_quantity_button = null;
+        product_wrapper_innerHtml = '';
 
         constructor() {
         }
 
-        initPage = () => {
-            const _arr_url_split = window.location.href.split('.');
-            const _product_id = _arr_url_split[_arr_url_split.length - 1];
-            this._getProductDetailById(215).then();
+        _addSkeletonLoading = () => {
+            this.product_wrapper_innerHtml = this.content_builder.product_wrapper_el.innerHTML;
+            this.content_builder.product_wrapper_el.innerHTML = this.content_builder._productSkeletonLoadingBuilder();
+        }
+
+        _addVariantAttributesId = (product) => {
+            if (!product || !product.variants || !product.variants.length) {
+                return product;
+            }
+
+            product.variants.forEach(v => {
+                let _attr_id = [];
+                if (v.attributes && v.attributes.length) {
+                    v.attributes.forEach(attr => {
+                        _attr_id.push(`${attr.id}-${attr.value.id}`);
+                    })
+                }
+                v.variant_attributes_id = _attr_id;
+            })
+
+            return product;
         }
 
         _getProductDetailById = async (product_id) => {
-            this.content_builder._showLoading();
             const response = await this.data_service.getProductDetailById(product_id);
             const product_detail = this._addVariantAttributesId(JSON.parse(response));
+
+            if (!product_detail) {
+                return;
+            }
+
+            this.content_builder.product_wrapper_el.innerHTML = this.product_wrapper_innerHtml;
 
             // Generate product detail element content
             const select_product_el = this.content_builder._queryElementsByAttribute(
@@ -546,25 +675,14 @@ const EnumPDElementAttributeValue = {
                 this.select_variant_button.handleSelectEvent();
             }
             this.group_quantity_button.addGroupProductQuantityEvent(product_detail.fulfillable);
-            this.content_builder._hideLoading();
+            this.content_builder._addBackToPreviousButtonAction();
         }
 
-        _addVariantAttributesId = (product) => {
-            if (!product || !product.variants || !product.variants.length) {
-                return product;
-            }
-
-            product.variants.forEach(v => {
-                let _attr_id = [];
-                if (v.attributes && v.attributes.length) {
-                    v.attributes.forEach(attr => {
-                        _attr_id.push(`${attr.id}-${attr.value.id}`);
-                    })
-                }
-                v.variant_attributes_id = _attr_id;
-            })
-
-            return product;
+        initPage = () => {
+            this._addSkeletonLoading();
+            const _arr_url_split = window.location.href.split('.');
+            const _product_id = _arr_url_split[_arr_url_split.length - 1];
+            this._getProductDetailById(215).then();
         }
     }
 
