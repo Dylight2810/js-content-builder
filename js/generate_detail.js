@@ -78,12 +78,16 @@ const EnumPDElementAttributeValue = {
         loading_element = null;
         page_wrapper_el = null;
         product_wrapper_el = null;
+        notify_backdrop_el = null;
+        notify_content_el = null;
 
         constructor() {
             const self = this;
             self.page_wrapper_el = document.getElementById('omp_wrapper');
             self.product_wrapper_el = document.getElementById(EnumLandingBlockElementName.LANDING_PRODUCT_DETAIL);
             self.loading_element = document.getElementsByClassName('omp-loading')[0];
+            self.notify_backdrop_el = document.getElementsByClassName('omp-notify--backdrop')[0];
+            self.notify_content_el = document.getElementsByClassName('omp-notify-content')[0];
         }
 
         _showLoading = () => {
@@ -96,6 +100,26 @@ const EnumPDElementAttributeValue = {
             if (this.loading_element.classList.contains('show')) {
                 this.loading_element.classList.remove('show');
             }
+        }
+
+        _openNotify = () => {
+            if (!this.notify_backdrop_el.classList.contains('show')) {
+                this.notify_backdrop_el.classList.add('show');
+            }
+
+            if (!this.notify_content_el.classList.contains('show')) {
+                this.notify_content_el.classList.add('show');
+            }
+
+            setTimeout(() => {
+                if (this.notify_backdrop_el.classList.contains('show')) {
+                    this.notify_backdrop_el.classList.remove('show');
+                }
+
+                if (this.notify_content_el.classList.contains('show')) {
+                    this.notify_content_el.classList.remove('show');
+                }
+            }, 1200);
         }
 
         _queryElementsByAttribute = (parent_node, attribute_name, attribute_value) => {
@@ -553,11 +577,16 @@ const EnumPDElementAttributeValue = {
             );
         }
 
+        _actionForInvalidProduct = () => {
+            this.element_content_builder._openNotify();
+            this.element_content_builder._addInvalidClass(this.select_product_el, 'invalid-product');
+            this.element_content_builder._scrollToElement(this.select_product_el);
+        }
+
         _addIncreaseProductQuantityEvent = (total_quantity) => {
             const _eventHandler = () => {
                 if (!this.add_to_cart_btn.getAttribute(EnumElementAttributeName.DATA_SKU)) {
-                    this.element_content_builder._addInvalidClass(this.select_product_el, 'invalid-product');
-                    this.element_content_builder._scrollToElement(this.select_product_el);
+                    this._actionForInvalidProduct();
                     return;
                 }
 
@@ -574,8 +603,7 @@ const EnumPDElementAttributeValue = {
         _addDecreaseProductQuantityEvent = () => {
             const _eventHandler = () => {
                 if (!this.add_to_cart_btn.getAttribute(EnumElementAttributeName.DATA_SKU)) {
-                    this.element_content_builder._addInvalidClass(this.select_product_el, 'invalid-product');
-                    this.element_content_builder._scrollToElement(this.select_product_el);
+                    this._actionForInvalidProduct();
                     return;
                 }
 
@@ -592,8 +620,7 @@ const EnumPDElementAttributeValue = {
         _addProductAddToCartAndCheckoutBtnEvent = () => {
             const _eventHandler = () => {
                 if (!this.add_to_cart_btn.getAttribute(EnumElementAttributeName.DATA_SKU)) {
-                    this.element_content_builder._addInvalidClass(this.select_product_el, 'invalid-product');
-                    this.element_content_builder._scrollToElement(this.select_product_el);
+                    this._actionForInvalidProduct();
                 }
             }
 

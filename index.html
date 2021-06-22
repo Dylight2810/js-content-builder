@@ -82,8 +82,6 @@
         max-width: var(--omp-body-max-width);
         margin: auto;
         background-color: #ffffff;
-        padding: var(--omp-landing-header-height) 0;
-        overflow-y: auto;
     }
 
     #omp_wrapper p {
@@ -978,6 +976,46 @@
             transform: translateX(100%);
         }
     }
+
+    .omp-notify--backdrop {
+        visibility: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: #4F4F4F;
+        opacity: 0.2;
+        z-index: 100000;
+    }
+
+    .omp-notify--backdrop.show {
+        visibility: visible;
+    }
+
+    .omp-notify-content {
+        visibility: hidden;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 0.5rem;
+        background-color: #000000;
+        text-align: center;
+        color: #ffffff;
+        font-size: 1rem;
+        opacity: 0.68;
+        white-space: nowrap;
+        border-radius: 10px;
+    }
+
+    .omp-notify-content.show {
+        visibility: visible;
+    }
+
+    .omp-notify-content i:before {
+        font-size: 1.5rem !important;
+    }
     </style>
 </head>
 <body>
@@ -1078,6 +1116,14 @@
         <div></div>
         <div></div>
     </div>
+</div>
+<div class="omp-notify--backdrop"></div>
+<div class="omp-notify-content">
+    <p>
+        <i class="bi bi-info-circle"></i>
+    </p>
+
+    <p>Vui lòng chọn mẫu mã</p>
 </div>
 <script type="text/javascript"
         src="js/generate_detail.js"></script>
