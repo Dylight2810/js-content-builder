@@ -125,7 +125,7 @@
     }
 
     #omp_wrapper img {
-        transform: translateZ(0, 0, 0);
+        transform: translateZ(0);
     }
 
     #omp_wrapper #OMP_HEADER {
@@ -177,8 +177,10 @@
     }
 
     #OMP_MENU_FOOTER .omp-menu-wrapper {
+        height: 100%;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         padding: 0.5rem;
     }
 
@@ -878,40 +880,573 @@
         }
     }
 
+    .skeleton-item {
+        display: inline-block;
+        height: 1em;
+        position: relative;
+        overflow: hidden;
+        background-color: #DDDBDD;
+        min-width: var(--omp-skeleton-size);
+        min-height: var(--omp-skeleton-size);
+    }
 
+    .omp-header-block--content .skeleton-item:nth-child(2) {
+        width: calc(var(--omp-skeleton-size) * 10);
+    }
 
+    #OMP_ALL_PRODUCTS .omp-landing-block--title .skeleton-item {
+        width: calc(var(--omp-skeleton-size) * 12);
+    }
+
+    #OMP_ALL_PRODUCTS .omp-product-card__top .skeleton-item {
+        width: 100%;
+        height: calc(var(--omp-skeleton-size) * 4);
+    }
+
+    #OMP_ALL_PRODUCTS .omp-product-card__bottom .skeleton-item {
+        width: 100%;
+        margin-bottom: var(--omp-space);
+    }
+
+    #OMP_MENU_FOOTER .skeleton-item {
+        width: calc(var(--omp-skeleton-size) * 4);
+    }
+
+    .skeleton-item::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transform: translateX(-100%);
+        background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0));
+        animation: shimmer 2s infinite;
+        content: "";
+    }
+
+    @keyframes shimmer {
+        100% {
+            transform: translateX(100%);
+        }
+    }
     </style>
 </head>
-<body>
+<body data-new-gr-c-s-check-loaded="14.1016.0" data-gr-ext-installed="">
 <div id="omp_wrapper">
     <div id="OMP_HEADER">
         <div class="omp-header-block--content">
-            <div class="skeleton-item"></div>
-            <div class="skeleton-item"></div>
+            <img alt="Landing Logo" src="https://storage.googleapis.com/omisell-cloud/omipage/logoulashop.png">
+            <div class="omp-header--landing-name">My Shop</div>
             <div class="omp-header--space"></div>
         </div>
     </div>
     <div id="OMP_MENU_FOOTER">
-        <div class="omp-menu-wrapper">
-            <div class="omp-menu-item">
-                <div class="omp-menu-item--content active">
-                    <div class="skeleton-item"></div>
+        <div class="omp-header-block--content">
+            <div class="omp-menu-wrapper">
+                <div class="omp-menu-item ng-star-inserted">
+                    <div class="omp-menu-item--content active">
+                        <p>
+                            <i class="bi bi-house"></i>
+                        </p>
+                        <span>Trang chủ</span>
+                    </div>
+                </div>
+                <div class="omp-menu-item ng-star-inserted">
+                    <div class="omp-menu-item--content">
+                        <p>
+                            <i class="bi bi-cart4"></i>
+                        </p>
+                        <span>Giỏ hàng</span>
+                    </div>
+                </div>
+                <div class="omp-menu-item ng-star-inserted">
+                    <div class="omp-menu-item--content">
+                        <p>
+                            <i class="bi bi-heart"></i>
+                        </p>
+                        <span>Yêu thích</span>
+                    </div>
                 </div>
             </div>
-            <div class="omp-menu-item">
-                <div class="omp-menu-item--content">
-                    <div class="skeleton-item"></div>
-                </div>
-            </div>
-            <div class="omp-menu-item">
-                <div class="omp-menu-item--content">
-                    <div class="skeleton-item"></div>
+        </div>
+    </div>
+    <div id="OMP_OUTSTANDING_PRODUCT_1">
+        <div class="omp-landing-block--title">tieeu dev aaxxnxooap</div>
+        <div class="omp-landing-block--content">
+            <div class="omp-wp__outstanding-product">
+                <div class="omp-row">
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://new-balance.omiboost.com/products/san-pham-test-checkout-001.30.8">
+                            <div class="omp-product-card__top">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="" class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/2ec3065e226c5663d4dc08c7518bb744.png">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Sản phẩm test Checkout 001</div>
+                                <div class="omp-product-card--category">SKU1001</div>
+                                <div class="product--rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="omp-product-card--price">
+                                    <span class="mr-1">1111110 VND</span>
+                                    <small>
+                                        <del>1111110 VND</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://new-balance.omiboost.com/products/san-pham-test-checkout-002.30.7">
+                            <div class="omp-product-card__top">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="" class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/11db3ff3a5473dc3e4c8ff5ff26e27ad.png">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Sản phẩm test checkout 002</div>
+                                <div class="omp-product-card--category">SKU1002</div>
+                                <div class="product--rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="omp-product-card--price">
+                                    <span class="mr-1">121110 VND</span>
+                                    <small>
+                                        <del>1111110 VND</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://new-balance.omiboost.com/products/san-pham-test-checkout-003.30.6">
+                            <div class="omp-product-card__top">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="" class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/80343cf018acfc85247c2950809315fc.png">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Sản phẩm test checkout 003</div>
+                                <div class="omp-product-card--category">SKU1003</div>
+                                <div class="product--rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="omp-product-card--price">
+                                    <span class="mr-1">12320 VND</span>
+                                    <small>
+                                        <del>123230 VND</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://new-balance.omiboost.com/products/dep-cao-su-gia-coi---40-kem.30.5">
+                            <div class="omp-product-card__top">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="" class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/e2eac68bb6fc601bedb5aa182c7d7183.jpeg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Dép cao su giả cói - 40, Kem</div>
+                                <div class="omp-product-card--category">VI20201120004</div>
+                                <div class="product--rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="omp-product-card--price">
+                                    <span class="mr-1">27000 VND</span>
+                                    <small>
+                                        <del>120000 VND</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://new-balance.omiboost.com/products/dep-cao-su-gia-coi---39-den.30.4">
+                            <div class="omp-product-card__top">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="" class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/37d3e49340d7bd42aeba1907375cf34e.jpeg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Dép cao su giả cói - 39, Đen</div>
+                                <div class="omp-product-card--category">VI20201120003</div>
+                                <div class="product--rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="omp-product-card--price">
+                                    <span class="mr-1">27000 VND</span>
+                                    <small>
+                                        <del>120000 VND</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://new-balance.omiboost.com/products/dep-cao-su-gia-coi---38-den.30.3">
+                            <div class="omp-product-card__top">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="" class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/0bd75ff3858a29dc806d55ff1d9f5fdd.jpeg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Dép cao su giả cói - 38, Đen</div>
+                                <div class="omp-product-card--category">VI20201120002</div>
+                                <div class="product--rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="omp-product-card--price">
+                                    <span class="mr-1">27000 VND</span>
+                                    <small>
+                                        <del>120000 VND</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://new-balance.omiboost.com/products/dep-nhom-gia-coi---40-den.30.2">
+                            <div class="omp-product-card__top">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="" class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/cc39af7dddc8c0f571ab65717d7b1e5f.jpeg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Dép nhôm giả cói - 40, Đen</div>
+                                <div class="omp-product-card--category">VI20201120002</div>
+                                <div class="product--rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="omp-product-card--price">
+                                    <span class="mr-1">27000 VND</span>
+                                    <small>
+                                        <del>120000 VND</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div id="OMP_ALL_PRODUCTS">
-
+        <div class="omp-landing-block--title">TẤT CẢ SẢN PHẨM</div>
+        <div class="omp-landing-block--content">
+            <div class="omp-wp__all-products">
+                <div class="omp-row">
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card" href="https://new-balance.omiboost.com/products/macbook-pro.30.215">
+                            <div class="omp-product-card__top">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="" class="mb-2"
+                                     src="https://danhgiacongnghe.net/wp-content/uploads/2021/01/macbook-air-m1-2020-3.jpg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Macbook PRO</div>
+                                <div class="omp-product-card--category">MACPRO10000</div>
+                                <div class="product--rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="omp-product-card--price">
+                                    <span class="mr-1">1050000 VND</span>
+                                    <small>
+                                        <del>1050000 VND</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://new-balance.omiboost.com/products/olalahome-nen-hong.30.211">
+                            <div class="omp-product-card__top">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="" class="mb-2"
+                                     src="https://hannaholala.com/promotion/wp-content/uploads/sites/2/2021/05/z2483519228453_2efea5e4e81fc0ab9b3585ed8ac0c97b-scaled.jpg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">OlalaHome nến Hồng</div>
+                                <div class="omp-product-card--category">S29017727129</div>
+                                <div class="product--rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="omp-product-card--price">
+                                    <span class="mr-1">1050000 VND</span>
+                                    <small>
+                                        <del>1050000 VND</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card" href="https://new-balance.omiboost.com/products/None.30.152">
+                            <div class="omp-product-card__top">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="" class="mb-2"
+                                     src="https://hannaholala.com/promotion/wp-content/uploads/sites/2/2021/05/thumbnail.jpg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">SHIS-D2: Khi mua phấn nền dạng lỏng Synchro Skin
+                                    Self-Refreshing Foundation 30ML - Tặng 01 Synchro Skin Self-Refreshing Cushion 13G
+                                    full size
+                                </div>
+                                <div class="omp-product-card--category">SHIS-D2</div>
+                                <div class="product--rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="omp-product-card--price">
+                                    <span class="mr-1">1400000 VND</span>
+                                    <small>
+                                        <del>1400000 VND</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://new-balance.omiboost.com/products/san-pham-test-checkout-001.30.8">
+                            <div class="omp-product-card__top">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="" class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/2ec3065e226c5663d4dc08c7518bb744.png">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Sản phẩm test Checkout 001</div>
+                                <div class="omp-product-card--category">SKU1001</div>
+                                <div class="product--rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="omp-product-card--price">
+                                    <span class="mr-1">1111110 VND</span>
+                                    <small>
+                                        <del>1111110 VND</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://new-balance.omiboost.com/products/san-pham-test-checkout-002.30.7">
+                            <div class="omp-product-card__top">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="" class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/11db3ff3a5473dc3e4c8ff5ff26e27ad.png">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Sản phẩm test checkout 002</div>
+                                <div class="omp-product-card--category">SKU1002</div>
+                                <div class="product--rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="omp-product-card--price">
+                                    <span class="mr-1">121110 VND</span>
+                                    <small>
+                                        <del>1111110 VND</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://new-balance.omiboost.com/products/san-pham-test-checkout-003.30.6">
+                            <div class="omp-product-card__top">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="" class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/80343cf018acfc85247c2950809315fc.png">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Sản phẩm test checkout 003</div>
+                                <div class="omp-product-card--category">SKU1003</div>
+                                <div class="product--rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="omp-product-card--price">
+                                    <span class="mr-1">12320 VND</span>
+                                    <small>
+                                        <del>123230 VND</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://new-balance.omiboost.com/products/dep-cao-su-gia-coi---40-kem.30.5">
+                            <div class="omp-product-card__top">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="" class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/e2eac68bb6fc601bedb5aa182c7d7183.jpeg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Dép cao su giả cói - 40, Kem</div>
+                                <div class="omp-product-card--category">VI20201120004</div>
+                                <div class="product--rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="omp-product-card--price">
+                                    <span class="mr-1">27000 VND</span>
+                                    <small>
+                                        <del>120000 VND</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://new-balance.omiboost.com/products/dep-cao-su-gia-coi---39-den.30.4">
+                            <div class="omp-product-card__top">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="" class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/37d3e49340d7bd42aeba1907375cf34e.jpeg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Dép cao su giả cói - 39, Đen</div>
+                                <div class="omp-product-card--category">VI20201120003</div>
+                                <div class="product--rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="omp-product-card--price">
+                                    <span class="mr-1">27000 VND</span>
+                                    <small>
+                                        <del>120000 VND</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://new-balance.omiboost.com/products/dep-cao-su-gia-coi---38-den.30.3">
+                            <div class="omp-product-card__top">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="" class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/0bd75ff3858a29dc806d55ff1d9f5fdd.jpeg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Dép cao su giả cói - 38, Đen</div>
+                                <div class="omp-product-card--category">VI20201120002</div>
+                                <div class="product--rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="omp-product-card--price">
+                                    <span class="mr-1">27000 VND</span>
+                                    <small>
+                                        <del>120000 VND</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://new-balance.omiboost.com/products/dep-nhom-gia-coi---40-den.30.2">
+                            <div class="omp-product-card__top">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="" class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/cc39af7dddc8c0f571ab65717d7b1e5f.jpeg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Dép nhôm giả cói - 40, Đen</div>
+                                <div class="omp-product-card--category">VI20201120002</div>
+                                <div class="product--rating-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="omp-product-card--price">
+                                    <span class="mr-1">27000 VND</span>
+                                    <small>
+                                        <del>120000 VND</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="omp-loading">
@@ -930,7 +1465,8 @@
         <div></div>
     </div>
 </div>
-<script type="text/javascript" src="js/generate_main.js"></script>
+<script type="text/javascript"
+        src="js/generate_main.js"></script>
 <script type="text/javascript" src="https://cdn.omipage.com/cart-embed/omipage-cart-embed.min.js"></script>
 </body>
 </html>

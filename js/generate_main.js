@@ -190,7 +190,6 @@ const EnumPageType = {
                                     </div>
                                     <div class="omp-product-card__bottom">
                                         <div class="omp-product-card--name">${p.name}</div>
-                                        <div class="omp-product-card--category">${p.sku}</div>
                                         <div class="product--rating-stars">
                                             <i class="bi bi-star-fill"></i>
                                             <i class="bi bi-star-fill"></i>
@@ -400,9 +399,14 @@ const EnumPageType = {
             this._renderElement(elements_config.page_elements);
         }
 
-        _renderElement = (el_config) => {
+        _renderElement = async (el_config) => {
             const dynamic_elements = el_config.dynamic_elements;
             const statics_elements = el_config.statics_elements;
+
+            await dynamic_elements.forEach((e, index) => {
+                const _is_last_dynamic_element = index === dynamic_elements.length - 1;
+                this._renderProductElement(e, _is_last_dynamic_element).then();
+            });
 
             statics_elements.forEach(e => {
                 switch (e.element_id) {
@@ -415,11 +419,6 @@ const EnumPageType = {
                         _footer.innerHTML = this.content_builder._footerElementBuilder();
                         break
                 }
-            });
-
-            dynamic_elements.forEach((e, index) => {
-                const _is_last_dynamic_element = index === dynamic_elements.length - 1;
-                this._renderProductElement(e, _is_last_dynamic_element).then();
             });
         }
 
