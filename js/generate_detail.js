@@ -1,7 +1,7 @@
 'use strict';
 
 const API_URL = {
-    PRODUCT_DETAIL: 'https://omipage.com/api/v1/products/',
+    PRODUCT_DETAIL: '/api/v1/products/',
 };
 
 const EnumLandingBlockElementName = {
@@ -45,10 +45,12 @@ const EnumNotifyType = {
 (function (window) {
     class DataService {
         landing_token;
+        api_domain;
 
         constructor(landing_token) {
             const _this = this;
             _this.landing_token = `Landing ${landing_token}`;
+            _this._getDomain();
         }
 
         _createGetRequest = (url) => {
@@ -70,8 +72,13 @@ const EnumNotifyType = {
         }
 
         getProductDetailById = async (product_id) => {
-            const request_url = `${API_URL.PRODUCT_DETAIL}${product_id}/`;
+            const request_url = `${this.api_domain}${API_URL.PRODUCT_DETAIL}${product_id}/`;
             return await this._createGetRequest(request_url);
+        }
+
+        _getDomain = () => {
+            const _env = document.querySelectorAll('meta[name="environment"]')[0];
+            this.api_domain = _env.getAttribute('content') === 'production' ? 'https://omipage.com' : 'https://dev.omipage.com';
         }
     }
 
