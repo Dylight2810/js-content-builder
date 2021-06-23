@@ -282,13 +282,15 @@ const EnumNotifyType = {
         store_group_selected_id = [];
         store_variant_group = [];
         select_product_el;
+        page_configs;
 
-        constructor(product, content_builder, group_quantity, select_product_el) {
+        constructor(product, content_builder, group_quantity, select_product_el, page_configs) {
             const _this = this;
             _this.product_detail = product;
             _this.element_content_builder = content_builder;
             _this.group_quantity_button = group_quantity;
             _this.select_product_el = select_product_el;
+            _this.page_configs = page_configs;
         }
 
         _queryProductVariantGroupElements = () => {
@@ -381,7 +383,8 @@ const EnumNotifyType = {
                 EnumElementAttributeName.DATA_OMP_ELEMENT,
                 EnumPDElementAttributeValue.PRODUCT_PRICE
             );
-            product_price_el.innerHTML = `${variant.price}`;
+            const _p = new Intl.NumberFormat(this.page_configs.country || 'vi-VN').format(variant.price);
+            product_price_el.innerHTML = `${_p} ${this.page_configs.currency || 'đ'}`;
 
             // Update product listed price
             const product_listed_price_el = this.element_content_builder._queryElementsByAttribute(
@@ -389,7 +392,8 @@ const EnumNotifyType = {
                 EnumElementAttributeName.DATA_OMP_ELEMENT,
                 EnumPDElementAttributeValue.PRODUCT_LISTED_PRICE
             );
-            product_listed_price_el.innerHTML = `${variant.listed_price}`;
+            const _lp = new Intl.NumberFormat(this.page_configs.country || 'vi-VN').format(variant.listed_price);
+            product_listed_price_el.innerHTML = `${_lp} ${this.page_configs.currency || 'đ'}`;
 
             // Update product description
             const product_description_el = this.element_content_builder._queryElementsByAttribute(
