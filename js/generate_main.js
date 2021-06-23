@@ -1,7 +1,7 @@
 'use strict';
 
 const API_URL = {
-    COLLECTION_PRODUCTS: 'https://dev.omipage.com/api/v1/products/simple/'
+    COLLECTION_PRODUCTS: 'https://omipage.com/api/v1/products/simple/'
 };
 
 const API_LIST_PAGE_SIZE = 10;
