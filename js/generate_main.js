@@ -392,7 +392,7 @@ const EnumPageType = {
                 const _all_product_element = this.content_builder._queryElementsById(document, EnumLandingBlockElementName.LANDING_ALL_PRODUCTS);
                 _all_product_element.innerHTML = this.content_builder._allProductContentBuilder(
                     _products,
-                    this.page_configs.country || 'vi-VN',
+                    this.page_configs.locale || 'vi-VN',
                     this.page_configs.currency || 'đ'
                 );
             }
@@ -409,7 +409,7 @@ const EnumPageType = {
                 const _product_wrapper = this.content_builder._queryElementsByClass(_all_product_element, 'omp-row');
                 _product_wrapper.innerHTML += this.content_builder._renderListProduct(
                     _products,
-                    this.page_configs.country || 'vi-VN',
+                    this.page_configs.locale || 'vi-VN',
                     this.page_configs.currency || 'đ'
                 );
             }
@@ -464,7 +464,7 @@ const EnumPageType = {
                         _el.innerHTML = this.content_builder._outstandingProductContentBuilder(
                             element_config.element_title,
                             products_of_collection,
-                            this.page_configs.country || 'vi-VN',
+                            this.page_configs.locale || 'vi-VN',
                             this.page_configs.currency || 'đ'
                         );
                         break;
