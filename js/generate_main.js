@@ -1,7 +1,7 @@
 'use strict';
 
 const API_URL = {
-    COLLECTION_PRODUCTS: 'https://dev.omipage.com/api/v1/products/simple/'
+    COLLECTION_PRODUCTS: '/api/v1/products/simple/'
 };
 
 const API_LIST_PAGE_SIZE = 10;
@@ -68,6 +68,7 @@ const EnumPageType = {
         constructor(landing_token) {
             const _this = this;
             _this.landing_token = `Landing ${landing_token}`;
+            _this._getDomain();
         }
 
         _createGetRequest = (url) => {
@@ -85,13 +86,18 @@ const EnumPageType = {
         }
 
         getCollectionDataAsync = async (collection_id) => {
-            const request_url = `${API_URL.COLLECTION_PRODUCTS}?collection_id=${collection_id}&is_parent=true`;
+            const request_url = `${this.api_domain}${API_URL.COLLECTION_PRODUCTS}?collection_id=${collection_id}&is_parent=true`;
             return await this._createGetRequest(request_url);
         }
 
         getLandingProductAsync = async (page) => {
-            const request_url = `${API_URL.COLLECTION_PRODUCTS}?page=${page}&page_size=${API_LIST_PAGE_SIZE}&is_parent=true`;
+            const request_url = `${this.api_domain}${API_URL.COLLECTION_PRODUCTS}?page=${page}&page_size=${API_LIST_PAGE_SIZE}&is_parent=true`;
             return await this._createGetRequest(request_url);
+        }
+
+        _getDomain = () => {
+            const _env = document.querySelectorAll('meta[name="environment"]')[0];
+            this.api_domain = _env.getAttribute('content') === 'production' ? 'https://omipage.com' : 'https://dev.omipage.com';
         }
     }
 
