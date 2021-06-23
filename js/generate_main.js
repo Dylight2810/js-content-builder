@@ -1,9 +1,7 @@
 'use strict';
 
 const API_URL = {
-    LANDING_CONFIG: 'https://omipage.com/api/v1/landings/config/',
-    ELEMENT_CONFIG: 'https://omipage.com/api/v1/landings/',
-    COLLECTION_PRODUCTS: 'https://omipage.com/api/v1/products/simple/'
+    COLLECTION_PRODUCTS: 'https://dev.omipage.com/api/v1/products/simple/'
 };
 
 const API_LIST_PAGE_SIZE = 10;
@@ -67,8 +65,9 @@ const EnumPageType = {
     class DataService {
         landing_token;
 
-        constructor() {
-            this._getLandingToken();
+        constructor(landing_token) {
+            const _this = this;
+            _this.landing_token = `Landing ${landing_token}`;
         }
 
         _createGetRequest = (url) => {
@@ -85,11 +84,6 @@ const EnumPageType = {
             })
         }
 
-        getPageElementsConfigAsync = async (landing_id) => {
-            const request_url = `${API_URL.ELEMENT_CONFIG}${landing_id}/elements/`;
-            return await this._createGetRequest(request_url);
-        }
-
         getCollectionDataAsync = async (collection_id) => {
             const request_url = `${API_URL.COLLECTION_PRODUCTS}?collection_id=${collection_id}&is_parent=true`;
             return await this._createGetRequest(request_url);
@@ -99,16 +93,6 @@ const EnumPageType = {
             const request_url = `${API_URL.COLLECTION_PRODUCTS}?page=${page}&page_size=${API_LIST_PAGE_SIZE}&is_parent=true`;
             return await this._createGetRequest(request_url);
         }
-
-        getLandingConfigAsync = async () => {
-            const request_url = `${API_URL.LANDING_CONFIG}`;
-            return await this._createGetRequest(request_url);
-        }
-
-        _getLandingToken = () => {
-            const _meta_el = document.querySelectorAll('meta[name="omp_key"]')[0];
-            this.landing_token = `Landing ${_meta_el.getAttribute('content')}`;
-        }
     }
 
     class ElementContentBuilder {
@@ -116,8 +100,8 @@ const EnumPageType = {
         loading_element = null
 
         constructor() {
-            const self = this;
-            self.loading_element = document.getElementsByClassName('omp-loading')[0];
+            const _this = this;
+            _this.loading_element = document.getElementsByClassName('omp-loading')[0];
         }
 
         _showLoading = () => {
@@ -352,11 +336,17 @@ const EnumPageType = {
     class LandingElementConfig {
         total_product_in_landing = 0;
         all_product_current_page = 1;
-        data_service = new DataService();
+        data_service = null;
         content_builder = new ElementContentBuilder();
         global_event = new GlobalEvent();
+        page_els = null;
+        page_configs = null;
 
         constructor() {
+            const _this = this;
+            _this.page_els = window.page_elements;
+            _this.page_configs = window.page_configs;
+            _this.data_service = new DataService(_this.page_configs?.access_token || '');
         }
 
         initialMainPage = () => {
@@ -391,20 +381,16 @@ const EnumPageType = {
             return new Promise((resolve, reject) => resolve(true));
         }
 
-        _handleGetPageElementConfig = async (configs) => {
-            if (!configs || !configs.elements || !configs.elements.length) {
-                return;
-            }
-            const elements_config = configs.elements.find(e => e.page_id === EnumPageType.HOME);
-
-            if (!elements_config || !elements_config.page_elements) {
+        _handleGetPageElementConfig = async () => {
+            if (!this.page_configs || !this.page_configs.id || !this.page_configs.access_token) {
                 return;
             }
 
-            const response = await this.data_service.getLandingConfigAsync();
-            const _landing_config = JSON.parse(response);
+            if (!this.page_els || !this.page_els.page_elements?.dynamic_elements?.length || !this.page_els.page_elements?.statics_elements?.length) {
+                return;
+            }
 
-            this._renderElement(_landing_config, elements_config.page_elements).then();
+            await this._renderElement(this.page_configs, this.page_els.page_elements).then();
         }
 
         _renderElement = async (landing_config, el_config) => {
@@ -453,9 +439,7 @@ const EnumPageType = {
         }
 
         _getElementConfigs = async () => {
-            const configs = await this.data_service.getPageElementsConfigAsync(35);
-            const obj_configs = JSON.parse(configs);
-            await this._handleGetPageElementConfig(obj_configs);
+            await this._handleGetPageElementConfig();
 
             const _loadMoreProduct = async () => {
                 if (this.all_product_current_page * API_LIST_PAGE_SIZE > this.total_product_in_landing) {

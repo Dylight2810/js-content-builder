@@ -1,7 +1,7 @@
 'use strict';
 
 const API_URL = {
-    PRODUCT_DETAIL: 'https://omipage.com/api/v1/products/',
+    PRODUCT_DETAIL: 'https://dev.omipage.com/api/v1/products/',
 };
 
 const EnumLandingBlockElementName = {
@@ -46,8 +46,9 @@ const EnumNotifyType = {
     class DataService {
         landing_token;
 
-        constructor() {
-            this._getLandingToken();
+        constructor(landing_token) {
+            const _this = this;
+            _this.landing_token = `Landing ${landing_token}`;
         }
 
         _createGetRequest = (url) => {
@@ -72,11 +73,6 @@ const EnumNotifyType = {
             const request_url = `${API_URL.PRODUCT_DETAIL}${product_id}/`;
             return await this._createGetRequest(request_url);
         }
-
-        _getLandingToken = () => {
-            const _meta_el = document.querySelectorAll('meta[name="omp_key"]')[0];
-            this.landing_token = `Landing ${_meta_el.getAttribute('content')}`;
-        }
     }
 
     class ElementContentBuilder {
@@ -87,12 +83,12 @@ const EnumNotifyType = {
         notify_content_el = null;
 
         constructor() {
-            const self = this;
-            self.page_wrapper_el = document.getElementById('omp_wrapper');
-            self.product_wrapper_el = document.getElementById(EnumLandingBlockElementName.LANDING_PRODUCT_DETAIL);
-            self.loading_element = document.getElementsByClassName('omp-loading')[0];
-            self.notify_backdrop_el = document.getElementsByClassName('omp-notify--backdrop')[0];
-            self.notify_content_el = document.getElementsByClassName('omp-notify-content')[0];
+            const _this = this;
+            _this.page_wrapper_el = document.getElementById('omp_wrapper');
+            _this.product_wrapper_el = document.getElementById(EnumLandingBlockElementName.LANDING_PRODUCT_DETAIL);
+            _this.loading_element = document.getElementsByClassName('omp-loading')[0];
+            _this.notify_backdrop_el = document.getElementsByClassName('omp-notify--backdrop')[0];
+            _this.notify_content_el = document.getElementsByClassName('omp-notify-content')[0];
         }
 
         _showLoading = () => {
@@ -253,11 +249,11 @@ const EnumNotifyType = {
         select_product_el;
 
         constructor(product, content_builder, group_quantity, select_product_el) {
-            const self = this;
-            self.product_detail = product;
-            self.element_content_builder = content_builder;
-            self.group_quantity_button = group_quantity;
-            self.select_product_el = select_product_el;
+            const _this = this;
+            _this.product_detail = product;
+            _this.element_content_builder = content_builder;
+            _this.group_quantity_button = group_quantity;
+            _this.select_product_el = select_product_el;
         }
 
         _queryProductVariantGroupElements = () => {
@@ -501,30 +497,30 @@ const EnumNotifyType = {
         select_product_el;
 
         constructor(content_builder, select_product_el) {
-            const self = this;
-            self.element_content_builder = content_builder;
-            self.select_product_el = select_product_el;
-            self.decrease_btn = self.element_content_builder._queryElementsByAttribute(
+            const _this = this;
+            _this.element_content_builder = content_builder;
+            _this.select_product_el = select_product_el;
+            _this.decrease_btn = _this.element_content_builder._queryElementsByAttribute(
                 document,
                 EnumElementAttributeName.DATA_OMP_ELEMENT,
                 EnumPDElementAttributeValue.PRODUCT_QUANTITY_DECREASE
             );
-            self.increase_btn = self.element_content_builder._queryElementsByAttribute(
+            _this.increase_btn = _this.element_content_builder._queryElementsByAttribute(
                 document,
                 EnumElementAttributeName.DATA_OMP_ELEMENT,
                 EnumPDElementAttributeValue.PRODUCT_QUANTITY_INCREASE
             );
-            self.quantity_element = self.element_content_builder._queryElementsByAttribute(
+            _this.quantity_element = _this.element_content_builder._queryElementsByAttribute(
                 document,
                 EnumElementAttributeName.DATA_OMP_ELEMENT,
                 EnumPDElementAttributeValue.PRODUCT_QUANTITY_VALUE
             );
-            self.add_to_cart_btn = self.element_content_builder._queryElementsByAttribute(
+            _this.add_to_cart_btn = _this.element_content_builder._queryElementsByAttribute(
                 document,
                 EnumElementAttributeName.DATA_ACTION,
                 EnumPDElementAttributeValue.ADD_TO_CART
             );
-            self.checkout_btn = self.element_content_builder._queryElementsByAttribute(
+            _this.checkout_btn = _this.element_content_builder._queryElementsByAttribute(
                 document,
                 EnumElementAttributeName.DATA_ACTION,
                 EnumPDElementAttributeValue.CHECKOUT
@@ -595,12 +591,18 @@ const EnumNotifyType = {
     }
 
     class ProductDetail {
-        data_service = new DataService();
+        data_service = null;
         content_builder = new ElementContentBuilder();
         select_variant_button = null;
         group_quantity_button = null;
+        page_els = null;
+        page_configs = null;
 
         constructor() {
+            const _this = this;
+            _this.page_els = window.page_elements;
+            _this.page_configs = window.page_configs;
+            _this.data_service = new DataService(_this.page_configs?.access_token || '');
         }
 
         _addVariantAttributesId = (product) => {
