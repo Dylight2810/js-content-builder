@@ -170,8 +170,9 @@ const EnumNotifyType = {
             return parent_node.querySelectorAll(`[${attribute_name}=${attribute_value}]`)[0];
         }
 
-        _queryElementsByClass = (parent_node, class_name) => {
-            return parent_node.querySelectorAll(`div[class=${class_name}]`)[0];
+        _queryElementsByClass = (parent_node, class_name, element_tag) => {
+            const _tag = element_tag || 'div';
+            return parent_node.querySelectorAll(`${_tag}[class=${class_name}]`)[0];
         }
 
         _queryElementsLikeClassName = (parent_node, class_name) => {
@@ -651,7 +652,7 @@ const EnumNotifyType = {
             const _header_el = this.content_builder._queryElementsByClass(document, 'omp-landing-detail--header');
             const _back_icon_el = this.content_builder._queryElementsByClass(_header_el, 'header-back-icon');
             const _cart_icon_el = this.content_builder._queryElementsByClass(_header_el, 'header-cart-icon');
-            const _header_title = this.content_builder._queryElementsByClass(_header_el, 'header-title');
+            const _header_title = this.content_builder._queryElementsByClass(_header_el, 'header-title', 'p');
 
             if (_header_el?.style) _header_el.removeAttribute('style');
             if (_back_icon_el?.style) _header_el.removeAttribute('style');
@@ -659,7 +660,7 @@ const EnumNotifyType = {
             if (_header_title?.style) _header_el.removeAttribute('style');
 
             const _handleEvent = (e) => {
-                if (e.scrollTop % 20 === 0 && e.scrollTop < 350) {
+                if (e.scrollTop < 350) {
                     _header_el.style.backgroundColor = `rgba(255, 255, 255, ${e.scrollTop / 240})`;
                     _header_el.style.boxShadow = `0 3px 8px 0 rgba(159, 168, 184, ${e.scrollTop / 1000})`;
                     _header_title.style.opacity = `${e.scrollTop / 240}`;
