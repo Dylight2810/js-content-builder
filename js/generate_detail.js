@@ -653,10 +653,10 @@ const EnumNotifyType = {
             const _cart_icon_el = this.content_builder._queryElementsByClass(_header_el, 'header-cart-icon');
             const _header_title = this.content_builder._queryElementsByClass(_header_el, 'header-title');
 
-            if (_header_el.style) _header_el.removeAttribute('style');
-            if (_back_icon_el.style) _header_el.removeAttribute('style');
-            if (_cart_icon_el.style) _header_el.removeAttribute('style');
-            if (_header_title.style) _header_el.removeAttribute('style');
+            if (_header_el?.style) _header_el.removeAttribute('style');
+            if (_back_icon_el?.style) _header_el.removeAttribute('style');
+            if (_cart_icon_el?.style) _header_el.removeAttribute('style');
+            if (_header_title?.style) _header_el.removeAttribute('style');
 
             const _handleEvent = (e) => {
                 if (e.scrollTop % 20 === 0 && e.scrollTop < 350) {
