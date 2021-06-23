@@ -49,13 +49,14 @@ const EnumPageType = {
         _addScrollEvent = (scroll_element, call_back) => {
             let _last_scroll_top = 0;
             const _eventHandler = (e) => {
-                if ((e.target.scrollTop + e.target.clientHeight) > e.target.scrollHeight - 5) {
-                    if (e.target.scrollTop > _last_scroll_top) {
-                        call_back(true);
+                const _el_scroll = e.target.scrollingElement;
+                if ((_el_scroll.scrollTop + _el_scroll.clientHeight) === _el_scroll.scrollHeight) {
+                    if (_el_scroll.scrollTop > _last_scroll_top) {
+                        call_back(e.target.scrollingElement);
                     }
                 }
 
-                _last_scroll_top = e.target.scrollTop
+                _last_scroll_top = _el_scroll.scrollTop;
             }
 
             scroll_element.addEventListener('scroll', _eventHandler);
@@ -458,7 +459,7 @@ const EnumPageType = {
             }
 
             this.global_event._addScrollEvent(
-                this.content_builder._queryElementsById(document, 'omp_wrapper'),
+                document,
                 _loadMoreProduct
             );
         }

@@ -43,6 +43,23 @@ const EnumNotifyType = {
 };
 
 (function (window) {
+    class GlobalEvent {
+        constructor() {
+        }
+
+        _addScrollEvent = (scroll_element, call_back) => {
+            let _last_scroll_top = 0;
+            const _eventHandler = (e) => {
+                const _el_scroll = e.target.scrollingElement;
+                call_back(e.target.scrollingElement);
+
+                _last_scroll_top = _el_scroll.scrollTop
+            }
+
+            scroll_element.addEventListener('scroll', _eventHandler);
+        }
+    }
+
     class DataService {
         landing_token;
         api_domain;
@@ -84,14 +101,12 @@ const EnumNotifyType = {
 
     class ElementContentBuilder {
         loading_element = null;
-        page_wrapper_el = null;
         product_wrapper_el = null;
         notify_backdrop_el = null;
         notify_content_el = null;
 
         constructor() {
             const _this = this;
-            _this.page_wrapper_el = document.getElementById('omp_wrapper');
             _this.product_wrapper_el = document.getElementById(EnumLandingBlockElementName.LANDING_PRODUCT_DETAIL);
             _this.loading_element = document.getElementsByClassName('omp-loading')[0];
             _this.notify_backdrop_el = document.getElementsByClassName('omp-notify--backdrop')[0];
@@ -232,7 +247,7 @@ const EnumNotifyType = {
 
         _scrollToElement = (el) => {
             const _el_screen_position = el.getBoundingClientRect();
-            this.page_wrapper_el.scrollTo({
+            document.scrollTo({
                 top: _el_screen_position.top,
                 behavior: 'smooth'
             });
@@ -242,7 +257,11 @@ const EnumNotifyType = {
             const _back_btn = this._queryElementsByClass(document, 'header-back-icon');
 
             _back_btn.addEventListener('click', () => {
-                window.history.back();
+                if (document.referrer) {
+                    window.history.back();
+                } else {
+                    window.location.href = window.location.origin;
+                }
             })
         }
     }
@@ -598,6 +617,7 @@ const EnumNotifyType = {
     }
 
     class ProductDetail {
+        global_event = new GlobalEvent();
         data_service = null;
         content_builder = new ElementContentBuilder();
         select_variant_button = null;
@@ -610,6 +630,41 @@ const EnumNotifyType = {
             _this.page_els = window.page_elements;
             _this.page_configs = window.page_configs;
             _this.data_service = new DataService(_this.page_configs?.access_token || '');
+        }
+
+        _listenScrollEvent = () => {
+            const _header_el = this.content_builder._queryElementsByClass(document, 'omp-landing-detail--header');
+            const _back_icon_el = this.content_builder._queryElementsByClass(_header_el, 'header-back-icon');
+            const _cart_icon_el = this.content_builder._queryElementsByClass(_header_el, 'header-cart-icon');
+            const _header_title = this.content_builder._queryElementsByClass(_header_el, 'header-title');
+
+            if (_header_el.style) _header_el.removeAttribute('style');
+            if (_back_icon_el.style) _header_el.removeAttribute('style');
+            if (_cart_icon_el.style) _header_el.removeAttribute('style');
+            if (_header_title.style) _header_el.removeAttribute('style');
+
+            const _handleEvent = (e) => {
+                if (e.scrollTop % 20 === 0 && e.scrollTop <= 240) {
+                    _header_el.style.backgroundColor = `rgba(255, 255, 255, ${e.scrollTop / 240})`;
+                    _header_el.style.boxShadow = `0 3px 8px 0 rgba(159, 168, 184, ${e.scrollTop / 1000})`;
+                    _header_title.style.opacity = `${e.scrollTop / 240}`;
+
+                    if (e.scrollTop < 180) {
+                        _back_icon_el.style.backgroundColor = `rgba(0, 0, 0, ${0.25 - (e.scrollTop / 1000) })`;
+                        _back_icon_el.style.color = '#ffffff';
+                        _cart_icon_el.style.backgroundColor = `rgba(0, 0, 0, ${0.25 - (e.scrollTop / 1000) })`;
+                        _cart_icon_el.style.color = '#ffffff';
+                    } else {
+                        _back_icon_el.style.backgroundColor = `rgba(255, 255, 255, ${e.scrollTop / 240})`;
+                        _back_icon_el.style.color = '#fd7e14';
+                        _cart_icon_el.style.backgroundColor = `rgba(255, 255, 255, ${e.scrollTop / 240})`;
+                        _cart_icon_el.style.color = '#fd7e14';
+                    }
+                }
+
+            }
+
+            this.global_event._addScrollEvent(document, _handleEvent);
         }
 
         _addVariantAttributesId = (product) => {
@@ -665,6 +720,7 @@ const EnumNotifyType = {
             }
             this.group_quantity_button.addGroupProductQuantityEvent(product_detail.fulfillable);
             this.content_builder._addBackToPreviousButtonAction();
+            this._listenScrollEvent();
             this.content_builder._hideLoading();
         }
 
@@ -672,7 +728,7 @@ const EnumNotifyType = {
             this.content_builder._showLoading();
             const _arr_url_split = window.location.href.split('.');
             const _product_id = _arr_url_split[_arr_url_split.length - 1];
-            this._getProductDetailById(_product_id).then();
+            this._getProductDetailById(6).then();
         }
     }
 
