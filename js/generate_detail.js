@@ -247,7 +247,7 @@ const EnumNotifyType = {
 
         _scrollToElement = (el) => {
             const _el_screen_position = el.getBoundingClientRect();
-            document.scrollTo({
+            window.scrollTo({
                 top: _el_screen_position.top,
                 behavior: 'smooth'
             });
@@ -633,6 +633,8 @@ const EnumNotifyType = {
         }
 
         _listenScrollEvent = () => {
+            window.scrollTo({ top: 0, behavior: 'smooth'});
+
             const _header_el = this.content_builder._queryElementsByClass(document, 'omp-landing-detail--header');
             const _back_icon_el = this.content_builder._queryElementsByClass(_header_el, 'header-back-icon');
             const _cart_icon_el = this.content_builder._queryElementsByClass(_header_el, 'header-cart-icon');
@@ -644,21 +646,21 @@ const EnumNotifyType = {
             if (_header_title.style) _header_el.removeAttribute('style');
 
             const _handleEvent = (e) => {
-                if (e.scrollTop % 20 === 0 && e.scrollTop <= 350) {
+                if (e.scrollTop % 20 === 0 && e.scrollTop < 350) {
                     _header_el.style.backgroundColor = `rgba(255, 255, 255, ${e.scrollTop / 240})`;
                     _header_el.style.boxShadow = `0 3px 8px 0 rgba(159, 168, 184, ${e.scrollTop / 1000})`;
                     _header_title.style.opacity = `${e.scrollTop / 240}`;
 
-                    if (e.scrollTop < 180) {
+                    if (e.scrollTop < 120) {
                         _back_icon_el.style.backgroundColor = `rgba(0, 0, 0, ${0.25 - (e.scrollTop / 1000) })`;
                         _back_icon_el.style.color = '#ffffff';
                         _cart_icon_el.style.backgroundColor = `rgba(0, 0, 0, ${0.25 - (e.scrollTop / 1000) })`;
                         _cart_icon_el.style.color = '#ffffff';
                     } else {
                         _back_icon_el.style.backgroundColor = `rgba(255, 255, 255, ${e.scrollTop / 240})`;
-                        _back_icon_el.style.color = '#fd7e14';
+                        _back_icon_el.style.color = `rgba(253, 126, 20, ${e.scrollTop / 240})`;
                         _cart_icon_el.style.backgroundColor = `rgba(255, 255, 255, ${e.scrollTop / 240})`;
-                        _cart_icon_el.style.color = '#fd7e14';
+                        _cart_icon_el.style.color = `rgba(253, 126, 20, ${e.scrollTop / 240})`;
                     }
                 }
 
