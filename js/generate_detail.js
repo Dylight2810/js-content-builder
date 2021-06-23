@@ -719,7 +719,7 @@ const EnumNotifyType = {
             if (product_detail.options && product_detail.options.length) {
                 select_product_el.innerHTML = this.content_builder._productSelectProductBuilder(product_detail.options);
             } else {
-                document.removeChild(select_product_el);
+                select_product_el.remove();
             }
 
             // Handle select variant event
