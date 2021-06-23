@@ -1,7 +1,7 @@
 'use strict';
 
 const API_URL = {
-    PRODUCT_DETAIL: 'https://omipage.com/api/v1/products/',
+    PRODUCT_DETAIL: 'https://dev.omipage.com/api/v1/products/',
 };
 
 const EnumLandingBlockElementName = {
