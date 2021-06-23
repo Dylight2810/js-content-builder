@@ -58,6 +58,15 @@ const EnumNotifyType = {
 
             scroll_element.addEventListener('scroll', _eventHandler);
         }
+
+        _addWindowResizeEvent = () => {
+            const _eventHandler = (e) => {
+                const _product_cart_top_el = document.querySelectorAll('div[class="omp-product-card__top"]');
+                _product_cart_top_el.forEach(e => e.style.height = `${e.offsetWidth}`);
+            };
+
+            window.addEventListener('resize', _eventHandler);
+        }
     }
 
     class DataService {
@@ -723,6 +732,7 @@ const EnumNotifyType = {
             this.group_quantity_button.addGroupProductQuantityEvent(product_detail.fulfillable);
             this.content_builder._addBackToPreviousButtonAction();
             this._listenScrollEvent();
+            this.global_event._addWindowResizeEvent();
             this.content_builder._hideLoading();
         }
 
