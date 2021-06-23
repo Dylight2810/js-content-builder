@@ -1,7 +1,7 @@
 'use strict';
 
 const API_URL = {
-    COLLECTION_PRODUCTS: 'https://omipage.com/api/v1/products/simple/'
+    COLLECTION_PRODUCTS: '/api/v1/products/simple/'
 };
 
 const API_LIST_PAGE_SIZE = 10;
@@ -49,13 +49,14 @@ const EnumPageType = {
         _addScrollEvent = (scroll_element, call_back) => {
             let _last_scroll_top = 0;
             const _eventHandler = (e) => {
-                if ((e.target.scrollTop + e.target.clientHeight) > e.target.scrollHeight - 5) {
-                    if (e.target.scrollTop > _last_scroll_top) {
-                        call_back(true);
+                const _el_scroll = e.target.scrollingElement;
+                if ((_el_scroll.scrollTop + _el_scroll.clientHeight) === _el_scroll.scrollHeight) {
+                    if (_el_scroll.scrollTop > _last_scroll_top) {
+                        call_back(e.target.scrollingElement);
                     }
                 }
 
-                _last_scroll_top = e.target.scrollTop
+                _last_scroll_top = _el_scroll.scrollTop;
             }
 
             scroll_element.addEventListener('scroll', _eventHandler);
@@ -68,6 +69,7 @@ const EnumPageType = {
         constructor(landing_token) {
             const _this = this;
             _this.landing_token = `Landing ${landing_token}`;
+            _this._getDomain();
         }
 
         _createGetRequest = (url) => {
@@ -85,13 +87,18 @@ const EnumPageType = {
         }
 
         getCollectionDataAsync = async (collection_id) => {
-            const request_url = `${API_URL.COLLECTION_PRODUCTS}?collection_id=${collection_id}&is_parent=true`;
+            const request_url = `${this.api_domain}${API_URL.COLLECTION_PRODUCTS}?collection_id=${collection_id}&is_parent=true`;
             return await this._createGetRequest(request_url);
         }
 
         getLandingProductAsync = async (page) => {
-            const request_url = `${API_URL.COLLECTION_PRODUCTS}?page=${page}&page_size=${API_LIST_PAGE_SIZE}&is_parent=true`;
+            const request_url = `${this.api_domain}${API_URL.COLLECTION_PRODUCTS}?page=${page}&page_size=${API_LIST_PAGE_SIZE}&is_parent=true`;
             return await this._createGetRequest(request_url);
+        }
+
+        _getDomain = () => {
+            const _env = document.querySelectorAll('meta[name="environment"]')[0];
+            this.api_domain = _env.getAttribute('content') === 'production' ? 'https://omipage.com' : 'https://dev.omipage.com';
         }
     }
 
@@ -452,7 +459,7 @@ const EnumPageType = {
             }
 
             this.global_event._addScrollEvent(
-                this.content_builder._queryElementsById(document, 'omp_wrapper'),
+                document,
                 _loadMoreProduct
             );
         }
