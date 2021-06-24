@@ -241,11 +241,12 @@ const EnumPageType = {
                 const sale_price = this._formatCurrency(country, currency, p.listed_price);
                 const price = this._formatCurrency(country, currency, p.price);
                 const cart_premium_content = product_tag ? `<span class="product-card--premium">${product_tag}</span>` : '';
+                const image = p.avatar_image ? p.avatar_image : p.images.length ? p.images[0] : '';
                 innerHtml += `<div class="${class_wrapper}">
                                 <a class="omp-product-card" href="${this.landing_domain}${p.link}">
                                     <div class="omp-product-card__top">
                                         ${cart_premium_content}
-                                        <img alt="${p.avatar_image}" class="mb-2" src="${p.avatar_image}">
+                                        <img alt="${image}" class="mb-2" src="${image}">
                                     </div>
                                     <div class="omp-product-card__bottom">
                                         <div class="omp-product-card--name">${p.name}</div>
@@ -530,32 +531,40 @@ const EnumPageType = {
             });
         }
 
+        _appendProductElementInnerHtml = (element, config, arr_products) => {
+            switch (config.element_name) {
+                case EnumLandingBlockElementName.DESIGN_OUTSTANDING_PRODUCT:
+                    element.innerHTML = this.content_builder._outstandingProductContentBuilder(
+                        config.element_title,
+                        arr_products,
+                        this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
+                        this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
+                    );
+                    break;
+
+                case EnumLandingBlockElementName.DESIGN_FLASH_SALE:
+                    element.innerHTML = this.content_builder._flashSaleProductContentBuilder(
+                        config.element_title,
+                        arr_products,
+                        this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
+                        this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
+                    )
+                    this.content_builder.startCarousel('omp-wp__flash-sale', arr_products.length)
+                    break;
+            }
+        }
+
         _renderProductElement = async (element_config, is_last_dynamic_element) => {
             const _el = document.getElementById(element_config.element_id);
 
-            if (element_config.config && element_config.config.collection) {
-                const response = await this.data_service.getCollectionDataAsync(element_config.config.collection.id);
-                const products_of_collection = JSON.parse(response).results;
+            if (element_config.config) {
+                if (element_config.config.collection) {
+                    const response = await this.data_service.getCollectionDataAsync(element_config.config.collection.id);
+                    const products_of_collection = JSON.parse(response).results;
 
-                switch (element_config.element_name) {
-                    case EnumLandingBlockElementName.DESIGN_OUTSTANDING_PRODUCT:
-                        _el.innerHTML = this.content_builder._outstandingProductContentBuilder(
-                            element_config.element_title,
-                            products_of_collection,
-                            this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
-                            this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
-                        );
-                        break;
-
-                    case EnumLandingBlockElementName.DESIGN_FLASH_SALE:
-                        _el.innerHTML = this.content_builder._flashSaleProductContentBuilder(
-                            element_config.element_title,
-                            products_of_collection,
-                            this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
-                            this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
-                        )
-                        this.content_builder.startCarousel('omp-wp__flash-sale', products_of_collection.length)
-                        break;
+                    this._appendProductElementInnerHtml(_el, element_config, products_of_collection);
+                } else if (element_config.config.products) {
+                    this._appendProductElementInnerHtml(_el, element_config, element_config.config.products);
                 }
             }
 
