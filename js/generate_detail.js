@@ -54,7 +54,10 @@ const EnumNotifyType = {
         constructor() {
         }
 
-        _handleMoveToNextCarousel = (carousel_item_el) => {
+        _handleMoveToNextCarousel = (carousel_item_el, prev_btn, next_btn) => {
+            if (this.current_carousel_index === carousel_item_el.length - 2) next_btn.classList.remove('show');
+            if (this.current_carousel_index === 0) prev_btn.classList.add('show');
+
             carousel_item_el[this.current_carousel_index].classList.add('prev');
             carousel_item_el[this.current_carousel_index].classList.remove('active');
 
@@ -68,7 +71,10 @@ const EnumNotifyType = {
             }
         }
 
-        _handleMoveToPrevCarousel = (carousel_item_el) => {
+        _handleMoveToPrevCarousel = (carousel_item_el, prev_btn, next_btn) => {
+            if (this.current_carousel_index === 1) prev_btn.classList.remove('show');
+            if (this.current_carousel_index === carousel_item_el.length - 1) next_btn.classList.add('show');
+
             carousel_item_el[this.current_carousel_index].classList.add('prev');
             carousel_item_el[this.current_carousel_index].classList.remove('active');
 
@@ -98,47 +104,43 @@ const EnumNotifyType = {
             let touch_move_x;
             let touch_start_x;
             const carousel_item_el = carousel_el.querySelectorAll('img[class^="ompi-carousel--image"]');
+            const prev_btn = carousel_el.querySelectorAll('div[class^="ompi-carousel--prev-btn"]')[0];
+            const next_btn = carousel_el.querySelectorAll('div[class^="ompi-carousel--next-btn"]')[0];
 
             if (!carousel_item_el.length) return;
 
             const _touchEndEventHandler = () => {
                 const long_move = touch_start_x - touch_move_x;
 
-                if (!touch_move_x) return;
+                if (!touch_move_x || Math.abs(long_move) < 20) return;
 
-                if (Math.abs(long_move) > 10) {
-                    if (long_move > 0 && this.current_carousel_index < carousel_item_el.length - 1) {
-                        this._handleMoveToNextCarousel(carousel_item_el);
-                    } else if (long_move < 0 && this.current_carousel_index > 0) {
-                        this._handleMoveToPrevCarousel(carousel_item_el);
-                    }
+                if (long_move > 0 && this.current_carousel_index < carousel_item_el.length - 1) {
+                    this._handleMoveToNextCarousel(carousel_item_el, prev_btn, next_btn);
+                } else if (long_move < 0 && this.current_carousel_index > 0) {
+                    this._handleMoveToPrevCarousel(carousel_item_el, prev_btn, next_btn);
                 }
+
+                touch_move_x = 0;
             };
 
             carousel_el.addEventListener('touchstart', (e) => touch_start_x = e.touches[0].pageX);
             carousel_el.addEventListener('touchmove', (e) => touch_move_x = e.touches[0].pageX);
             carousel_el.addEventListener('touchend', _touchEndEventHandler);
-            this._addCarouselClickEvent(carousel_el, carousel_item_el);
+            this._addCarouselClickEvent(carousel_el, carousel_item_el, prev_btn, next_btn);
         }
-        
-        _addCarouselClickEvent = (carousel_el, carousel_item_el) => {
-            const prev_btn = carousel_el.querySelectorAll('div[class^="ompi-carousel--prev-btn"]')[0];
-            const next_btn = carousel_el.querySelectorAll('div[class^="ompi-carousel--next-btn"]')[0];
 
+        _addCarouselClickEvent = (carousel_el, carousel_item_el, prev_btn, next_btn) => {
             const _prevBtnEventHandler = () => {
                 if (this.current_carousel_index === 0) return;
-                if (this.current_carousel_index === 1) prev_btn.classList.remove('show');
-                if (this.current_carousel_index === carousel_item_el.length - 1) next_btn.classList.add('show');
 
-                this._handleMoveToPrevCarousel(carousel_item_el);
+
+                this._handleMoveToPrevCarousel(carousel_item_el, prev_btn, next_btn);
             }
 
             const _nextBtnEventHandler = () => {
                 if (this.current_carousel_index === carousel_item_el.length - 1) return;
-                if (this.current_carousel_index === carousel_item_el.length - 2) next_btn.classList.remove('show');
-                if (this.current_carousel_index === 0) prev_btn.classList.add('show');
 
-                this._handleMoveToNextCarousel(carousel_item_el);
+                this._handleMoveToNextCarousel(carousel_item_el, prev_btn, next_btn);
             }
 
             prev_btn.addEventListener('click', _prevBtnEventHandler);
