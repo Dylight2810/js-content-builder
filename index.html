@@ -322,6 +322,30 @@
         position: relative;
     }
 
+    .ompi-carousel :is(.ompi-carousel--prev-btn, .ompi-carousel--next-btn) {
+        position: absolute;
+        top: 50%;
+        padding: 5px;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.25);
+        color: #ffffff;
+        opacity: 0;
+        transform: translateY(-50%);
+        z-index: 8;
+    }
+
+    .ompi-carousel :is(.ompi-carousel--prev-btn, .ompi-carousel--next-btn).show {
+        opacity: 1;
+    }
+
+    .ompi-carousel .ompi-carousel--prev-btn {
+        left: 2rem;
+    }
+
+    .ompi-carousel .ompi-carousel--next-btn {
+        right: 2rem;
+    }
+
     .ompi-carousel--image {
         opacity: 0;
         position: absolute;

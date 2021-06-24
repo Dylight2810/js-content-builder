@@ -49,7 +49,37 @@ const EnumNotifyType = {
 
 (function (window) {
     class GlobalEvent {
+        current_carousel_index = 0;
+
         constructor() {
+        }
+
+        _handleMoveToNextCarousel = (carousel_item_el) => {
+            carousel_item_el[this.current_carousel_index].classList.add('prev');
+            carousel_item_el[this.current_carousel_index].classList.remove('active');
+
+            this.current_carousel_index++;
+
+            carousel_item_el[this.current_carousel_index].classList.add('active');
+            carousel_item_el[this.current_carousel_index].classList.remove('next');
+
+            if (this.current_carousel_index < carousel_item_el.length - 1) {
+                carousel_item_el[this.current_carousel_index + 1].classList.add('next');
+            }
+        }
+
+        _handleMoveToPrevCarousel = (carousel_item_el) => {
+            carousel_item_el[this.current_carousel_index].classList.add('prev');
+            carousel_item_el[this.current_carousel_index].classList.remove('active');
+
+            this.current_carousel_index--;
+
+            carousel_item_el[this.current_carousel_index].classList.add('active');
+            carousel_item_el[this.current_carousel_index].classList.remove('next');
+
+            if (this.current_carousel_index === 1) {
+                carousel_item_el[0].classList.add('next');
+            }
         }
 
         _addScrollEvent = (scroll_element, call_back) => {
@@ -64,56 +94,55 @@ const EnumNotifyType = {
             scroll_element.addEventListener('scroll', _eventHandler);
         }
 
-        _addCarouselEvent = (carousel_el) => {
+        _addCarouselTouchEvent = (carousel_el) => {
             let touch_move_x;
             let touch_start_x;
-            let carousel_index = 0;
             const carousel_item_el = carousel_el.querySelectorAll('img[class^="ompi-carousel--image"]');
-            const item_width = carousel_item_el[0]?.offsetWidth;
 
             if (!carousel_item_el.length) return;
 
-            carousel_el.addEventListener('touchstart', (e) => {
-                touch_start_x = e.touches[0].pageX;
-            });
-
-            carousel_el.addEventListener('touchmove', (e) => {
-                touch_move_x = e.touches[0].pageX;
-            });
-
-            carousel_el.addEventListener('touchend', () => {
+            const _touchEndEventHandler = () => {
                 const long_move = touch_start_x - touch_move_x;
 
                 if (!touch_move_x) return;
 
                 if (Math.abs(long_move) > 10) {
-                    if (long_move > 0 && carousel_index < carousel_item_el.length - 1) {
-                        carousel_item_el[carousel_index].classList.add('prev');
-                        carousel_item_el[carousel_index].classList.remove('active');
-
-                        carousel_index++;
-
-                        carousel_item_el[carousel_index].classList.add('active');
-                        carousel_item_el[carousel_index].classList.remove('next');
-
-                        if (carousel_index < carousel_item_el.length - 1) {
-                            carousel_item_el[carousel_index + 1].classList.add('next');
-                        }
-                    } else if (long_move < 0 && carousel_index > 0) {
-                        carousel_item_el[carousel_index].classList.add('prev');
-                        carousel_item_el[carousel_index].classList.remove('active');
-
-                        carousel_index--;
-
-                        carousel_item_el[carousel_index].classList.add('active');
-                        carousel_item_el[carousel_index].classList.remove('next');
-
-                        if (carousel_index === 1) {
-                            carousel_item_el[0].classList.add('next');
-                        }
+                    if (long_move > 0 && this.current_carousel_index < carousel_item_el.length - 1) {
+                        this._handleMoveToNextCarousel(carousel_item_el);
+                    } else if (long_move < 0 && this.current_carousel_index > 0) {
+                        this._handleMoveToPrevCarousel(carousel_item_el);
                     }
                 }
-            });
+            };
+
+            carousel_el.addEventListener('touchstart', (e) => touch_start_x = e.touches[0].pageX);
+            carousel_el.addEventListener('touchmove', (e) => touch_move_x = e.touches[0].pageX);
+            carousel_el.addEventListener('touchend', _touchEndEventHandler);
+            this._addCarouselClickEvent(carousel_el, carousel_item_el);
+        }
+        
+        _addCarouselClickEvent = (carousel_el, carousel_item_el) => {
+            const prev_btn = carousel_el.querySelectorAll('div[class^="ompi-carousel--prev-btn"]')[0];
+            const next_btn = carousel_el.querySelectorAll('div[class^="ompi-carousel--next-btn"]')[0];
+
+            const _prevBtnEventHandler = () => {
+                if (this.current_carousel_index === 0) return;
+                if (this.current_carousel_index === 1) prev_btn.classList.remove('show');
+                if (this.current_carousel_index === carousel_item_el.length - 1) next_btn.classList.add('show');
+
+                this._handleMoveToPrevCarousel(carousel_item_el);
+            }
+
+            const _nextBtnEventHandler = () => {
+                if (this.current_carousel_index === carousel_item_el.length - 1) return;
+                if (this.current_carousel_index === carousel_item_el.length - 2) next_btn.classList.remove('show');
+                if (this.current_carousel_index === 0) prev_btn.classList.add('show');
+
+                this._handleMoveToNextCarousel(carousel_item_el);
+            }
+
+            prev_btn.addEventListener('click', _prevBtnEventHandler);
+            next_btn.addEventListener('click', _nextBtnEventHandler);
         }
     }
 
@@ -239,20 +268,33 @@ const EnumNotifyType = {
                     case 0:
                         innerHtml += `
                             <img class="ompi-carousel--image active" src="${img.url}" alt="${img.url}">
-                        `
+                        `;
                         break;
                     case 1:
                         innerHtml += `
                             <img class="ompi-carousel--image next" src="${img.url}" alt="${img.url}">
-                        `
+                        `;
                         break;
                     default:
                         innerHtml += `
                             <img class="ompi-carousel--image" src="${img.url}" alt="${img.url}">
-                        `
+                        `;
                         break;
                 }
             })
+
+            innerHtml += `
+                <div class="ompi-carousel--prev-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                    </svg>
+                </div>
+                <div class="ompi-carousel--next-btn show">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                </div>
+            `;
 
             return innerHtml;
         }
@@ -789,7 +831,7 @@ const EnumNotifyType = {
             );
 
             product_image_el.innerHTML = this.content_builder._productImageCarouselBuilder(arr_images);
-            this.global_event._addCarouselEvent(product_image_el);
+            this.global_event._addCarouselTouchEvent(product_image_el);
         }
 
         _generateProductSelectVariant = (product_detail) => {
