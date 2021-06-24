@@ -63,6 +63,56 @@ const EnumNotifyType = {
 
             scroll_element.addEventListener('scroll', _eventHandler);
         }
+
+        _addCarouselEvent = (carousel_el) => {
+            let touch_move_x;
+            let touch_start_x;
+            let carousel_index = 0;
+            const carousel_item_el = carousel_el.querySelectorAll('img[class^="ompi-carousel--image"]');
+            const item_width = carousel_item_el[0]?.offsetWidth;
+
+            if (!carousel_item_el.length) return;
+
+            carousel_el.addEventListener('touchstart', (e) => {
+                touch_start_x = e.touches[0].pageX;
+            });
+            carousel_el.addEventListener('touchmove', (e) => {
+                touch_move_x = e.touches[0].pageX;
+            });
+            carousel_el.addEventListener('touchend', () => {
+                const long_move = touch_start_x - touch_move_x;
+
+                if (!touch_move_x) return;
+
+                if (Math.abs(long_move) > (item_width / 2)) {
+                    if (long_move > 0 && carousel_index < carousel_item_el.length - 1) {
+                        carousel_item_el[carousel_index].classList.add('prev');
+                        carousel_item_el[carousel_index].classList.remove('active');
+
+                        carousel_index++;
+
+                        carousel_item_el[carousel_index].classList.add('active');
+                        carousel_item_el[carousel_index].classList.remove('next');
+
+                        if (carousel_index < carousel_item_el.length - 1) {
+                            carousel_item_el[carousel_index + 1].classList.add('next');
+                        }
+                    } else if (long_move < 0 && carousel_index > 0) {
+                        carousel_item_el[carousel_index].classList.add('prev');
+                        carousel_item_el[carousel_index].classList.remove('active');
+
+                        carousel_index--;
+
+                        carousel_item_el[carousel_index].classList.add('active');
+                        carousel_item_el[carousel_index].classList.remove('next');
+
+                        if (carousel_index === 1) {
+                            carousel_item_el[0].classList.add('next');
+                        }
+                    }
+                }
+            });
+        }
     }
 
     class DataService {
@@ -177,6 +227,32 @@ const EnumNotifyType = {
 
         _queryElementsLikeClassName = (parent_node, class_name) => {
             return parent_node.querySelectorAll(`div[class^=${class_name}]`);
+        }
+
+        _productImageCarouselBuilder = (arr_images) => {
+            let innerHtml = '';
+
+            arr_images.forEach((img, index) => {
+                switch (index) {
+                    case 0:
+                        innerHtml += `
+                            <img class="ompi-carousel--image active" src="${img.url}" alt="${img.url}">
+                        `
+                        break;
+                    case 1:
+                        innerHtml += `
+                            <img class="ompi-carousel--image next" src="${img.url}" alt="${img.url}">
+                        `
+                        break;
+                    default:
+                        innerHtml += `
+                            <img class="ompi-carousel--image" src="${img.url}" alt="${img.url}">
+                        `
+                        break;
+                }
+            })
+
+            return innerHtml;
         }
 
         _productSelectProductBuilder = (variant_option) => {
@@ -703,15 +779,18 @@ const EnumNotifyType = {
             return product;
         }
 
-        _getProductDetailById = async (product_id) => {
-            const response = await this.data_service.getProductDetailById(product_id);
-            const product_detail = this._addVariantAttributesId(JSON.parse(response));
+        _generateProductImageCarousel = (arr_images) => {
+            const product_image_el = this.content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                EnumPDElementAttributeValue.PRODUCT_IMAGE
+            );
 
-            if (!product_detail) {
-                return;
-            }
+            product_image_el.innerHTML = this.content_builder._productImageCarouselBuilder(arr_images);
+            this.global_event._addCarouselEvent(product_image_el);
+        }
 
-            // Generate product detail element content
+        _generateProductSelectVariant = (product_detail) => {
             const select_product_el = this.content_builder._queryElementsByAttribute(
                 document,
                 EnumElementAttributeName.DATA_OMP_ELEMENT,
@@ -739,6 +818,22 @@ const EnumNotifyType = {
             } else {
                 this.content_builder._updateGroupButtonAttribute(product_detail);
             }
+        }
+
+        _getProductDetailById = async (product_id) => {
+            const response = await this.data_service.getProductDetailById(product_id);
+            const product_detail = this._addVariantAttributesId(JSON.parse(response));
+
+            if (!product_detail) {
+                return;
+            }
+
+            // Generate product detail element content
+            this._generateProductSelectVariant(product_detail);
+
+            // Generate product image carousel
+            this._generateProductImageCarousel(product_detail.images);
+
             this.group_quantity_button.addGroupProductQuantityEvent(product_detail.fulfillable);
             this.content_builder._addBackToPreviousButtonAction();
             this._listenScrollEvent();
@@ -749,7 +844,7 @@ const EnumNotifyType = {
             this.content_builder._showLoading();
             const _arr_url_split = window.location.href.split('.');
             const _product_id = _arr_url_split[_arr_url_split.length - 1];
-            this._getProductDetailById(_product_id).then();
+            this._getProductDetailById(327).then();
         }
     }
 
