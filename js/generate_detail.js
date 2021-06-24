@@ -75,16 +75,18 @@ const EnumNotifyType = {
 
             carousel_el.addEventListener('touchstart', (e) => {
                 touch_start_x = e.touches[0].pageX;
-            });
+            }, { passive: true });
+
             carousel_el.addEventListener('touchmove', (e) => {
                 touch_move_x = e.touches[0].pageX;
-            });
+            }, { passive: true });
+
             carousel_el.addEventListener('touchend', () => {
                 const long_move = touch_start_x - touch_move_x;
 
                 if (!touch_move_x) return;
 
-                if (Math.abs(long_move) > (item_width / 4)) {
+                if (Math.abs(long_move) > 10) {
                     if (long_move > 0 && carousel_index < carousel_item_el.length - 1) {
                         carousel_item_el[carousel_index].classList.add('prev');
                         carousel_item_el[carousel_index].classList.remove('active');
@@ -111,7 +113,7 @@ const EnumNotifyType = {
                         }
                     }
                 }
-            });
+            }, { passive: true });
         }
     }
 
