@@ -386,7 +386,7 @@ const EnumNotifyType = {
                 EnumElementAttributeName.DATA_OMP_ELEMENT,
                 EnumPDElementAttributeValue.PRODUCT_PRICE
             );
-            product_price_el.innerHTML = `${this.element_content_builder._formatCurrency(_country_locale, _currency_code, variant.price)}`;
+            product_price_el.innerHTML = `${this.element_content_builder.formatCurrency(_country_locale, _currency_code, variant.price)}`;
 
             // Update product listed price
             const product_listed_price_el = this.element_content_builder._queryElementsByAttribute(
@@ -394,7 +394,7 @@ const EnumNotifyType = {
                 EnumElementAttributeName.DATA_OMP_ELEMENT,
                 EnumPDElementAttributeValue.PRODUCT_LISTED_PRICE
             );
-            product_listed_price_el.innerHTML = `${this.element_content_builder._formatCurrency(_country_locale, _currency_code, variant.listed_price)}`;
+            product_listed_price_el.innerHTML = `${this.element_content_builder.formatCurrency(_country_locale, _currency_code, variant.listed_price)}`;
 
             // Update product description
             const product_description_el = this.element_content_builder._queryElementsByAttribute(
