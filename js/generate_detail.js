@@ -228,7 +228,7 @@ const EnumNotifyType = {
                 btn_el.setAttribute(EnumElementAttributeName.DATA_NAME, product.name);
                 btn_el.setAttribute(EnumElementAttributeName.DATA_PRICE, product.listed_price);
                 btn_el.setAttribute(EnumElementAttributeName.DATA_DISCOUNTED_PRICE, product.price);
-                btn_el.setAttribute(EnumElementAttributeName.DATA_IMAGE, product.images[0].url);
+                btn_el.setAttribute(EnumElementAttributeName.DATA_IMAGE, product.images[0]?.url || '');
             }
 
             const _add_to_cart_btn = this._queryElementsByAttribute(document, EnumElementAttributeName.DATA_ACTION, EnumPDElementAttributeValue.ADD_TO_CART);
