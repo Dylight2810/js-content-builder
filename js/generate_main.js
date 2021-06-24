@@ -124,6 +124,34 @@ const EnumPageType = {
             _this.loading_element = document.getElementsByClassName('omp-loading')[0];
         }
 
+        startCarousel = (carousel_el_name, carousel_product_length) => {
+            let count = 0;
+            let reverse = false;
+            const _carousel_el = this._queryElementsLikeClassName(carousel_el_name)[0];
+
+            setInterval(() => {
+                let bonusTranslate = 0;
+                if (reverse) {
+                    if (count === 0) {
+                        _carousel_el.setAttribute('style', `transform: translate3d(0, 0, 0)`);
+                        reverse = false;
+                        return;
+                    }
+                    count--;
+                } else {
+                    if (count >= carousel_product_length - 3) {
+                        reverse = true;
+                        return;
+                    }
+                    count++;
+                }
+
+                bonusTranslate = !reverse && count === carousel_product_length - 3 ? 4.5 : 0;
+                console.log(bonusTranslate);
+                _carousel_el.setAttribute('style', `transform: translate3d(-${9 * count + bonusTranslate}rem, 0, 0)`);
+            }, 2000);
+        }
+
         _formatCurrency = (country_locale, currency_code, value) => {
             return new Intl.NumberFormat(country_locale, { style: 'currency', currency: currency_code }).format(value);
         }
@@ -206,16 +234,17 @@ const EnumPageType = {
                     </div>`
         }
 
-        _renderListProduct = (arr_product, country, currency) => {
+        _renderListProduct = (arr_product, country, currency, class_wrapper, product_tag) => {
             let innerHtml = '';
 
             arr_product.forEach(p => {
                 const sale_price = this._formatCurrency(country, currency, p.listed_price);
                 const price = this._formatCurrency(country, currency, p.price);
-                innerHtml += `<div class="omp-product-col omp-product-wrapper">
+                const cart_premium_content = product_tag ? `<span class="product-card--premium">${product_tag}</span>` : '';
+                innerHtml += `<div class="${class_wrapper}">
                                 <a class="omp-product-card" href="${this.landing_domain}${p.link}">
                                     <div class="omp-product-card__top">
-                                        <span class="product-card--premium">Hot</span>
+                                        ${cart_premium_content}
                                         <img alt="${p.avatar_image}" class="mb-2" src="${p.avatar_image}">
                                     </div>
                                     <div class="omp-product-card__bottom">
@@ -245,7 +274,7 @@ const EnumPageType = {
                                         </div>
                                     </div>
                                 </a>
-                            </div>`
+                              </div>`
             });
 
             return innerHtml;
@@ -256,7 +285,7 @@ const EnumPageType = {
                 return '';
             }
 
-            const innerHtml = this._renderListProduct(arr_product, country, currency);
+            const innerHtml = this._renderListProduct(arr_product, country, currency, 'omp-product-col omp-product-wrapper');
 
             return `<div class="omp-landing-block--title">TẤT CẢ SẢN PHẨM</div>
                     <div class="omp-landing-block--content">
@@ -271,7 +300,13 @@ const EnumPageType = {
                 return '';
             }
 
-            const innerHtml = this._renderListProduct(arr_product, country, currency);
+            const innerHtml = this._renderListProduct(
+                arr_product,
+                country,
+                currency,
+                'omp-product-col omp-product-wrapper',
+                'Hot'
+            );
 
             return `<div class="omp-landing-block--title">${title}</div>
                     <div class="omp-landing-block--content">
@@ -319,22 +354,24 @@ const EnumPageType = {
                     </div>`
         }
 
-        _flashSaleProductContentBuilder = (title, arr_product) => {
+        _flashSaleProductContentBuilder = (title, arr_product, country, currency) => {
             if (!arr_product.length) {
                 return '';
             }
 
-            let innerHtml = '';
-
-            arr_product.forEach(p => {
-                innerHtml += ``
-            });
+            const innerHtml = this._renderListProduct(
+                arr_product,
+                country,
+                currency,
+                'omp-product-wrapper',
+                `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightning-fill" viewBox="0 0 16 16">
+                              <path d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5z"/>
+                            </svg>`
+            );
 
             return `<div class="omp-landing-block--title">${title}</div>
                     <div class="omp-landing-block--content">
-                        <div class="omp-wp__outstanding-product">
-                            <div class="omp-row">${innerHtml}</div>
-                        </div>
+                        <div class="omp-wp__flash-sale omp-carousel--wrapper">${innerHtml}</div>
                     </div>`
         }
 
@@ -508,6 +545,16 @@ const EnumPageType = {
                             this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
                             this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
                         );
+                        break;
+
+                    case EnumLandingBlockElementName.DESIGN_FLASH_SALE:
+                        _el.innerHTML = this.content_builder._flashSaleProductContentBuilder(
+                            element_config.element_title,
+                            products_of_collection,
+                            this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
+                            this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
+                        )
+                        this.content_builder.startCarousel('omp-wp__flash-sale', products_of_collection.length)
                         break;
                 }
             }
