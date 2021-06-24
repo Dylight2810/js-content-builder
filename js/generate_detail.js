@@ -9,6 +9,11 @@ const EnumLandingBlockElementName = {
     LANDING_PRODUCT_DETAIL: 'OMP_PRODUCT_DETAIL'
 };
 
+const DefaultVNLocale = {
+    VN_ICU_LOCALE: 'vi-VN',
+    VN_CURRENCY_CODE: 'VND'
+}
+
 const EnumElementAttributeName = {
     DATA_OMP_ELEMENT: 'data-omp-element',
     DATA_ACTION: 'data-action',
@@ -111,6 +116,10 @@ const EnumNotifyType = {
             _this.loading_element = document.getElementsByClassName('omp-loading')[0];
             _this.notify_backdrop_el = document.getElementsByClassName('omp-notify--backdrop')[0];
             _this.notify_content_el = document.getElementsByClassName('omp-notify-content')[0];
+        }
+
+        formatCurrency = (country_locale, currency_code, value) => {
+            return new Intl.NumberFormat(country_locale, { style: 'currency', currency: currency_code }).format(value);
         }
 
         _showLoading = () => {
@@ -352,6 +361,8 @@ const EnumNotifyType = {
 
         _updateProductInfoFollowVariantSelected = (variant) => {
             if (!variant) return;
+            const _country_locale = this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE;
+            const _currency_code = this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE;
 
             // Update product Image
             const product_image_el = this.element_content_builder._queryElementsByAttribute(
@@ -375,8 +386,7 @@ const EnumNotifyType = {
                 EnumElementAttributeName.DATA_OMP_ELEMENT,
                 EnumPDElementAttributeValue.PRODUCT_PRICE
             );
-            const _p = new Intl.NumberFormat(this.page_configs.locale || 'vi-VN').format(variant.price);
-            product_price_el.innerHTML = `${_p} ${this.page_configs.currency || 'đ'}`;
+            product_price_el.innerHTML = `${this.element_content_builder._formatCurrency(_country_locale, _currency_code, variant.price)}`;
 
             // Update product listed price
             const product_listed_price_el = this.element_content_builder._queryElementsByAttribute(
@@ -384,8 +394,7 @@ const EnumNotifyType = {
                 EnumElementAttributeName.DATA_OMP_ELEMENT,
                 EnumPDElementAttributeValue.PRODUCT_LISTED_PRICE
             );
-            const _lp = new Intl.NumberFormat(this.page_configs.locale || 'vi-VN').format(variant.listed_price);
-            product_listed_price_el.innerHTML = `${_lp} ${this.page_configs.currency || 'đ'}`;
+            product_listed_price_el.innerHTML = `${this.element_content_builder._formatCurrency(_country_locale, _currency_code, variant.listed_price)}`;
 
             // Update product description
             const product_description_el = this.element_content_builder._queryElementsByAttribute(
@@ -721,7 +730,8 @@ const EnumNotifyType = {
                     product_detail,
                     this.content_builder,
                     this.group_quantity_button,
-                    select_product_el
+                    select_product_el,
+                    this.page_configs
                 );
                 this.select_variant_button.handleSelectEvent();
             } else {
