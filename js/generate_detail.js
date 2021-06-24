@@ -228,7 +228,7 @@ const EnumNotifyType = {
                 btn_el.setAttribute(EnumElementAttributeName.DATA_NAME, product.name);
                 btn_el.setAttribute(EnumElementAttributeName.DATA_PRICE, product.listed_price);
                 btn_el.setAttribute(EnumElementAttributeName.DATA_DISCOUNTED_PRICE, product.price);
-                btn_el.setAttribute(EnumElementAttributeName.DATA_IMAGE, product.images[0]);
+                btn_el.setAttribute(EnumElementAttributeName.DATA_IMAGE, product.images[0].url);
             }
 
             const _add_to_cart_btn = this._queryElementsByAttribute(document, EnumElementAttributeName.DATA_ACTION, EnumPDElementAttributeValue.ADD_TO_CART);
@@ -370,7 +370,7 @@ const EnumNotifyType = {
                 EnumElementAttributeName.DATA_OMP_ELEMENT,
                 EnumPDElementAttributeValue.PRODUCT_IMAGE
             );
-            product_image_el.innerHTML = `<img src="${variant.images[0]}" alt="ProductImage">`;
+            product_image_el.innerHTML = `<img src="${variant.images[0].url}" alt="ProductImage">`;
 
             // Update product name
             const product_name_el = this.element_content_builder._queryElementsByAttribute(
@@ -378,7 +378,7 @@ const EnumNotifyType = {
                 EnumElementAttributeName.DATA_OMP_ELEMENT,
                 EnumPDElementAttributeValue.PRODUCT_NAME
             );
-            product_name_el.innerHTML = `${variant.full_name}`;
+            product_name_el.innerHTML = `${variant.name}`;
 
             // Update product price
             const product_price_el = this.element_content_builder._queryElementsByAttribute(
