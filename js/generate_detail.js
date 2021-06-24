@@ -75,11 +75,11 @@ const EnumNotifyType = {
 
             carousel_el.addEventListener('touchstart', (e) => {
                 touch_start_x = e.touches[0].pageX;
-            }, { passive: true });
+            });
 
             carousel_el.addEventListener('touchmove', (e) => {
                 touch_move_x = e.touches[0].pageX;
-            }, { passive: true });
+            });
 
             carousel_el.addEventListener('touchend', () => {
                 const long_move = touch_start_x - touch_move_x;
@@ -113,7 +113,7 @@ const EnumNotifyType = {
                         }
                     }
                 }
-            }, { passive: true });
+            });
         }
     }
 
