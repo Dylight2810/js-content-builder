@@ -6,6 +6,11 @@ const API_URL = {
 
 const API_LIST_PAGE_SIZE = 10;
 
+const DefaultVNLocale = {
+    VN_ICU_LOCALE: 'vi-VN',
+    VN_CURRENCY_CODE: 'VND'
+}
+
 const EnumLandingBlockElementName = {
     NONE: '',
     // Landing Header
@@ -63,8 +68,8 @@ const EnumPageType = {
         }
 
         _addWindowResizeEvent = (callback) => {
-            const _eventHandler = (e) => {
-                callback(e);
+            const _eventHandler = () => {
+                callback();
             };
 
             window.addEventListener('resize', _eventHandler);
@@ -119,6 +124,10 @@ const EnumPageType = {
             _this.loading_element = document.getElementsByClassName('omp-loading')[0];
         }
 
+        _formatCurrency = (country_locale, currency_code, value) => {
+            return new Intl.NumberFormat(country_locale, { style: 'currency', currency: currency_code }).format(value);
+        }
+
         _showLoading = () => {
             if (!this.loading_element.classList.contains('show')) {
                 this.loading_element.classList.add('show');
@@ -131,16 +140,24 @@ const EnumPageType = {
             }
         }
 
-        _queryElementsByClass = (parent_node, class_name) => {
-            return parent_node.querySelectorAll(`div[class=${class_name}]`)[0]
+        _queryElementsByClass = (class_name, parent_node) => {
+            const _parent_node = parent_node || document;
+            return _parent_node.querySelectorAll(`div[class=${class_name}]`)[0];
         }
 
-        _queryElementsById = (parent_node, id_name) => {
-            return parent_node.getElementById(`${id_name}`)
+        _queryAllElementsByClass = (class_name, parent_node) => {
+            const _parent_node = parent_node || document;
+            return _parent_node.querySelectorAll(`div[class=${class_name}]`);
         }
 
-        _queryElementsLikeClassName = (parent_node, class_name) => {
-            return parent_node.querySelectorAll(`div[class^=${class_name}]`)
+        _queryElementsById = (id_name, parent_node) => {
+            const _parent_node = parent_node || document;
+            return _parent_node.getElementById(`${id_name}`);
+        }
+
+        _queryElementsLikeClassName = (class_name, parent_node) => {
+            const _parent_node = parent_node || document;
+            return _parent_node.querySelectorAll(`div[class^=${class_name}]`);
         }
 
         _headerElementBuilder = (landing_name, image_url) => {
@@ -193,8 +210,8 @@ const EnumPageType = {
             let innerHtml = '';
 
             arr_product.forEach(p => {
-                const sale_price = new Intl.NumberFormat(country).format(p.listed_price);
-                const price = new Intl.NumberFormat(country).format(p.price);
+                const sale_price = this._formatCurrency(country, currency, p.listed_price);
+                const price = this._formatCurrency(country, currency, p.price);
                 innerHtml += `<div class="omp-product-col omp-product-wrapper">
                                 <a class="omp-product-card" href="${this.landing_domain}${p.link}">
                                     <div class="omp-product-card__top">
@@ -221,9 +238,9 @@ const EnumPageType = {
                                             </svg>
                                         </div>
                                         <div class="omp-product-card--price">
-                                            <p class="mr-1 omp-mb-0">${sale_price} ${currency}</p>
+                                            <p class="omp-mr-1 omp-mb-0">${sale_price}</p>
                                             <small>
-                                                <del>${price} ${currency}</del>
+                                                <del>${price}</del>
                                             </small>
                                         </div>
                                     </div>
@@ -388,8 +405,19 @@ const EnumPageType = {
         }
 
         _resizeProductImage = () => {
-            const _product_cart_top_el = document.querySelectorAll('div[class="omp-product-card__top"]');
-            _product_cart_top_el.forEach(e => e.style.height = `${e.offsetWidth}`);
+            const _product_price_els = this.content_builder._queryAllElementsByClass('omp-product-card--price');
+            if (window.innerWidth > 576) {
+                _product_price_els.forEach(e => e.setAttribute('style', 'display: flex;'))
+            } else {
+                _product_price_els.forEach(e => e.removeAttribute('style'))
+            }
+
+            const _product_cart_top_els = this.content_builder._queryAllElementsByClass('omp-product-card__top');
+            const _product_cart_top_el_height = _product_cart_top_els[0]?.offsetWidth || 0;
+            _product_cart_top_els.forEach(e => e.style.height = `${e.offsetWidth}`);
+
+            const _product_cart_els = this.content_builder._queryAllElementsByClass('omp-product-card');
+            _product_cart_els.forEach(e => e.setAttribute('style', `height: ${_product_cart_top_el_height + 115}px`))
         }
 
         _renderAllProductBlock = async (page) => {
@@ -400,11 +428,11 @@ const EnumPageType = {
 
             if (_products && _products.length) {
                 this.all_product_current_page++;
-                const _all_product_element = this.content_builder._queryElementsById(document, EnumLandingBlockElementName.LANDING_ALL_PRODUCTS);
+                const _all_product_element = this.content_builder._queryElementsById(EnumLandingBlockElementName.LANDING_ALL_PRODUCTS);
                 _all_product_element.innerHTML = this.content_builder._allProductContentBuilder(
                     _products,
-                    this.page_configs.locale || 'vi-VN',
-                    this.page_configs.currency || 'đ'
+                    this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
+                    this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
                 );
             }
 
@@ -418,12 +446,12 @@ const EnumPageType = {
 
             if (_products && _products.length) {
                 this.all_product_current_page++;
-                const _all_product_element = this.content_builder._queryElementsById(document, EnumLandingBlockElementName.LANDING_ALL_PRODUCTS);
-                const _product_wrapper = this.content_builder._queryElementsByClass(_all_product_element, 'omp-row');
+                const _all_product_element = this.content_builder._queryElementsById(EnumLandingBlockElementName.LANDING_ALL_PRODUCTS);
+                const _product_wrapper = this.content_builder._queryElementsByClass('omp-row', _all_product_element);
                 _product_wrapper.innerHTML += this.content_builder._renderListProduct(
                     _products,
-                    this.page_configs.locale || 'vi-VN',
-                    this.page_configs.currency || 'đ'
+                    this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
+                    this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
                 );
             }
 
@@ -477,8 +505,8 @@ const EnumPageType = {
                         _el.innerHTML = this.content_builder._outstandingProductContentBuilder(
                             element_config.element_title,
                             products_of_collection,
-                            this.page_configs.locale || 'vi-VN',
-                            this.page_configs.currency || 'đ'
+                            this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
+                            this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
                         );
                         break;
                 }
