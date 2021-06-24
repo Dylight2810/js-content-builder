@@ -84,7 +84,7 @@ const EnumNotifyType = {
 
                 if (!touch_move_x) return;
 
-                if (Math.abs(long_move) > (item_width / 2)) {
+                if (Math.abs(long_move) > (item_width / 4)) {
                     if (long_move > 0 && carousel_index < carousel_item_el.length - 1) {
                         carousel_item_el[carousel_index].classList.add('prev');
                         carousel_item_el[carousel_index].classList.remove('active');
@@ -169,7 +169,7 @@ const EnumNotifyType = {
         }
 
         formatCurrency = (country_locale, currency_code, value) => {
-            return new Intl.NumberFormat(country_locale, { style: 'currency', currency: currency_code }).format(value);
+            return new Intl.NumberFormat(country_locale, {style: 'currency', currency: currency_code}).format(value);
         }
 
         _showLoading = () => {
@@ -725,7 +725,7 @@ const EnumNotifyType = {
         }
 
         _listenScrollEvent = () => {
-            window.scrollTo({ top: 0, behavior: 'smooth'});
+            window.scrollTo({top: 0, behavior: 'smooth'});
 
             const _header_el = this.content_builder._queryElementsByClass(document, 'omp-landing-detail--header');
             const _back_icon_el = this.content_builder._queryElementsByClass(_header_el, 'header-back-icon');
@@ -744,9 +744,9 @@ const EnumNotifyType = {
                     _header_title.style.opacity = `${e.scrollTop / 240}`;
 
                     if (e.scrollTop < 120) {
-                        _back_icon_el.style.backgroundColor = `rgba(0, 0, 0, ${0.25 - (e.scrollTop / 1000) })`;
+                        _back_icon_el.style.backgroundColor = `rgba(0, 0, 0, ${0.25 - (e.scrollTop / 1000)})`;
                         _back_icon_el.style.color = '#ffffff';
-                        _cart_icon_el.style.backgroundColor = `rgba(0, 0, 0, ${0.25 - (e.scrollTop / 1000) })`;
+                        _cart_icon_el.style.backgroundColor = `rgba(0, 0, 0, ${0.25 - (e.scrollTop / 1000)})`;
                         _cart_icon_el.style.color = '#ffffff';
                     } else {
                         _back_icon_el.style.backgroundColor = `rgba(255, 255, 255, ${e.scrollTop / 240})`;
