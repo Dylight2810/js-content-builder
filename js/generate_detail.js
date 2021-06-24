@@ -364,13 +364,15 @@ const EnumNotifyType = {
             const _country_locale = this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE;
             const _currency_code = this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE;
 
-            // Update product Image
-            const product_image_el = this.element_content_builder._queryElementsByAttribute(
-                document,
-                EnumElementAttributeName.DATA_OMP_ELEMENT,
-                EnumPDElementAttributeValue.PRODUCT_IMAGE
-            );
-            product_image_el.innerHTML = `<img src="${variant.images[0].url}" alt="ProductImage">`;
+            if (variant.images.length) {
+                // Update product Image
+                const product_image_el = this.element_content_builder._queryElementsByAttribute(
+                    document,
+                    EnumElementAttributeName.DATA_OMP_ELEMENT,
+                    EnumPDElementAttributeValue.PRODUCT_IMAGE
+                );
+                product_image_el.innerHTML = `<img src="${variant.images[0].url}" alt="ProductImage">`;
+            }
 
             // Update product name
             const product_name_el = this.element_content_builder._queryElementsByAttribute(
