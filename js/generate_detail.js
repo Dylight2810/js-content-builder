@@ -54,38 +54,40 @@ const EnumNotifyType = {
         constructor() {
         }
 
-        _handleMoveToNextCarousel = (carousel_item_el, prev_btn, next_btn) => {
-            if (this.current_carousel_index === carousel_item_el.length - 2) next_btn.classList.remove('show');
-            if (this.current_carousel_index === 0) prev_btn.classList.add('show');
-
+        _handleMoveToNextCarousel = (carousel_item_el) => {
+            let next_index;
             carousel_item_el[this.current_carousel_index].classList.add('prev');
             carousel_item_el[this.current_carousel_index].classList.remove('active');
 
-            this.current_carousel_index++;
+            if (this.current_carousel_index === carousel_item_el.length - 1) {
+                this.current_carousel_index = 0;
+            } else {
+                this.current_carousel_index++;
+            }
+
+            next_index = this.current_carousel_index === carousel_item_el.length - 1 ? 0 : this.current_carousel_index + 1;
 
             carousel_item_el[this.current_carousel_index].classList.add('active');
             carousel_item_el[this.current_carousel_index].classList.remove('next');
-
-            if (this.current_carousel_index < carousel_item_el.length - 1) {
-                carousel_item_el[this.current_carousel_index + 1].classList.add('next');
-            }
+            carousel_item_el[next_index].classList.add('next');
         }
 
-        _handleMoveToPrevCarousel = (carousel_item_el, prev_btn, next_btn) => {
-            if (this.current_carousel_index === 1) prev_btn.classList.remove('show');
-            if (this.current_carousel_index === carousel_item_el.length - 1) next_btn.classList.add('show');
-
+        _handleMoveToPrevCarousel = (carousel_item_el) => {
+            let next_index;
             carousel_item_el[this.current_carousel_index].classList.add('prev');
             carousel_item_el[this.current_carousel_index].classList.remove('active');
 
-            this.current_carousel_index--;
+            if (this.current_carousel_index === 0) {
+                this.current_carousel_index = carousel_item_el.length - 1;
+            } else {
+                this.current_carousel_index--;
+            }
+
+            next_index = this.current_carousel_index === 0 ? carousel_item_el.length - 1 : this.current_carousel_index - 1;
 
             carousel_item_el[this.current_carousel_index].classList.add('active');
             carousel_item_el[this.current_carousel_index].classList.remove('next');
-
-            if (this.current_carousel_index === 1) {
-                carousel_item_el[0].classList.add('next');
-            }
+            carousel_item_el[next_index].classList.add('next');
         }
 
         _addScrollEvent = (scroll_element, call_back) => {
@@ -114,10 +116,10 @@ const EnumNotifyType = {
 
                 if (!touch_move_x || Math.abs(long_move) < 20) return;
 
-                if (long_move > 0 && this.current_carousel_index < carousel_item_el.length - 1) {
-                    this._handleMoveToNextCarousel(carousel_item_el, prev_btn, next_btn);
-                } else if (long_move < 0 && this.current_carousel_index > 0) {
-                    this._handleMoveToPrevCarousel(carousel_item_el, prev_btn, next_btn);
+                if (long_move > 0) {
+                    this._handleMoveToNextCarousel(carousel_item_el);
+                } else {
+                    this._handleMoveToPrevCarousel(carousel_item_el);
                 }
 
                 touch_move_x = 0;
@@ -131,16 +133,11 @@ const EnumNotifyType = {
 
         _addCarouselClickEvent = (carousel_el, carousel_item_el, prev_btn, next_btn) => {
             const _prevBtnEventHandler = () => {
-                if (this.current_carousel_index === 0) return;
-
-
-                this._handleMoveToPrevCarousel(carousel_item_el, prev_btn, next_btn);
+                this._handleMoveToPrevCarousel(carousel_item_el);
             }
 
             const _nextBtnEventHandler = () => {
-                if (this.current_carousel_index === carousel_item_el.length - 1) return;
-
-                this._handleMoveToNextCarousel(carousel_item_el, prev_btn, next_btn);
+                this._handleMoveToNextCarousel(carousel_item_el);
             }
 
             prev_btn.addEventListener('click', _prevBtnEventHandler);
@@ -286,7 +283,7 @@ const EnumNotifyType = {
             })
 
             innerHtml += `
-                <div class="ompi-carousel--prev-btn">
+                <div class="ompi-carousel--prev-btn show">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                     </svg>
@@ -486,15 +483,15 @@ const EnumNotifyType = {
             const _country_locale = this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE;
             const _currency_code = this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE;
 
-            if (variant.images.length) {
-                // Update product Image
-                const product_image_el = this.element_content_builder._queryElementsByAttribute(
-                    document,
-                    EnumElementAttributeName.DATA_OMP_ELEMENT,
-                    EnumPDElementAttributeValue.PRODUCT_IMAGE
-                );
-                product_image_el.innerHTML = `<img src="${variant.images[0].url}" alt="ProductImage">`;
-            }
+            // if (variant.images.length) {
+            //     // Update product Image
+            //     const product_image_el = this.element_content_builder._queryElementsByAttribute(
+            //         document,
+            //         EnumElementAttributeName.DATA_OMP_ELEMENT,
+            //         EnumPDElementAttributeValue.PRODUCT_IMAGE
+            //     );
+            //     product_image_el.innerHTML = `<img src="${variant.images[0].url}" alt="ProductImage">`;
+            // }
 
             // Update product name
             const product_name_el = this.element_content_builder._queryElementsByAttribute(

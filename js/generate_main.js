@@ -124,34 +124,6 @@ const EnumPageType = {
             _this.loading_element = document.getElementsByClassName('omp-loading')[0];
         }
 
-        startCarousel = (carousel_el_name, carousel_product_length) => {
-            let count = 0;
-            let reverse = false;
-            const _carousel_el = this._queryElementsLikeClassName(carousel_el_name)[0];
-
-            setInterval(() => {
-                let bonusTranslate = 0;
-                if (reverse) {
-                    if (count === 0) {
-                        _carousel_el.setAttribute('style', `transform: translate3d(0, 0, 0)`);
-                        reverse = false;
-                        return;
-                    }
-                    count--;
-                } else {
-                    if (count >= carousel_product_length - 3) {
-                        reverse = true;
-                        return;
-                    }
-                    count++;
-                }
-
-                bonusTranslate = !reverse && count === carousel_product_length - 3 ? 4.5 : 0;
-                console.log(bonusTranslate);
-                _carousel_el.setAttribute('style', `transform: translate3d(-${9 * count + bonusTranslate}rem, 0, 0)`);
-            }, 2000);
-        }
-
         _formatCurrency = (country_locale, currency_code, value) => {
             return new Intl.NumberFormat(country_locale, { style: 'currency', currency: currency_code }).format(value);
         }
@@ -372,7 +344,7 @@ const EnumPageType = {
 
             return `<div class="omp-landing-block--title">${title}</div>
                     <div class="omp-landing-block--content">
-                        <div class="omp-wp__flash-sale omp-carousel--wrapper">${innerHtml}</div>
+                        <div class="omp-wp__flash-sale">${innerHtml}</div>
                     </div>`
         }
 
@@ -549,7 +521,6 @@ const EnumPageType = {
                         this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
                         this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
                     )
-                    this.content_builder.startCarousel('omp-wp__flash-sale', arr_products.length)
                     break;
             }
         }
