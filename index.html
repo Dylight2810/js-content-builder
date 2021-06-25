@@ -2,21 +2,18 @@
 <head>
     <meta charset="utf-8">
     <meta name="environment" content="development">
-    <link rel="icon" type="image/x-icon"
-          href="https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324.jpg?w=80&amp;h=80">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <meta name="description" content="Đây là mô tả">
-    <meta name="keywords" content="quan ao, quan ao mua he, gia re">
-    <meta name="omp_key" content="CmGLLXPN8JBgw2JjwJMaqrsJo">
+    <link rel="icon" type="image/x-icon" href="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="wwweee">
+    <meta name="keywords" content="omipage">
+    <meta name="omp_key" content="bOd7dtDtqmsCpxHEQ1X9ibNGx">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preload"
           href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap">
-    <title>Giầy dép giá rẻ</title>
-    <meta property="og:url" content="{{og_url}}">
-    <meta property="og:type" content="{{og_type}}">
-    <meta property="og:title" content="{{og_title}}">
-    <meta property="og:description" content="{{og_description}}">
-    <meta property="og:image" content="{{og_image}}">
+    <title>wwweee</title>
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="omipage">
+    <meta property="og:description" content="Create by Omipage">
     <style type="text/css">:root {
         --omp-font-size: 16px;
         --omp-body-width: 420px;
@@ -163,18 +160,17 @@
         padding: 0 calc(var(--omp-space) * 2);
     }
 
-    #omp_wrapper #OMP_HEADER .omp-header-block--content img {
-        max-width: 35px;
-        max-height: 35px;
+    .omp-header-block--content img {
+        max-height: 45px;
     }
 
-    .omp-header--space {
-        padding: var(--omp-space);
+    .omp-header-block--content .omp-header--space {
+        width: 1.5rem;
     }
 
-    #omp_wrapper #OMP_HEADER .omp-header-block--content .omp-header--landing-name {
-        padding: calc(var(--omp-space) * 2);
-        font-size: 1rem;
+    .omp-header-block--content .omp-header--cart i:before {
+        font-size: 1.5rem;
+        color: var(--omp-orange);
     }
 
     #OMP_MENU_FOOTER {
@@ -349,11 +345,11 @@
     .ompi-carousel--image {
         opacity: 0;
         position: absolute;
-        top:0;
+        top: 0;
         width: 100%;
         height: 100%;
         z-index: 2;
-        transition: transform .5s, opacity .5s, z-index .5s;
+        transition: transform 0.5s, opacity 0.5s, z-index 0.5s;
     }
 
     .ompi-carousel--image.active {
@@ -365,9 +361,11 @@
     .ompi-carousel--image.next {
         z-index: 1;
     }
+
     .ompi-carousel--image.prev {
         transform: translateX(-100%);
     }
+
     .ompi-carousel--image.next {
         transform: translateX(100%);
     }
@@ -482,7 +480,7 @@
 
     .p-quantity .p-quantity-button {
         cursor: pointer;
-        padding: calc(var(--omp-space)) calc(var(--omp-space) * 1.5);
+        padding: calc(var(--omp-space) * 0.5) calc(var(--omp-space) * 1.5);
         border: 1px solid var(--omp-silver);
     }
 
@@ -751,17 +749,17 @@
         padding-left: var(--omp-space);
     }
 
-    @media (max-width: 400px) {
+    @media (max-width: 414px) {
         .omp-row .omp-product-col {
             width: 50%;
             max-width: 50% !important;
         }
     }
 
-    @media (min-width: 401px) and (max-width: 567px) {
+    @media (min-width: 415px) and (max-width: 567px) {
         .omp-row .omp-product-col {
-            width: 30%;
-            max-width: 30%;
+            width: 33.33%;
+            max-width: 33.33%;
         }
     }
 
@@ -911,7 +909,7 @@
         font-weight: 800 !important;
     }
 
-    .btn {
+    .omp-btn {
         display: inline-block;
         cursor: pointer;
         font-weight: 400;
@@ -928,19 +926,19 @@
         transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     }
 
-    .btn-primary {
+    .omp-btn-primary {
         color: #fff;
         background-color: #27AE60;
         border-color: #27AE60;
     }
 
-    .btn-danger {
+    .omp-btn-danger {
         color: #fff;
         background-color: var(--omp-orange);
         border-color: var(--omp-orange);
     }
 
-    .btn-add-to-cart, .btn-checkout {
+    .omp-btn-add-to-cart, .omp-btn-checkout {
         width: 50%;
         border-radius: unset !important;
         height: 3rem;
@@ -1170,111 +1168,443 @@
         width: calc(var(--omp-skeleton-size) * 4);
     }
     </style>
+    <style>#omp-cart-popup {
+        font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 10000; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        background-color: rgb(0, 0, 0); /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    }
+
+    #omp-cart-popup * {
+        box-sizing: border-box !important;
+    }
+
+    #omp-cart-popup.active {
+        display: block;
+    }
+
+    .omp-cart-title {
+        font-size: 22px;
+    }
+
+    .omp-cart-popup-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 100%;
+        max-width: 1000px;
+        height: 100%;
+    }
+
+    .omp-cart-row {
+        display: block;
+        margin: 5px 0px;
+        border-bottom: 1px solid #f2f2f2;
+        padding-bottom: 10px;
+    }
+
+    .omp-cart-row:last-child {
+        border-bottom: none;
+    }
+
+    .omp-cart-header {
+        display: flex;
+        justify-content: space-between;
+        align-item: center;
+    }
+
+    .omp-cart-close {
+        display: flex;
+        align-item: center;
+    }
+
+    .omp-cart-close button {
+        background: none;
+        border: none;
+        color: #333;
+    }
+
+    .omp-cart-close button:hover {
+        cursor: pointer;
+    }
+
+    .omp-text-center {
+        text-align: center;
+    }
+
+    .omp-cart-image {
+        width: 50px !important;
+        height: 50px;
+        float: left;
+    }
+
+    .omp-cart-image img {
+        width: 50px;
+        height: 50px;
+        border-radius: 3px;
+    }
+
+    .omp-cart-product-name {
+        font-size: 13px;
+        padding-left: 5px;
+        font-weight: 400;
+        min-width: 300px;
+    }
+
+    .omp-cart-quantity-content {
+        display: -webkit-inline-flex;
+        display: inline-flex;
+    }
+
+    .omp-cart-quantity-content input {
+        width: 50px;
+        height: 30px;
+        text-align: center;
+        border: 1px solid #cdcdcd;
+        border-radius: 0px;
+    }
+
+    .omp-cart-quantity-content button {
+        border: 1px solid #cdcdcd;
+        cursor: pointer;
+        text-align: center;
+        width: 21px;
+        height: 30px;
+        background: #cdcdcd;
+        padding: 8px !important;
+        border-radius: 0;
+
+    }
+
+    .omp-cart-quantity-content button:active {
+        height: 29px;
+    }
+
+    .omp-cart-price {
+        text-align: right;
+        color: red;
+        width: 180px;
+    }
+
+    .omp-cart-remove-item button {
+        border: 1px solid #cdcdcd;
+        cursor: pointer;
+        text-align: center;
+        width: 23px;
+        height: 30px;
+        margin-left: 5px;
+        font-size: 11px;
+        background: #cdcdcd;
+        padding: 8px !important;
+
+    }
+
+    .omp-cart-remove-item button:active {
+        height: 29px;
+    }
+
+    .omp-cart-action {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        max-width: 1000px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 20px 15px;
+        box-shadow: 0 -2px 6px 0 rgb(66 73 83 / 8%);
+    }
+
+    .omp-cart-action button {
+        height: 45px;
+        background: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        width: 100%;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .omp-cart-action button:active {
+        opacity: 0.9;
+    }
+
+    .omipage-checkout__products-item {
+        display: grid;
+        grid-template-columns: 5rem auto 10rem 2rem;
+        grid-template-areas:
+                                "thumbnail name discounted-price delete-button"
+                                "thumbnail quantity quantity delete-button";
+        grid-column-gap: 1rem;
+        grid-row-gap: 0.75rem;
+    }
+
+    .omipage-checkout__products-item--thumbnail {
+        grid-area: thumbnail;
+        align-self: center;
+        width: 5rem;
+        max-height: 5rem;
+        border-radius: 3px;
+    }
+
+    .omipage-checkout__products-item--name {
+        grid-area: name;
+        align-self: center;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .omipage-checkout__products-item--name .item-name__group--product-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: 400;
+    }
+
+    .omipage-checkout__products-item--discounted-price {
+        grid-area: discounted-price;
+        align-self: center;
+        white-space: normal;
+        word-break: break-word;
+        color: red;
+        text-align: right;
+    }
+
+    .omipage-checkout__products-item--delete-button {
+        grid-area: delete-button;
+        align-self: center;
+        color: red;
+        text-align: right
+    }
+
+    .omipage-checkout__products-item--quantity {
+        grid-area: quantity;
+        align-self: center;
+    }
+
+    /* When the browser is at least 600px and above */
+    /* Portrait and Landscape */
+    @media (max-width: 767.98px) {
+        .omipage-checkout__products-item--thumbnail {
+            width: 3rem;
+        }
+
+        .omipage-checkout__products-item {
+            grid-template-columns: 3rem auto 10rem 1.5rem;
+        }
+    }</style>
+    <script style="display: none;">var tvt = tvt || {};
+    tvt.captureVariables = function (a) {
+        for (var b =
+            new Date, c = {}, d = Object.keys(a || {}), e = 0, f; f = d[e]; e++) if (a.hasOwnProperty(f) && "undefined" != typeof a[f]) try {
+            var g = [];
+            c[f] = JSON.stringify(a[f], function (l, t) {
+                try {
+                    if ("function" !== typeof t) {
+                        if ("object" === typeof t && null !== t) {
+                            if (t instanceof HTMLElement || t instanceof Node || -1 != g.indexOf(t)) return;
+                            g.push(t)
+                        }
+                        return t
+                    }
+                } catch (A) {
+                }
+            })
+        } catch (l) {
+        }
+        a = document.createEvent("CustomEvent");
+        a.initCustomEvent("TvtRetrievedVariablesEvent", !0, !0, {variables: c, date: b});
+        window.dispatchEvent(a)
+    };
+    window.setTimeout(function () {
+        tvt.captureVariables({
+            'dataLayer.hide': (function (a) {
+                a = a.split(".");
+                for (var b = window, c = 0; c < a.length && (b = b[a[c]], b); c++) ;
+                return b
+            })('dataLayer.hide'), 'gaData': window['gaData'], 'dataLayer': window['dataLayer']
+        })
+    }, 2000);</script>
 </head>
 <body>
 <div id="omp_wrapper">
-    <div id="OMP_PRODUCT_DETAIL">
-        <div class="omp-landing-detail--header">
-            <div class="header-container">
-                <div class="header-back-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                         class="bi bi-arrow-left" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                              d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"></path>
-                    </svg>
+    <div id="OMP_HEADER">
+        <div class="omp-header-block--content">
+            <img alt="Landing Logo" src="undefined">
+            <div class="omp-header--landing-name">wwweee</div>
+            <div class="omp-header--space"></div>
+        </div>
+    </div>
+    <div id="OMP_MENU_FOOTER">
+        <div class="omp-header-block--content">
+            <div class="omp-menu-wrapper">
+                <div class="omp-menu-item ng-star-inserted">
+                    <div class="omp-menu-item--content active">
+                        <p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                 class="bi bi-house" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                      d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"></path>
+                                <path fill-rule="evenodd"
+                                      d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"></path>
+                            </svg>
+                        </p>
+                        <span>Trang chủ</span>
+                    </div>
                 </div>
-                <p class="header-title">{{product_name}}</p>
-                <div class="header-cart-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
-                         class="bi bi-cart4" viewBox="0 0 16 16">
-                        <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"></path>
-                    </svg>
+                <div class="omp-menu-item ng-star-inserted">
+                    <div class="omp-menu-item--content" onclick="omipage.open_cart_popup()">
+                        <p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                 class="bi bi-cart4" viewBox="0 0 16 16">
+                                <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"></path>
+                            </svg>
+                        </p>
+                        <span>Giỏ hàng</span>
+                    </div>
+                </div>
+                <div class="omp-menu-item ng-star-inserted">
+                    <div class="omp-menu-item--content">
+                        <p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                 class="bi bi-heart" viewBox="0 0 16 16">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+                            </svg>
+                        </p>
+                        <span>Yêu thích</span>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="OMP_FLASH_SALE_1"></div>
+    <div id="OMP_OUTSTANDING_PRODUCT_1"></div>
+    <div id="OMP_ALL_PRODUCTS">
+        <div class="omp-landing-block--title">
+            <div class="skeleton-item"></div>
         </div>
         <div class="omp-landing-block--content">
-            <div class="omp-product-detail--image">
-                <div class="product-image--wrapper ompi-carousel--wrapper">
-                    <div class="ompi-carousel" data-omp-element="product-image">
-                        <img src="{{product_image}}" alt="Product image">
-                    </div>
-                </div>
-            </div>
-            <div class="omp-product-detail--information">
-                <div class="product-detail--meta-data">
-                    <div class="omp-container">
-                        <div class="p-name-price">
-                            <h5 data-omp-element="product-name">{{product_name}}</h5>
-                            <h5 class="price-sale">
-                                <span data-omp-element="product-listed-price">{{product_price}}</span>
-                                <span class="normal-price"
-                                      data-omp-element="product-price">{{product_listed_price}}</span>
-                            </h5>
-                        </div>
-                        <div class="p-favorite-action">
-                            <i class="bi bi-heart"></i>
+            <div class="omp-wp__all-products">
+                <div class="omp-row">
+                    <div class="omp-product-col omp-product-wrapper">
+                        <div class="omp-product-card" style="height: 296px">
+                            <div class="omp-product-card__top" style="height: 181px;">
+                                <div class="skeleton-item"></div>
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="omp-container">
-                        <div class="product--rating-stars">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-star-fill" viewBox="0 0 16 16">
-                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-star-fill" viewBox="0 0 16 16">
-                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-star-fill" viewBox="0 0 16 16">
-                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-star-fill" viewBox="0 0 16 16">
-                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-star-fill" viewBox="0 0 16 16">
-                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
-                            </svg>
-                        </div>
 
-                        <div class="product--rating-results">
-                            <span class="rating-result--number">5.0</span>
-                            <span class="rating-result--text">Đánh giá tốt</span>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <div class="omp-product-card" style="height: 296px">
+                            <div class="omp-product-card__top" style="height: 181px;">
+                                <div class="skeleton-item"></div>
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="omp-product-col omp-product-wrapper">
+                        <div class="omp-product-card" style="height: 296px">
+                            <div class="omp-product-card__top" style="height: 181px;">
+                                <div class="skeleton-item"></div>
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="omp-product-col omp-product-wrapper">
+                        <div class="omp-product-card" style="height: 296px">
+                            <div class="omp-product-card__top" style="height: 181px;">
+                                <div class="skeleton-item"></div>
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="omp-product-col omp-product-wrapper">
+                        <div class="omp-product-card" style="height: 296px">
+                            <div class="omp-product-card__top" style="height: 181px;">
+                                <div class="skeleton-item"></div>
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="omp-product-col omp-product-wrapper">
+                        <div class="omp-product-card" style="height: 296px">
+                            <div class="omp-product-card__top" style="height: 181px;">
+                                <div class="skeleton-item"></div>
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="omp-product-col omp-product-wrapper">
+                        <div class="omp-product-card" style="height: 296px">
+                            <div class="omp-product-card__top" style="height: 181px;">
+                                <div class="skeleton-item"></div>
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="omp-product-col omp-product-wrapper">
+                        <div class="omp-product-card" style="height: 296px">
+                            <div class="omp-product-card__top" style="height: 181px;">
+                                <div class="skeleton-item"></div>
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="product-detail--select-product" data-omp-element="variant-select">
-                </div>
-                <div class="product-detail--description">
-                    <div class="omp-container display-flex omp-mb-3">
-                        <p class="fw-600">Mô tả sản phẩm</p>
-                        <div class="p-description" data-omp-element="product-description">
-                            {{product_description}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="omp-landing-detail--footer">
-            <div class="product-detail--select-quantity" data-omp-element="group-button-action">
-                <div class="omp-container display-flex">
-                    <p class="omp-mb-0">Chọn số lượng</p>
-                    <div class="p-quantity">
-                        <div class="p-quantity-button" data-omp-element="decrease-quantity">-</div>
-                        <div class="p-quantity-button p-quantity-number" data-omp-element="quantity-value">1</div>
-                        <div class="p-quantity-button" data-omp-element="increase-quantity">+</div>
-                    </div>
-                </div>
-            </div>
-            <div class="display-flex">
-                <button class="btn btn-primary btn-add-to-cart" data-action="add_to_cart">
-                    Thêm vào giỏ hàng
-                </button>
-                <button class="btn btn-danger btn-checkout" data-action="checkout">
-                    Mua ngay
-                </button>
             </div>
         </div>
     </div>
@@ -1303,43 +1633,91 @@
     <p>Vui lòng chọn mẫu mã</p>
 </div>
 <script>window.page_elements = {
-    "page_id": "product_detail",
+    "page_id": "home",
     "page_elements": {
         "statics_elements": [{
             "element_index": null,
-            "element_id": "OMP_PRODUCT_DETAIL",
+            "element_id": "OMP_HEADER",
             "element_height": null,
             "element_title": "",
-            "element_name": "OMP_PRODUCT_DETAIL"
-        }], "dynamic_elements": []
+            "element_name": "OMP_HEADER"
+        }, {
+            "element_index": null,
+            "element_id": "OMP_MENU_FOOTER",
+            "element_height": null,
+            "element_title": "",
+            "element_name": "OMP_MENU_FOOTER"
+        }],
+        "dynamic_elements": [{
+            "element_id": "OMP_FLASH_SALE_1",
+            "element_name": "OMP_FLASH_SALE",
+            "element_index": 1,
+            "element_height": 25,
+            "element_title": "Flash sale",
+            "config": {
+                "collection": {
+                    "id": 23,
+                    "name": "aasdsdsdsdsd",
+                    "slug": "aasdsdsdsdsd",
+                    "description": "test",
+                    "is_active": true,
+                    "landing": {"name": "Landing 2", "url": "https://landing2.guds.asia"},
+                    "link": "/collections/aasdsdsdsdsd.30.aasdsdsdsdsd"
+                }
+            }
+        }, {
+            "element_id": "OMP_OUTSTANDING_PRODUCT_1",
+            "element_name": "OMP_OUTSTANDING_PRODUCT",
+            "element_index": 2,
+            "element_height": 25,
+            "element_title": "Test detail page",
+            "config": {
+                "collection": {
+                    "id": 23,
+                    "name": "aasdsdsdsdsd",
+                    "slug": "aasdsdsdsdsd",
+                    "description": "test",
+                    "is_active": true,
+                    "landing": {"name": "Landing 2", "url": "https://landing2.guds.asia"}
+                }
+            }
+        }]
     }
 };
 window.page_configs = {
-    "id": 30,
-    "name": "Landing 2",
-    "url": "https://landing2.guds.asia",
-    "created_time": 1619410821,
+    "id": 34,
+    "name": "wwweee",
+    "url": "https://wwweee.omiboost.com",
+    "created_time": 1619411503,
     "sync_integration": false,
-    "last_released_time": 1624519781,
-    "config": {
-        "logo": "https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324.jpg?w=795&h=530",
-        "favicon": "https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324.jpg?w=80&h=80",
-        "meta_keyword": "quan ao, quan ao mua he, gia re",
-        "website_title": "Giầy dép giá rẻ",
-        "facebook_pixel": "162890002483695",
-        "google_tracking": "162890002483695",
-        "website_description": "Đây là mô tả"
-    },
-    "access_token": "CmGLLXPN8JBgw2JjwJMaqrsJo",
-    "external_store_id": 482,
+    "last_released_time": 1623920493,
+    "config": {},
+    "access_token": "bOd7dtDtqmsCpxHEQ1X9ibNGx",
+    "external_store_id": null,
     "language": "vi",
     "currency": "VND",
     "locale": "vi-VN",
     "active": true
 }</script>
 <script type="text/javascript"
-        src="js/generate_detail.js"></script>
+        src="js/generate_main.js"></script>
 <script type="text/javascript"
         src="https://cdn.jsdelivr.net/gh/Boxme-Global/omipage-cart-embed@v0.1.220602/lib/index.js"></script>
+<div id="omp-cart-popup">
+    <div class="omp-cart-popup-content">
+        <p class="omp-text-center ">
+            <img src="https://storage.googleapis.com/omisell-cloud/omipage/cart_empty.png" width="300px" alt=""
+                 class="mx-auto">
+        </p>
+        <p class="omp-text-center ">
+            Giỏ hàng của bạn trống
+        </p>
+
+
+        <div class="omp-cart-action">
+            <button onclick="omipage.close_cart_popup()">Quay lại</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
