@@ -27,6 +27,7 @@ const EnumLandingBlockElementName = {
 
     // Banner Design
     DESIGN_CAROUSEL: 'OMP_CAROUSEL',
+    DESIGN_ONE_IMAGE: 'OMP_ONE_IMAGE',
     DESIGN_TWO_IMAGE: 'OMP_TWO_IMAGE',
     DESIGN_VIDEO: 'OMP_VIDEO',
 
@@ -145,9 +146,9 @@ const EnumPageType = {
             return _parent_node.querySelectorAll(`div[class=${class_name}]`)[0];
         }
 
-        _queryAllElementsByClass = (class_name, parent_node) => {
+        _queryAllElementsByClass = (wrapper_tag, class_name, parent_node) => {
             const _parent_node = parent_node || document;
-            return _parent_node.querySelectorAll(`div[class=${class_name}]`);
+            return _parent_node.querySelectorAll(`${wrapper_tag}[class=${class_name}]`);
         }
 
         _queryElementsById = (id_name, parent_node) => {
@@ -211,6 +212,7 @@ const EnumPageType = {
         }
 
         _renderListProduct = (arr_product, country, currency, class_wrapper, product_tag) => {
+            if (!arr_product.length) return '';
             let innerHtml = '';
 
             arr_product.forEach(p => {
@@ -258,9 +260,7 @@ const EnumPageType = {
         }
 
         _allProductContentBuilder = (arr_product, country, currency) => {
-            if (!arr_product.length) {
-                return '';
-            }
+            if (!arr_product.length) return '';
 
             const innerHtml = this._renderListProduct(arr_product, country, currency, 'omp-product-col omp-product-wrapper');
 
@@ -273,9 +273,7 @@ const EnumPageType = {
         }
 
         _outstandingProductContentBuilder = (title, arr_product, country, currency) => {
-            if (!arr_product.length) {
-                return '';
-            }
+            if (!arr_product.length) return '';
 
             const innerHtml = this._renderListProduct(
                 arr_product,
@@ -313,9 +311,7 @@ const EnumPageType = {
         }
 
         _newProductContentBuilder = (title, arr_product) => {
-            if (!arr_product.length) {
-                return '';
-            }
+            if (!arr_product.length) return '';
 
             let innerHtml = '';
 
@@ -332,9 +328,7 @@ const EnumPageType = {
         }
 
         _flashSaleProductContentBuilder = (title, arr_product, country, currency) => {
-            if (!arr_product.length) {
-                return '';
-            }
+            if (!arr_product.length) return '';
 
             const innerHtml = this._renderListProduct(
                 arr_product,
@@ -352,18 +346,15 @@ const EnumPageType = {
                     </div>`
         }
 
-        _bannerImageProductContentBuilder = (title, arr_product) => {
-            if (!arr_product.length) {
-                return '';
-            }
+        _bannerCarouselContentBuilder = (images) => {
+            if (!images.length) return '';
+        }
 
-            let innerHtml = '';
+        _bannerOneImageContentBuilder = (image_url) => {
+            if (!image_url) return '';
 
-            return `<div class="omp-landing-block--title">${title}</div>
-                    <div class="omp-landing-block--content">
-                        <div class="omp-wp__outstanding-product">
-                            <div class="omp-row">${innerHtml}</div>
-                        </div>
+            return `<div class="omp-banner__one-image--content">
+                        <img src="${image_url}" alt="${image_url}">
                     </div>`
         }
 
@@ -419,19 +410,19 @@ const EnumPageType = {
         }
 
         _resizeProductImage = () => {
-            const _product_price_els = this.content_builder._queryAllElementsByClass('omp-product-card--price');
+            const _product_price_els = this.content_builder._queryAllElementsByClass('div', 'omp-product-card--price');
             if (window.innerWidth > 576) {
                 _product_price_els.forEach(e => e.setAttribute('style', 'display: flex;'))
             } else {
                 _product_price_els.forEach(e => e.removeAttribute('style'))
             }
 
-            const _product_cart_top_els = this.content_builder._queryAllElementsByClass('omp-product-card__top');
+            const _product_cart_top_els = this.content_builder._queryAllElementsByClass('div', 'omp-product-card__top');
             const _product_cart_top_el_height = _product_cart_top_els[0]?.offsetWidth || 0;
             _product_cart_top_els.forEach(e => e.style.height = `${e.offsetWidth}`);
 
-            const _product_cart_els = this.content_builder._queryAllElementsByClass('omp-product-card');
-            _product_cart_els.forEach(e => e.setAttribute('style', `height: ${_product_cart_top_el_height + 115}px`))
+            const _product_cart_els = this.content_builder._queryAllElementsByClass('a','omp-product-card');
+            _product_cart_els.forEach(e => e.setAttribute('style', `height: ${_product_cart_top_el_height + 125}px`))
         }
 
         _renderAllProductBlock = async (page) => {
@@ -516,12 +507,6 @@ const EnumPageType = {
                         this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
                         this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
                     );
-                    console.log(this.content_builder._outstandingProductContentBuilder(
-                        config.element_title,
-                        arr_products,
-                        this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
-                        this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
-                    ));
                     break;
 
                 case EnumLandingBlockElementName.DESIGN_FLASH_SALE:
@@ -531,6 +516,33 @@ const EnumPageType = {
                         this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
                         this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
                     )
+                    break;
+
+                case EnumLandingBlockElementName.DESIGN_TWO_IMAGE:
+                    element.innerHTML = this.content_builder._flashSaleProductContentBuilder(
+                        config.element_title,
+                        arr_products,
+                        this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
+                        this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
+                    )
+                    break;
+            }
+        }
+
+        _appendImageElementInnerHtml = (element, config) => {
+            if (!config || !config.config) return;
+
+            const _el_config = config?.config
+            switch (config.element_name) {
+                case EnumLandingBlockElementName.DESIGN_CAROUSEL:
+                    element.innerHTML = this.content_builder._bannerOneImageContentBuilder(_el_config.images);
+                    break;
+                case EnumLandingBlockElementName.DESIGN_ONE_IMAGE:
+                    const _image = _el_config.images && _el_config.images.length ? _el_config.images[0] : '';
+                    element.innerHTML = this.content_builder._bannerOneImageContentBuilder(_image);
+                    break;
+                case EnumLandingBlockElementName.DESIGN_TWO_IMAGE:
+                    element.innerHTML = this.content_builder._bannerOneImageContentBuilder(_el_config.images);
                     break;
             }
         }
@@ -546,6 +558,8 @@ const EnumPageType = {
                     this._appendProductElementInnerHtml(_el, element_config, products_of_collection);
                 } else if (element_config.config.products) {
                     this._appendProductElementInnerHtml(_el, element_config, element_config.config.products);
+                } else if (element_config.config.images) {
+                    this._appendImageElementInnerHtml(_el, element_config);
                 }
             }
 

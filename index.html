@@ -2,23 +2,24 @@
 <head>
     <meta charset="utf-8">
     <meta name="environment" content="development">
-    <link rel="icon" type="image/x-icon" href="">
+    <link rel="icon" type="image/x-icon"
+          href="https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324.jpg?w=80&amp;h=80">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <meta name="description" content="wwweee">
-    <meta name="keywords" content="omipage">
-    <meta name="omp_key" content="bOd7dtDtqmsCpxHEQ1X9ibNGx">
+    <meta name="description" content="Đây là mô tả">
+    <meta name="keywords" content="quan ao, quan ao mua he, gia re">
+    <meta name="omp_key" content="CmGLLXPN8JBgw2JjwJMaqrsJo">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preload"
           href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap">
-    <title>wwweee</title>
+    <title>Giầy dép giá rẻ</title>
     <meta property="og:type" content="website">
-    <meta property="og:title" content="omipage">
-    <meta property="og:description" content="Create by Omipage">
+    <meta property="og:title" content="Giầy dép giá rẻ">
+    <meta property="og:description" content="Đây là mô tả">
     <style type="text/css">:root {
         --omp-font-size: 16px;
         --omp-body-width: 420px;
         --omp-body-max-width: 1000px;
-        --omp-space: 0.5rem;
+        --omp-space: 0.25rem;
         --omp-landing-header-height: 3.6rem;
         --omp-landing-footer-height: 3.6rem;
         --omp-banner-height: 10rem;
@@ -106,7 +107,7 @@
         margin-bottom: calc(var(--omp-space) * 2);
     }
 
-    #omp_wrapper :is([id^=OMP_CAROUSEL], [id^=OMP_TWO_IMAGE], [id^=OMP_VIDEO]) {
+    #omp_wrapper :is([id^=OMP_CAROUSEL], [id^=OMP_ONE_IMAGE], [id^=OMP_TWO_IMAGE], [id^=OMP_VIDEO]) {
         height: var(--omp-banner-height);
     }
 
@@ -168,9 +169,13 @@
         width: 1.5rem;
     }
 
-    .omp-header-block--content .omp-header--cart i:before {
-        font-size: 1.5rem;
+    .omp-header-block--content .omp-header--cart {
+        margin-right: calc(var(--omp-space) * 2);
         color: var(--omp-orange);
+    }
+
+    .omp-header--cart i:before {
+        font-size: 1.5rem;
     }
 
     #OMP_MENU_FOOTER {
@@ -212,7 +217,7 @@
     }
 
     #OMP_MENU_FOOTER .omp-menu-wrapper .omp-menu-item .omp-menu-item--content.active {
-        color: #28a745 !important;
+        color: var(--omp-orange) !important;
     }
 
     #OMP_MENU_FOOTER .omp-menu-wrapper .omp-menu-item span {
@@ -536,6 +541,18 @@
         padding: var(--omp-space);
     }
 
+    [id^=OMP_ONE_IMAGE] .omp-banner__one-image--content {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    [id^=OMP_ONE_IMAGE] .omp-banner__one-image--content img {
+        max-width: 100%;
+        max-height: var(--omp-banner-height);
+    }
+
     .omp-two-image {
         height: 100%;
         display: flex;
@@ -643,7 +660,6 @@
         display: block !important;
         text-decoration: none !important;
         background-color: white;
-        border-radius: 8px;
         box-shadow: rgba(159, 168, 184, 0.24) 0 1px 8px 0;
     }
 
@@ -654,8 +670,6 @@
 
     .omp-product-card .omp-product-card__top {
         max-height: var(--omp-product-list-img-height);
-        border-top-right-radius: 8px;
-        border-top-left-radius: 8px;
         width: 100%;
         position: relative;
     }
@@ -679,22 +693,23 @@
         width: 100%;
         margin: 0;
         padding: 0;
-        border-top-right-radius: 8px;
-        border-top-left-radius: 8px;
     }
 
     .omp-product-card .omp-product-card__bottom {
-        padding: var(--omp-space);
+        padding: calc(var(--omp-space) * 2);
     }
 
     .omp-product-card .omp-product-card__bottom .omp-product-card--name {
-        font-weight: 500;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
         color: #1e1e23;
         max-width: 100%;
-        max-height: 1rem;
+        max-height: 2.6rem;
         text-overflow: ellipsis;
         overflow: hidden;
-        white-space: nowrap;
+        white-space: normal;
+        word-break: break-all;
         margin-bottom: var(--omp-space);
     }
 
@@ -1437,9 +1452,15 @@
 <div id="omp_wrapper">
     <div id="OMP_HEADER">
         <div class="omp-header-block--content">
-            <img alt="Landing Logo" src="undefined">
-            <div class="omp-header--landing-name">wwweee</div>
             <div class="omp-header--space"></div>
+            <img alt="Landing Logo"
+                 src="https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324.jpg?w=795&amp;h=530">
+            <div class="omp-header--cart">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-cart3"
+                     viewBox="0 0 16 16">
+                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                </svg>
+            </div>
         </div>
     </div>
     <div id="OMP_MENU_FOOTER">
@@ -1463,8 +1484,8 @@
                     <div class="omp-menu-item--content" onclick="omipage.open_cart_popup()">
                         <p>
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
-                                 class="bi bi-cart4" viewBox="0 0 16 16">
-                                <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"></path>
+                                 class="bi bi-cart3" viewBox="0 0 16 16">
+                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
                             </svg>
                         </p>
                         <span>Giỏ hàng</span>
@@ -1484,125 +1505,1086 @@
             </div>
         </div>
     </div>
-    <div id="OMP_FLASH_SALE_1"></div>
-    <div id="OMP_OUTSTANDING_PRODUCT_1"></div>
-    <div id="OMP_ALL_PRODUCTS">
-        <div class="omp-landing-block--title">
-            <div class="skeleton-item"></div>
+    <div id="OMP_ONE_IMAGE_1"></div>
+    <div id="OMP_FLASH_SALE_1">
+        <div class="omp-landing-block--title">Flash sale</div>
+        <div class="omp-landing-block--content">
+            <div class="omp-wp__flash-sale">
+                <div class="omp-product-wrapper">
+                    <a class="omp-product-card"
+                       href="https://landing2.guds.asia/products/san-pham-test-checkout-001.30.8">
+                        <div class="omp-product-card__top" style="height: 136px;">
+                                        <span class="product-card--premium"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 width="16" height="16"
+                                                                                 fill="currentColor"
+                                                                                 class="bi bi-lightning-fill"
+                                                                                 viewBox="0 0 16 16">
+                              <path d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5z"></path>
+                            </svg></span>
+                            <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/2ec3065e226c5663d4dc08c7518bb744.png"
+                                 class="mb-2"
+                                 src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/2ec3065e226c5663d4dc08c7518bb744.png">
+                        </div>
+                        <div class="omp-product-card__bottom">
+                            <div class="omp-product-card--name">Sản phẩm test Checkout 001</div>
+                            <div class="product--rating-stars">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                            </div>
+                            <div class="omp-product-card--price" style="display: flex;">
+                                <p class="omp-mr-1 omp-mb-0">1.111.110&nbsp;₫</p>
+                                <small>
+                                    <del>1.111.110&nbsp;₫</del>
+                                </small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="omp-product-wrapper">
+                    <a class="omp-product-card"
+                       href="https://landing2.guds.asia/products/san-pham-test-checkout-002.30.7">
+                        <div class="omp-product-card__top" style="height: 136px;">
+                                        <span class="product-card--premium"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 width="16" height="16"
+                                                                                 fill="currentColor"
+                                                                                 class="bi bi-lightning-fill"
+                                                                                 viewBox="0 0 16 16">
+                              <path d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5z"></path>
+                            </svg></span>
+                            <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/11db3ff3a5473dc3e4c8ff5ff26e27ad.png"
+                                 class="mb-2"
+                                 src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/11db3ff3a5473dc3e4c8ff5ff26e27ad.png">
+                        </div>
+                        <div class="omp-product-card__bottom">
+                            <div class="omp-product-card--name">Sản phẩm test checkout 002</div>
+                            <div class="product--rating-stars">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                            </div>
+                            <div class="omp-product-card--price" style="display: flex;">
+                                <p class="omp-mr-1 omp-mb-0">121.110&nbsp;₫</p>
+                                <small>
+                                    <del>1.111.110&nbsp;₫</del>
+                                </small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="omp-product-wrapper">
+                    <a class="omp-product-card"
+                       href="https://landing2.guds.asia/products/san-pham-test-checkout-003.30.6">
+                        <div class="omp-product-card__top" style="height: 136px;">
+                                        <span class="product-card--premium"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 width="16" height="16"
+                                                                                 fill="currentColor"
+                                                                                 class="bi bi-lightning-fill"
+                                                                                 viewBox="0 0 16 16">
+                              <path d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5z"></path>
+                            </svg></span>
+                            <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/80343cf018acfc85247c2950809315fc.png"
+                                 class="mb-2"
+                                 src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/80343cf018acfc85247c2950809315fc.png">
+                        </div>
+                        <div class="omp-product-card__bottom">
+                            <div class="omp-product-card--name">Sản phẩm test checkout 003</div>
+                            <div class="product--rating-stars">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                            </div>
+                            <div class="omp-product-card--price" style="display: flex;">
+                                <p class="omp-mr-1 omp-mb-0">12.320&nbsp;₫</p>
+                                <small>
+                                    <del>123.230&nbsp;₫</del>
+                                </small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="omp-product-wrapper">
+                    <a class="omp-product-card"
+                       href="https://landing2.guds.asia/products/dep-cao-su-gia-coi---40-kem.30.5">
+                        <div class="omp-product-card__top" style="height: 136px;">
+                                        <span class="product-card--premium"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 width="16" height="16"
+                                                                                 fill="currentColor"
+                                                                                 class="bi bi-lightning-fill"
+                                                                                 viewBox="0 0 16 16">
+                              <path d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5z"></path>
+                            </svg></span>
+                            <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/e2eac68bb6fc601bedb5aa182c7d7183.jpeg"
+                                 class="mb-2"
+                                 src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/e2eac68bb6fc601bedb5aa182c7d7183.jpeg">
+                        </div>
+                        <div class="omp-product-card__bottom">
+                            <div class="omp-product-card--name">Dép cao su giả cói - 40, Kem</div>
+                            <div class="product--rating-stars">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                            </div>
+                            <div class="omp-product-card--price" style="display: flex;">
+                                <p class="omp-mr-1 omp-mb-0">27.000&nbsp;₫</p>
+                                <small>
+                                    <del>120.000&nbsp;₫</del>
+                                </small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="omp-product-wrapper">
+                    <a class="omp-product-card"
+                       href="https://landing2.guds.asia/products/dep-cao-su-gia-coi---39-den.30.4">
+                        <div class="omp-product-card__top" style="height: 136px;">
+                                        <span class="product-card--premium"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 width="16" height="16"
+                                                                                 fill="currentColor"
+                                                                                 class="bi bi-lightning-fill"
+                                                                                 viewBox="0 0 16 16">
+                              <path d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5z"></path>
+                            </svg></span>
+                            <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/37d3e49340d7bd42aeba1907375cf34e.jpeg"
+                                 class="mb-2"
+                                 src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/37d3e49340d7bd42aeba1907375cf34e.jpeg">
+                        </div>
+                        <div class="omp-product-card__bottom">
+                            <div class="omp-product-card--name">Dép cao su giả cói - 39, Đen</div>
+                            <div class="product--rating-stars">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                            </div>
+                            <div class="omp-product-card--price" style="display: flex;">
+                                <p class="omp-mr-1 omp-mb-0">27.000&nbsp;₫</p>
+                                <small>
+                                    <del>120.000&nbsp;₫</del>
+                                </small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="omp-product-wrapper">
+                    <a class="omp-product-card"
+                       href="https://landing2.guds.asia/products/dep-cao-su-gia-coi---38-den.30.3">
+                        <div class="omp-product-card__top" style="height: 136px;">
+                                        <span class="product-card--premium"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 width="16" height="16"
+                                                                                 fill="currentColor"
+                                                                                 class="bi bi-lightning-fill"
+                                                                                 viewBox="0 0 16 16">
+                              <path d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5z"></path>
+                            </svg></span>
+                            <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/0bd75ff3858a29dc806d55ff1d9f5fdd.jpeg"
+                                 class="mb-2"
+                                 src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/0bd75ff3858a29dc806d55ff1d9f5fdd.jpeg">
+                        </div>
+                        <div class="omp-product-card__bottom">
+                            <div class="omp-product-card--name">Dép cao su giả cói - 38, Đen</div>
+                            <div class="product--rating-stars">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                            </div>
+                            <div class="omp-product-card--price" style="display: flex;">
+                                <p class="omp-mr-1 omp-mb-0">27.000&nbsp;₫</p>
+                                <small>
+                                    <del>120.000&nbsp;₫</del>
+                                </small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="omp-product-wrapper">
+                    <a class="omp-product-card"
+                       href="https://landing2.guds.asia/products/dep-nhom-gia-coi---40-den.30.2">
+                        <div class="omp-product-card__top" style="height: 136px;">
+                                        <span class="product-card--premium"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 width="16" height="16"
+                                                                                 fill="currentColor"
+                                                                                 class="bi bi-lightning-fill"
+                                                                                 viewBox="0 0 16 16">
+                              <path d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5z"></path>
+                            </svg></span>
+                            <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/cc39af7dddc8c0f571ab65717d7b1e5f.jpeg"
+                                 class="mb-2"
+                                 src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/cc39af7dddc8c0f571ab65717d7b1e5f.jpeg">
+                        </div>
+                        <div class="omp-product-card__bottom">
+                            <div class="omp-product-card--name">Dép nhôm giả cói - 40, Đen</div>
+                            <div class="product--rating-stars">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                </svg>
+                            </div>
+                            <div class="omp-product-card--price" style="display: flex;">
+                                <p class="omp-mr-1 omp-mb-0">27.000&nbsp;₫</p>
+                                <small>
+                                    <del>120.000&nbsp;₫</del>
+                                </small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
+    </div>
+    <div id="OMP_OUTSTANDING_PRODUCT_1">
+        <div class="omp-landing-block--title">Sản phẩm nổi bật</div>
+        <div class="omp-landing-block--content">
+            <div class="omp-wp__outstanding-product">
+                <div class="omp-row">
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/san-pham-test-checkout-001.30.8">
+                            <div class="omp-product-card__top" style="height: 190px;">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/2ec3065e226c5663d4dc08c7518bb744.png"
+                                     class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/2ec3065e226c5663d4dc08c7518bb744.png">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Sản phẩm test Checkout 001</div>
+                                <div class="product--rating-stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">1.111.110&nbsp;₫</p>
+                                    <small>
+                                        <del>1.111.110&nbsp;₫</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/san-pham-test-checkout-002.30.7">
+                            <div class="omp-product-card__top" style="height: 190px;">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/11db3ff3a5473dc3e4c8ff5ff26e27ad.png"
+                                     class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/11db3ff3a5473dc3e4c8ff5ff26e27ad.png">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Sản phẩm test checkout 002</div>
+                                <div class="product--rating-stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">121.110&nbsp;₫</p>
+                                    <small>
+                                        <del>1.111.110&nbsp;₫</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/san-pham-test-checkout-003.30.6">
+                            <div class="omp-product-card__top" style="height: 190px;">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/80343cf018acfc85247c2950809315fc.png"
+                                     class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/80343cf018acfc85247c2950809315fc.png">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Sản phẩm test checkout 003</div>
+                                <div class="product--rating-stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">12.320&nbsp;₫</p>
+                                    <small>
+                                        <del>123.230&nbsp;₫</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/dep-cao-su-gia-coi---40-kem.30.5">
+                            <div class="omp-product-card__top" style="height: 190px;">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/e2eac68bb6fc601bedb5aa182c7d7183.jpeg"
+                                     class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/e2eac68bb6fc601bedb5aa182c7d7183.jpeg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Dép cao su giả cói - 40, Kem</div>
+                                <div class="product--rating-stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">27.000&nbsp;₫</p>
+                                    <small>
+                                        <del>120.000&nbsp;₫</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/dep-cao-su-gia-coi---39-den.30.4">
+                            <div class="omp-product-card__top" style="height: 190px;">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/37d3e49340d7bd42aeba1907375cf34e.jpeg"
+                                     class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/37d3e49340d7bd42aeba1907375cf34e.jpeg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Dép cao su giả cói - 39, Đen</div>
+                                <div class="product--rating-stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">27.000&nbsp;₫</p>
+                                    <small>
+                                        <del>120.000&nbsp;₫</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/dep-cao-su-gia-coi---38-den.30.3">
+                            <div class="omp-product-card__top" style="height: 190px;">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/0bd75ff3858a29dc806d55ff1d9f5fdd.jpeg"
+                                     class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/0bd75ff3858a29dc806d55ff1d9f5fdd.jpeg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Dép cao su giả cói - 38, Đen</div>
+                                <div class="product--rating-stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">27.000&nbsp;₫</p>
+                                    <small>
+                                        <del>120.000&nbsp;₫</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/dep-nhom-gia-coi---40-den.30.2">
+                            <div class="omp-product-card__top" style="height: 190px;">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/cc39af7dddc8c0f571ab65717d7b1e5f.jpeg"
+                                     class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/cc39af7dddc8c0f571ab65717d7b1e5f.jpeg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Dép nhôm giả cói - 40, Đen</div>
+                                <div class="product--rating-stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">27.000&nbsp;₫</p>
+                                    <small>
+                                        <del>120.000&nbsp;₫</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="OMP_ALL_PRODUCTS">
+        <div class="omp-landing-block--title">TẤT CẢ SẢN PHẨM</div>
         <div class="omp-landing-block--content">
             <div class="omp-wp__all-products">
                 <div class="omp-row">
                     <div class="omp-product-col omp-product-wrapper">
-                        <div class="omp-product-card" style="height: 296px">
-                            <div class="omp-product-card__top" style="height: 181px;">
-                                <div class="skeleton-item"></div>
-                            </div>
-                            <div class="omp-product-card__bottom">
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                            </div>
-                        </div>
-                    </div>
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-3.30.327">
+                            <div class="omp-product-card__top" style="height: 190px;">
 
-                    <div class="omp-product-col omp-product-wrapper">
-                        <div class="omp-product-card" style="height: 296px">
-                            <div class="omp-product-card__top" style="height: 181px;">
-                                <div class="skeleton-item"></div>
+                                <img alt="https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/7faa33ec309ae7e3a427fb1d1c7b6a7e-4294c721-d589-4871-9db1-023a46168771.jpeg"
+                                     class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/7faa33ec309ae7e3a427fb1d1c7b6a7e-4294c721-d589-4871-9db1-023a46168771.jpeg">
                             </div>
                             <div class="omp-product-card__bottom">
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
+                                <div class="omp-product-card--name">Đĩa Tròn Phẳng Trang Trí Bàn Ăn Phong Cách Bắc Âu
+                                    Macaroon
+                                </div>
+                                <div class="product--rating-stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">30.000&nbsp;₫</p>
+                                    <small>
+                                        <del>99.000&nbsp;₫</del>
+                                    </small>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
-
                     <div class="omp-product-col omp-product-wrapper">
-                        <div class="omp-product-card" style="height: 296px">
-                            <div class="omp-product-card__top" style="height: 181px;">
-                                <div class="skeleton-item"></div>
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-2.30.280">
+                            <div class="omp-product-card__top" style="height: 190px;">
+
+                                <img alt="https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/7faa33ec309ae7e3a427fb1d1c7b6a7e-4294c721-d589-4871-9db1-023a46168771.jpeg"
+                                     class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/7faa33ec309ae7e3a427fb1d1c7b6a7e-4294c721-d589-4871-9db1-023a46168771.jpeg">
                             </div>
                             <div class="omp-product-card__bottom">
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
+                                <div class="omp-product-card--name">Đĩa Tròn Phẳng Trang Trí Bàn Ăn Phong Cách Bắc Âu
+                                    Macaroon - 6 Màu Khác Nhau
+                                </div>
+                                <div class="product--rating-stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">30.000&nbsp;₫</p>
+                                    <small>
+                                        <del>99.000&nbsp;₫</del>
+                                    </small>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
-
                     <div class="omp-product-col omp-product-wrapper">
-                        <div class="omp-product-card" style="height: 296px">
-                            <div class="omp-product-card__top" style="height: 181px;">
-                                <div class="skeleton-item"></div>
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau.30.259">
+                            <div class="omp-product-card__top" style="height: 190px;">
+
+                                <img alt="https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/7faa33ec309ae7e3a427fb1d1c7b6a7e-4294c721-d589-4871-9db1-023a46168771.jpeg"
+                                     class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/7faa33ec309ae7e3a427fb1d1c7b6a7e-4294c721-d589-4871-9db1-023a46168771.jpeg">
                             </div>
                             <div class="omp-product-card__bottom">
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
+                                <div class="omp-product-card--name">Đĩa Tròn Phẳng Trang Trí Bàn Ăn Phong Cách Bắc Âu
+                                    Macaroon - 6 Màu Khác Nhau
+                                </div>
+                                <div class="product--rating-stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">30.000&nbsp;₫</p>
+                                    <small>
+                                        <del>99.000&nbsp;₫</del>
+                                    </small>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
-
                     <div class="omp-product-col omp-product-wrapper">
-                        <div class="omp-product-card" style="height: 296px">
-                            <div class="omp-product-card__top" style="height: 181px;">
-                                <div class="skeleton-item"></div>
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-1.30.238">
+                            <div class="omp-product-card__top" style="height: 190px;">
+
+                                <img alt="https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/7faa33ec309ae7e3a427fb1d1c7b6a7e-4294c721-d589-4871-9db1-023a46168771.jpeg"
+                                     class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/7faa33ec309ae7e3a427fb1d1c7b6a7e-4294c721-d589-4871-9db1-023a46168771.jpeg">
                             </div>
                             <div class="omp-product-card__bottom">
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
+                                <div class="omp-product-card--name">Đĩa Tròn Phẳng Trang Trí Bàn Ăn Phong Cách Bắc Âu
+                                    Macaroon - 6 Màu Khác Nhau
+                                </div>
+                                <div class="product--rating-stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">30.000&nbsp;₫</p>
+                                    <small>
+                                        <del>99.000&nbsp;₫</del>
+                                    </small>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
-
                     <div class="omp-product-col omp-product-wrapper">
-                        <div class="omp-product-card" style="height: 296px">
-                            <div class="omp-product-card__top" style="height: 181px;">
-                                <div class="skeleton-item"></div>
+                        <a class="omp-product-card" href="https://landing2.guds.asia/products/macbook-pro.30.215">
+                            <div class="omp-product-card__top" style="height: 190px;">
+
+                                <img alt="https://hannaholala.com/promotion/wp-content/uploads/sites/2/2021/05/z2483519228453_2efea5e4e81fc0ab9b3585ed8ac0c97b-scaled.jpg"
+                                     class="mb-2"
+                                     src="https://hannaholala.com/promotion/wp-content/uploads/sites/2/2021/05/z2483519228453_2efea5e4e81fc0ab9b3585ed8ac0c97b-scaled.jpg">
                             </div>
                             <div class="omp-product-card__bottom">
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
+                                <div class="omp-product-card--name">Macbook PRO</div>
+                                <div class="product--rating-stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">1.050.000&nbsp;₫</p>
+                                    <small>
+                                        <del>1.050.000&nbsp;₫</del>
+                                    </small>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
-
                     <div class="omp-product-col omp-product-wrapper">
-                        <div class="omp-product-card" style="height: 296px">
-                            <div class="omp-product-card__top" style="height: 181px;">
-                                <div class="skeleton-item"></div>
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/olalahome-nen-hong.30.211">
+                            <div class="omp-product-card__top" style="height: 190px;">
+
+                                <img alt="https://hannaholala.com/promotion/wp-content/uploads/sites/2/2021/05/z2483519228453_2efea5e4e81fc0ab9b3585ed8ac0c97b-scaled.jpg"
+                                     class="mb-2"
+                                     src="https://hannaholala.com/promotion/wp-content/uploads/sites/2/2021/05/z2483519228453_2efea5e4e81fc0ab9b3585ed8ac0c97b-scaled.jpg">
                             </div>
                             <div class="omp-product-card__bottom">
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
+                                <div class="omp-product-card--name">OlalaHome nến Hồng</div>
+                                <div class="product--rating-stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">1.050.000&nbsp;₫</p>
+                                    <small>
+                                        <del>1.050.000&nbsp;₫</del>
+                                    </small>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
-
                     <div class="omp-product-col omp-product-wrapper">
-                        <div class="omp-product-card" style="height: 296px">
-                            <div class="omp-product-card__top" style="height: 181px;">
-                                <div class="skeleton-item"></div>
+                        <a class="omp-product-card" href="https://landing2.guds.asia/products/None.30.152">
+                            <div class="omp-product-card__top" style="height: 190px;">
+
+                                <img alt="https://hannaholala.com/promotion/wp-content/uploads/sites/2/2021/05/thumbnail.jpg"
+                                     class="mb-2"
+                                     src="https://hannaholala.com/promotion/wp-content/uploads/sites/2/2021/05/thumbnail.jpg">
                             </div>
                             <div class="omp-product-card__bottom">
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
-                                <div class="skeleton-item"></div>
+                                <div class="omp-product-card--name">SHIS-D2: Khi mua phấn nền dạng lỏng Synchro Skin
+                                    Self-Refreshing Foundation 30ML - Tặng 01 Synchro Skin Self-Refreshing Cushion 13G
+                                    full size
+                                </div>
+                                <div class="product--rating-stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">1.400.000&nbsp;₫</p>
+                                    <small>
+                                        <del>1.400.000&nbsp;₫</del>
+                                    </small>
+                                </div>
                             </div>
-                        </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/san-pham-test-checkout-001.30.8">
+                            <div class="omp-product-card__top" style="height: 190px;">
+
+                                <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/2ec3065e226c5663d4dc08c7518bb744.png"
+                                     class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/2ec3065e226c5663d4dc08c7518bb744.png">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Sản phẩm test Checkout 001</div>
+                                <div class="product--rating-stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">1.111.110&nbsp;₫</p>
+                                    <small>
+                                        <del>1.111.110&nbsp;₫</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/san-pham-test-checkout-002.30.7">
+                            <div class="omp-product-card__top" style="height: 190px;">
+
+                                <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/11db3ff3a5473dc3e4c8ff5ff26e27ad.png"
+                                     class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/11db3ff3a5473dc3e4c8ff5ff26e27ad.png">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Sản phẩm test checkout 002</div>
+                                <div class="product--rating-stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">121.110&nbsp;₫</p>
+                                    <small>
+                                        <del>1.111.110&nbsp;₫</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/san-pham-test-checkout-003.30.6">
+                            <div class="omp-product-card__top" style="height: 190px;">
+
+                                <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/80343cf018acfc85247c2950809315fc.png"
+                                     class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/80343cf018acfc85247c2950809315fc.png">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Sản phẩm test checkout 003</div>
+                                <div class="product--rating-stars">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">12.320&nbsp;₫</p>
+                                    <small>
+                                        <del>123.230&nbsp;₫</del>
+                                    </small>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -1633,8 +2615,7 @@
     <p>Vui lòng chọn mẫu mã</p>
 </div>
 <script>window.page_elements = {
-    "page_id": "home",
-    "page_elements": {
+    "page_id": "home", "page_elements": {
         "statics_elements": [{
             "element_index": null,
             "element_id": "OMP_HEADER",
@@ -1649,9 +2630,16 @@
             "element_name": "OMP_MENU_FOOTER"
         }],
         "dynamic_elements": [{
+            "element_id": "OMP_ONE_IMAGE_1",
+            "element_name": "OMP_ONE_IMAGE",
+            "element_index": 1,
+            "element_height": 10,
+            "element_title": "page_editor.origin_block_title.one_image",
+            "config": {"images": ["https://storage.googleapis.com/boxme/omisocial/30/2021/06/first_promotion_type_mEygJw_202106.png"]}
+        }, {
             "element_id": "OMP_FLASH_SALE_1",
             "element_name": "OMP_FLASH_SALE",
-            "element_index": 1,
+            "element_index": 2,
             "element_height": 25,
             "element_title": "Flash sale",
             "config": {
@@ -1668,9 +2656,9 @@
         }, {
             "element_id": "OMP_OUTSTANDING_PRODUCT_1",
             "element_name": "OMP_OUTSTANDING_PRODUCT",
-            "element_index": 2,
+            "element_index": 3,
             "element_height": 25,
-            "element_title": "Test detail page",
+            "element_title": "Sản phẩm nổi bật",
             "config": {
                 "collection": {
                     "id": 23,
@@ -1678,22 +2666,31 @@
                     "slug": "aasdsdsdsdsd",
                     "description": "test",
                     "is_active": true,
-                    "landing": {"name": "Landing 2", "url": "https://landing2.guds.asia"}
+                    "landing": {"name": "Landing 2", "url": "https://landing2.guds.asia"},
+                    "link": "/collections/aasdsdsdsdsd.30.aasdsdsdsdsd"
                 }
             }
         }]
     }
 };
 window.page_configs = {
-    "id": 34,
-    "name": "wwweee",
-    "url": "https://wwweee.omiboost.com",
-    "created_time": 1619411503,
+    "id": 30,
+    "name": "Landing 2",
+    "url": "https://landing2.guds.asia",
+    "created_time": 1619410821,
     "sync_integration": false,
-    "last_released_time": 1623920493,
-    "config": {},
-    "access_token": "bOd7dtDtqmsCpxHEQ1X9ibNGx",
-    "external_store_id": null,
+    "last_released_time": 1624633714,
+    "config": {
+        "logo": "https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324.jpg?w=795&h=530",
+        "favicon": "https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324.jpg?w=80&h=80",
+        "meta_keyword": "quan ao, quan ao mua he, gia re",
+        "website_title": "Giầy dép giá rẻ",
+        "facebook_pixel": "162890002483695",
+        "google_tracking": "162890002483695",
+        "website_description": "Đây là mô tả"
+    },
+    "access_token": "CmGLLXPN8JBgw2JjwJMaqrsJo",
+    "external_store_id": 482,
     "language": "vi",
     "currency": "VND",
     "locale": "vi-VN",
@@ -1705,18 +2702,57 @@ window.page_configs = {
         src="https://cdn.jsdelivr.net/gh/Boxme-Global/omipage-cart-embed@v0.1.220602/lib/index.js"></script>
 <div id="omp-cart-popup">
     <div class="omp-cart-popup-content">
-        <p class="omp-text-center ">
-            <img src="https://storage.googleapis.com/omisell-cloud/omipage/cart_empty.png" width="300px" alt=""
-                 class="mx-auto">
-        </p>
-        <p class="omp-text-center ">
-            Giỏ hàng của bạn trống
-        </p>
-
-
-        <div class="omp-cart-action">
-            <button onclick="omipage.close_cart_popup()">Quay lại</button>
+        <div class="omp-cart-header">
+            <div class="omp-cart-close" onclick="omipage.close_cart_popup()">
+                <button>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                         class="bi bi-chevron-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"></path>
+                    </svg>
+                </button>
+            </div>
+            <p class="omp-text-center omp-cart-title">Giỏ hàng</p>
+            <p class="spacer"></p>
         </div>
+        <div class="omp-cart-row" id="omp-cart-row-DISK_207">
+            <div class="col-12 omipage-checkout__products-item">
+                <img alt="Product image" class="omipage-checkout__products-item--thumbnail"
+                     src="https://storage.googleapis.com/omisell-cloud/omipage/product.png"
+                     onerror="this.src='https://storage.googleapis.com/omisell-cloud/omipage/product.png'">
+                <div class="omipage-checkout__products-item--name">
+                    <div class="item-name__group">
+                        <div class="item-name__group--product-name" title="Xanh đen XL"> Xanh đen XL</div>
+                    </div>
+                </div>
+                <div class="omipage-checkout__products-item--discounted-price text-danger"><span
+                        id="omp-cart-price-DISK_207">99,000 VNĐ</span>
+                </div>
+                <div class="omipage-checkout__products-item--quantity input-group">
+                    <div class="omp-cart-quantity-content">
+                        <button onclick="javascript: omipage.decrease_quantity('DISK_207', 1);" type="button">
+                            <span>-</span></button>
+                        <input id="omp-cart-quantity-input-DISK_207" type="number" min="1" value="1"
+                               oninput="javascript: omipage.set_quantity('DISK_207', this.value);">
+                        <button type="button" onclick="javascript: omipage.increase_quantity('DISK_207', 1);">
+                            <span>+</span></button>
+                    </div>
+                </div>
+                <div class="omipage-checkout__products-item--delete-button text-danger pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                        <path fill-rule="evenodd"
+                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="omp-cart-action">
+        <a href="/checkout" onmouseover="this.style.cursor='pointer'">
+            <button data-action="checkout">THANH TOÁN NGAY</button>
+        </a>
     </div>
 </div>
 </body>
