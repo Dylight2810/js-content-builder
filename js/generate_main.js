@@ -141,9 +141,9 @@ const EnumPageType = {
             }
         }
 
-        _queryElementsByClass = (class_name, parent_node) => {
+        _queryElementsByClass = (wrapper_tag, class_name, parent_node) => {
             const _parent_node = parent_node || document;
-            return _parent_node.querySelectorAll(`div[class=${class_name}]`)[0];
+            return _parent_node.querySelectorAll(`${wrapper_tag}[class=${class_name}]`)[0];
         }
 
         _queryAllElementsByClass = (wrapper_tag, class_name, parent_node) => {
@@ -417,12 +417,13 @@ const EnumPageType = {
                 _product_price_els.forEach(e => e.removeAttribute('style'))
             }
 
-            const _product_cart_top_els = this.content_builder._queryAllElementsByClass('div', 'omp-product-card__top');
-            const _product_cart_top_el_height = _product_cart_top_els[0]?.offsetWidth || 0;
-            _product_cart_top_els.forEach(e => e.style.height = `${e.offsetWidth}`);
-
             const _product_cart_els = this.content_builder._queryAllElementsByClass('a','omp-product-card');
-            _product_cart_els.forEach(e => e.setAttribute('style', `height: ${_product_cart_top_el_height + 125}px`))
+            _product_cart_els.forEach(e => {
+                const _product_cart_top_els = this.content_builder._queryElementsByClass('div', 'omp-product-card__top', e);
+                _product_cart_top_els.setAttribute('style', `height: ${_product_cart_top_els.offsetWidth}px`);
+
+                e.setAttribute('style', `height: ${_product_cart_top_els.offsetWidth + 125}px`)
+            })
         }
 
         _renderAllProductBlock = async (page) => {
@@ -452,7 +453,7 @@ const EnumPageType = {
             if (_products && _products.length) {
                 this.all_product_current_page++;
                 const _all_product_element = this.content_builder._queryElementsById(EnumLandingBlockElementName.LANDING_ALL_PRODUCTS);
-                const _product_wrapper = this.content_builder._queryElementsByClass('omp-row', _all_product_element);
+                const _product_wrapper = this.content_builder._queryElementsByClass('div', 'omp-row', _all_product_element);
                 _product_wrapper.innerHTML += this.content_builder._renderListProduct(
                     _products,
                     this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
