@@ -353,7 +353,7 @@ const EnumPageType = {
         _bannerOneImageContentBuilder = (image_url) => {
             if (!image_url) return '';
 
-            return `<div class="omp-banner__one-image--content">
+            return `<div class="omp-wp__one-image">
                         <img src="${image_url}" alt="${image_url}">
                     </div>`
         }
