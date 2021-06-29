@@ -93,7 +93,6 @@ const EBannerImgReferenceLinkType = {
         }
 
         _addAutoCarouselEvent = (block_element) => {
-            const carousel_wrapper_el = block_element.getElementsByClassName('ompi-carousel');
             const carousel_item_els = block_element.querySelectorAll('div[class^="ompi-carousel--image"]');
 
             if (!carousel_item_els.length) return;
@@ -107,7 +106,7 @@ const EBannerImgReferenceLinkType = {
             if (this.current_carousel_index !== 0) {
                 carousel_item_els[this.current_carousel_index - 1].classList.remove('prev');
             } else {
-                carousel_item_els[this.current_carousel_index + 1].classList.remove('prev');
+                carousel_item_els[carousel_item_els.length - 1].classList.remove('prev');
             }
 
             carousel_item_els[this.current_carousel_index].classList.add('prev');
