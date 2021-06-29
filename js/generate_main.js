@@ -41,16 +41,17 @@ const EnumLandingBlockElementName = {
     DESIGN_FLASH_SALE: 'OMP_FLASH_SALE'
 };
 
-const EnumPageType = {
-    HOME: 'home',
-    PRODUCT_DETAIL: 'product_detail',
-    POLICY: 'policy_page'
+const EBannerImgReferenceLinkType = {
+    PRODUCT_DETAIL: 1,
+    COLLECTION_DETAIL: 2,
+    HARD_LINK: 3
 };
 
 (function (window) {
     class GlobalEvent {
         carousel_interval;
         current_carousel_index = 0;
+
         constructor() {
         }
 
@@ -102,6 +103,13 @@ const EnumPageType = {
 
         _handleMoveToNextCarousel = (carousel_item_els, is_auto_event = false) => {
             let next_index;
+
+            if (this.current_carousel_index !== 0) {
+                carousel_item_els[this.current_carousel_index - 1].classList.remove('prev');
+            } else {
+                carousel_item_els[this.current_carousel_index + 1].classList.remove('prev');
+            }
+
             carousel_item_els[this.current_carousel_index].classList.add('prev');
             carousel_item_els[this.current_carousel_index].classList.remove('active');
 
@@ -124,6 +132,13 @@ const EnumPageType = {
 
         _handleMoveToPrevCarousel = (carousel_item_els) => {
             let next_index;
+
+            if (this.current_carousel_index !== carousel_item_els.length - 1) {
+                carousel_item_els[this.current_carousel_index + 1].classList.remove('prev');
+            } else {
+                carousel_item_els[0].classList.remove('prev');
+            }
+
             carousel_item_els[this.current_carousel_index].classList.add('prev');
             carousel_item_els[this.current_carousel_index].classList.remove('active');
 
@@ -271,6 +286,24 @@ const EnumPageType = {
         _queryElementsLikeClassName = (class_name, parent_node) => {
             const _parent_node = parent_node || document;
             return _parent_node.querySelectorAll(`div[class^=${class_name}]`);
+        }
+
+        _convertImageLink = (image_config, landing_url) => {
+            let _image_link = '';
+
+            switch (image_config.reference_type) {
+                case EBannerImgReferenceLinkType.COLLECTION_DETAIL:
+                    _image_link = `${landing_url}${image_config.reference_data.link}`;
+                    break;
+                case EBannerImgReferenceLinkType.PRODUCT_DETAIL:
+                    _image_link = `${landing_url}${image_config.reference_data.link}`;
+                    break;
+                case EBannerImgReferenceLinkType.HARD_LINK:
+                    _image_link = `${image_config.reference_link}`;
+                    break;
+            }
+
+            return _image_link;
         }
 
         _headerElementBuilder = (landing_name, image_url) => {
@@ -464,12 +497,13 @@ const EnumPageType = {
             let innerHtml = '';
 
             images_config.forEach((img, index) => {
+                const _img_link = this._convertImageLink(img, landing_url);
                 switch (index) {
                     case 0:
                         innerHtml += `
                             <div class="ompi-carousel--image active">
                                 <img src="${img.url}" alt="${img.url}">
-                                <a href="${landing_url}${img.reference_data.link}"></a>
+                                <a href="${_img_link}"></a>
                             </div>
                         `;
                         break;
@@ -477,7 +511,7 @@ const EnumPageType = {
                         innerHtml += `
                            <div class="ompi-carousel--image next">
                                 <img src="${img.url}" alt="${img.url}">
-                                <a href="${landing_url}${img.reference_data.link}"></a>
+                                <a href="${_img_link}"></a>
                             </div>
                         `;
                         break;
@@ -485,7 +519,7 @@ const EnumPageType = {
                         innerHtml += `
                             <div class="ompi-carousel--image">
                                 <img src="${img.url}" alt="${img.url}">
-                                <a href="${landing_url}${img.reference_data.link}"></a>
+                                <a href="${_img_link}"></a>
                             </div>
                         `;
                         break;
@@ -517,9 +551,11 @@ const EnumPageType = {
         _bannerOneImageContentBuilder = (image_config, landing_url) => {
             if (!image_config || !image_config.length) return '';
 
+            const _img_link = this._convertImageLink(image_config[0], landing_url);
+
             return `<div class="omp-wp__one-image">
-                        <img src="${image_config[0].url}" alt="${image_config[0].reference_data.name}">
-                        <a href="${landing_url}${image_config[0].reference_data.link}"></a>
+                        <img src="${image_config[0].url}" alt="${image_config[0].url}">
+                        <a href="${_img_link}"></a>
                     </div>`
         }
 

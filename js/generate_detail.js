@@ -54,40 +54,54 @@ const EnumNotifyType = {
         constructor() {
         }
 
-        _handleMoveToNextCarousel = (carousel_item_el) => {
+        _handleMoveToNextCarousel = (carousel_item_els) => {
             let next_index;
-            carousel_item_el[this.current_carousel_index].classList.add('prev');
-            carousel_item_el[this.current_carousel_index].classList.remove('active');
 
-            if (this.current_carousel_index === carousel_item_el.length - 1) {
+            if (this.current_carousel_index !== 0) {
+                carousel_item_els[this.current_carousel_index - 1].classList.remove('prev');
+            } else {
+                carousel_item_els[this.current_carousel_index + 1].classList.remove('prev');
+            }
+
+            carousel_item_els[this.current_carousel_index].classList.add('prev');
+            carousel_item_els[this.current_carousel_index].classList.remove('active');
+
+            if (this.current_carousel_index === carousel_item_els.length - 1) {
                 this.current_carousel_index = 0;
             } else {
                 this.current_carousel_index++;
             }
 
-            next_index = this.current_carousel_index === carousel_item_el.length - 1 ? 0 : this.current_carousel_index + 1;
+            next_index = this.current_carousel_index === carousel_item_els.length - 1 ? 0 : this.current_carousel_index + 1;
 
-            carousel_item_el[this.current_carousel_index].classList.add('active');
-            carousel_item_el[this.current_carousel_index].classList.remove('next');
-            carousel_item_el[next_index].classList.add('next');
+            carousel_item_els[this.current_carousel_index].classList.add('active');
+            carousel_item_els[this.current_carousel_index].classList.remove('next');
+            carousel_item_els[next_index].classList.add('next');
         }
 
-        _handleMoveToPrevCarousel = (carousel_item_el) => {
+        _handleMoveToPrevCarousel = (carousel_item_els) => {
             let next_index;
-            carousel_item_el[this.current_carousel_index].classList.add('prev');
-            carousel_item_el[this.current_carousel_index].classList.remove('active');
+
+            if (this.current_carousel_index !== carousel_item_els.length - 1) {
+                carousel_item_els[this.current_carousel_index + 1].classList.remove('prev');
+            } else {
+                carousel_item_els[0].classList.remove('prev');
+            }
+
+            carousel_item_els[this.current_carousel_index].classList.add('prev');
+            carousel_item_els[this.current_carousel_index].classList.remove('active');
 
             if (this.current_carousel_index === 0) {
-                this.current_carousel_index = carousel_item_el.length - 1;
+                this.current_carousel_index = carousel_item_els.length - 1;
             } else {
                 this.current_carousel_index--;
             }
 
-            next_index = this.current_carousel_index === 0 ? carousel_item_el.length - 1 : this.current_carousel_index - 1;
+            next_index = this.current_carousel_index === 0 ? carousel_item_els.length - 1 : this.current_carousel_index - 1;
 
-            carousel_item_el[this.current_carousel_index].classList.add('active');
-            carousel_item_el[this.current_carousel_index].classList.remove('next');
-            carousel_item_el[next_index].classList.add('next');
+            carousel_item_els[this.current_carousel_index].classList.add('active');
+            carousel_item_els[this.current_carousel_index].classList.remove('next');
+            carousel_item_els[next_index].classList.add('next');
         }
 
         _addScrollEvent = (scroll_element, call_back) => {
