@@ -50,6 +50,7 @@ const EnumPageType = {
 (function (window) {
     class GlobalEvent {
         carousel_interval;
+        current_carousel_index = 0;
         constructor() {
         }
 
@@ -84,6 +85,7 @@ const EnumPageType = {
                 const item_next_index = Array.from(carousel_item_els).findIndex(e => e.classList.contains('next'));
                 const new_next_index = item_next_index === carousel_item_els.length - 1
                     ? 0 : item_next_index + 1;
+
                 Array.from(carousel_item_els).forEach((el, index) => {
                     if (index === item_prev_index) el.classList.remove('prev');
                     if (index === item_active_index) {
@@ -95,6 +97,9 @@ const EnumPageType = {
                         el.classList.add('active');
                     }
                     if (index === new_next_index) el.classList.add('next');
+
+                    this.current_carousel_index = item_next_index;
+                    console.log('Change current carousel index');
                 });
             }, 5000);
         }
