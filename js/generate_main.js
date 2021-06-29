@@ -502,24 +502,27 @@ const EBannerImgReferenceLinkType = {
                     case 0:
                         innerHtml += `
                             <div class="ompi-carousel--image active">
-                                <img src="${img.url}" alt="${img.url}">
-                                <a href="${_img_link}"></a>
+                                <a href="${_img_link}">
+                                    <img src="${img.url}" alt="${img.url}">
+                                </a>
                             </div>
                         `;
                         break;
                     case 1:
                         innerHtml += `
                            <div class="ompi-carousel--image next">
-                                <img src="${img.url}" alt="${img.url}">
-                                <a href="${_img_link}"></a>
+                                <a href="${_img_link}">
+                                    <img src="${img.url}" alt="${img.url}">
+                                </a>
                             </div>
                         `;
                         break;
                     default:
                         innerHtml += `
                             <div class="ompi-carousel--image">
-                                <img src="${img.url}" alt="${img.url}">
-                                <a href="${_img_link}"></a>
+                                <a href="${_img_link}">
+                                    <img src="${img.url}" alt="${img.url}">
+                                </a>
                             </div>
                         `;
                         break;
