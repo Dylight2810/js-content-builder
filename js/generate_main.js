@@ -350,11 +350,12 @@ const EnumPageType = {
             if (!images.length) return '';
         }
 
-        _bannerOneImageContentBuilder = (image_url) => {
-            if (!image_url) return '';
+        _bannerOneImageContentBuilder = (image_config, landing_url) => {
+            if (!image_config || !image_config.length) return '';
 
             return `<div class="omp-wp__one-image">
-                        <img src="${image_url}" alt="${image_url}">
+                        <img src="${image_config[0].url}" alt="${image_config[0].reference_data.name}">
+                        <a href="${landing_url}${image_config[0].reference_data.link}"></a>
                     </div>`
         }
 
@@ -539,8 +540,7 @@ const EnumPageType = {
                     element.innerHTML = this.content_builder._bannerOneImageContentBuilder(_el_config.images);
                     break;
                 case EnumLandingBlockElementName.DESIGN_ONE_IMAGE:
-                    const _image = _el_config.images && _el_config.images.length ? _el_config.images[0] : '';
-                    element.innerHTML = this.content_builder._bannerOneImageContentBuilder(_image);
+                    element.innerHTML = this.content_builder._bannerOneImageContentBuilder(_el_config.images, this.page_configs.url);
                     break;
                 case EnumLandingBlockElementName.DESIGN_TWO_IMAGE:
                     element.innerHTML = this.content_builder._bannerOneImageContentBuilder(_el_config.images);
