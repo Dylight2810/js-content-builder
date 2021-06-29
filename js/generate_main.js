@@ -49,6 +49,7 @@ const EnumPageType = {
 
 (function (window) {
     class GlobalEvent {
+        carousel_interval;
         constructor() {
         }
 
@@ -76,13 +77,8 @@ const EnumPageType = {
             window.addEventListener('resize', _eventHandler);
         }
 
-        _addAutoCarouselEvent = (block_element) => {
-            const carousel_wrapper_el = block_element.getElementsByClassName('ompi-carousel');
-            const carousel_item_els = block_element.querySelectorAll('div[class^="ompi-carousel--image"]');
-
-            if (!carousel_item_els.length) return;
-
-            setInterval(() => {
+        _setIntervalForAutoCarousel = (carousel_item_els) => {
+            this.carousel_interval = setInterval(() => {
                 const item_prev_index = Array.from(carousel_item_els).findIndex(e => e.classList.contains('prev'));
                 const item_active_index = Array.from(carousel_item_els).findIndex(e => e.classList.contains('active'));
                 const item_next_index = Array.from(carousel_item_els).findIndex(e => e.classList.contains('next'));
@@ -100,7 +96,103 @@ const EnumPageType = {
                     }
                     if (index === new_next_index) el.classList.add('next');
                 });
-            }, 3000);
+            }, 5000);
+        }
+
+        _addAutoCarouselEvent = (block_element) => {
+            const carousel_wrapper_el = block_element.getElementsByClassName('ompi-carousel');
+            const carousel_item_els = block_element.querySelectorAll('div[class^="ompi-carousel--image"]');
+
+            if (!carousel_item_els.length) return;
+
+            this._setIntervalForAutoCarousel(carousel_item_els);
+        }
+
+        _handleMoveToNextCarousel = (carousel_item_els) => {
+            let next_index;
+            carousel_item_els[this.current_carousel_index].classList.add('prev');
+            carousel_item_els[this.current_carousel_index].classList.remove('active');
+
+            if (this.current_carousel_index === carousel_item_els.length - 1) {
+                this.current_carousel_index = 0;
+            } else {
+                this.current_carousel_index++;
+            }
+
+            next_index = this.current_carousel_index === carousel_item_els.length - 1 ? 0 : this.current_carousel_index + 1;
+
+            carousel_item_els[this.current_carousel_index].classList.add('active');
+            carousel_item_els[this.current_carousel_index].classList.remove('next');
+            carousel_item_els[next_index].classList.add('next');
+
+            this._setIntervalForAutoCarousel(carousel_item_els);
+        }
+
+        _handleMoveToPrevCarousel = (carousel_item_els) => {
+            let next_index;
+            carousel_item_els[this.current_carousel_index].classList.add('prev');
+            carousel_item_els[this.current_carousel_index].classList.remove('active');
+
+            if (this.current_carousel_index === 0) {
+                this.current_carousel_index = carousel_item_els.length - 1;
+            } else {
+                this.current_carousel_index--;
+            }
+
+            next_index = this.current_carousel_index === 0 ? carousel_item_els.length - 1 : this.current_carousel_index - 1;
+
+            carousel_item_els[this.current_carousel_index].classList.add('active');
+            carousel_item_els[this.current_carousel_index].classList.remove('next');
+            carousel_item_els[next_index].classList.add('next');
+
+            this._setIntervalForAutoCarousel(carousel_item_els);
+        }
+
+        _addCarouselClickEvent = (carousel_el, carousel_item_el, prev_btn, next_btn) => {
+            const _prevBtnEventHandler = () => {
+                this._handleMoveToPrevCarousel(carousel_item_el);
+            }
+
+            const _nextBtnEventHandler = () => {
+                this._handleMoveToNextCarousel(carousel_item_el);
+            }
+
+            prev_btn.addEventListener('click', _prevBtnEventHandler);
+            next_btn.addEventListener('click', _nextBtnEventHandler);
+        }
+
+        _addCarouselTouchEvent = (carousel_el) => {
+            let touch_move_x;
+            let touch_start_x;
+            const carousel_item_els = carousel_el.querySelectorAll('div[class^="ompi-carousel--image"]');
+            const prev_btn = carousel_el.querySelectorAll('div[class^="ompi-carousel--prev-btn"]')[0];
+            const next_btn = carousel_el.querySelectorAll('div[class^="ompi-carousel--next-btn"]')[0];
+
+            if (!carousel_item_els.length) return;
+
+            const _touchEndEventHandler = () => {
+                // Stop Auto Carousel
+                if (this.carousel_interval) {
+                    clearInterval(this.carousel_interval);
+                }
+
+                const long_move = touch_start_x - touch_move_x;
+
+                if (!touch_move_x || Math.abs(long_move) < 20) return;
+
+                if (long_move > 0) {
+                    this._handleMoveToNextCarousel(carousel_item_els);
+                } else {
+                    this._handleMoveToPrevCarousel(carousel_item_els);
+                }
+
+                touch_move_x = 0;
+            };
+
+            carousel_el.addEventListener('touchstart', (e) => touch_start_x = e.touches[0].pageX);
+            carousel_el.addEventListener('touchmove', (e) => touch_move_x = e.touches[0].pageX);
+            carousel_el.addEventListener('touchend', _touchEndEventHandler);
+            this._addCarouselClickEvent(carousel_el, carousel_item_els, prev_btn, next_btn);
         }
     }
 
@@ -407,6 +499,19 @@ const EnumPageType = {
                 }
             })
 
+            innerHtml += `
+                <div class="ompi-carousel--prev-btn show">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                    </svg>
+                </div>
+                <div class="ompi-carousel--next-btn show">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                </div>
+            `;
+
             return `
                 <div class="omp-banner-carousel ompi-carousel--wrapper">
                     <div class="ompi-carousel">
@@ -549,7 +654,8 @@ const EnumPageType = {
                 switch (e.element_id) {
                     case EnumLandingBlockElementName.LANDING_HEADER:
                         const _header = document.getElementById(e.element_id)
-                        _header.innerHTML = this.content_builder._headerElementBuilder(landing_config?.name, landing_config?.config?.logo);
+                        const _headerLogo = e.config?.images && e.config?.images.length ? e.config?.images[0].url : landing_config?.config?.logo
+                        _header.innerHTML = this.content_builder._headerElementBuilder(landing_config?.name, _headerLogo);
                         break
                     case EnumLandingBlockElementName.LANDING_MENU_FOOTER:
                         const _footer = document.getElementById(e.element_id)
@@ -598,6 +704,7 @@ const EnumPageType = {
                 case EnumLandingBlockElementName.DESIGN_CAROUSEL:
                     element.innerHTML = this.content_builder._bannerCarouselContentBuilder(_el_config.images, this.page_configs.url);
                     this.global_event._addAutoCarouselEvent(element);
+                    this.global_event._addCarouselTouchEvent(element);
                     break;
                 case EnumLandingBlockElementName.DESIGN_ONE_IMAGE:
                     element.innerHTML = this.content_builder._bannerOneImageContentBuilder(_el_config.images, this.page_configs.url);
