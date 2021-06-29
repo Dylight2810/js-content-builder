@@ -78,30 +78,17 @@ const EnumPageType = {
             window.addEventListener('resize', _eventHandler);
         }
 
+        _clearIntervalBeforeDoEvent = () => {
+            // Stop Auto Carousel
+            if (this.carousel_interval) {
+                clearInterval(this.carousel_interval);
+            }
+        }
+
         _setIntervalForAutoCarousel = (carousel_item_els) => {
             this.carousel_interval = setInterval(() => {
-                const item_prev_index = Array.from(carousel_item_els).findIndex(e => e.classList.contains('prev'));
-                const item_active_index = Array.from(carousel_item_els).findIndex(e => e.classList.contains('active'));
-                const item_next_index = Array.from(carousel_item_els).findIndex(e => e.classList.contains('next'));
-                const new_next_index = item_next_index === carousel_item_els.length - 1
-                    ? 0 : item_next_index + 1;
-
-                Array.from(carousel_item_els).forEach((el, index) => {
-                    if (index === item_prev_index) el.classList.remove('prev');
-                    if (index === item_active_index) {
-                        el.classList.remove('active');
-                        el.classList.add('prev')
-                    }
-                    if (index === item_next_index) {
-                        el.classList.remove('next');
-                        el.classList.add('active');
-                    }
-                    if (index === new_next_index) el.classList.add('next');
-
-                    this.current_carousel_index = item_next_index;
-                    console.log('Change current carousel index');
-                });
-            }, 5000);
+                this._handleMoveToNextCarousel(carousel_item_els, true);
+            }, 8000);
         }
 
         _addAutoCarouselEvent = (block_element) => {
@@ -113,7 +100,7 @@ const EnumPageType = {
             this._setIntervalForAutoCarousel(carousel_item_els);
         }
 
-        _handleMoveToNextCarousel = (carousel_item_els) => {
+        _handleMoveToNextCarousel = (carousel_item_els, is_auto_event = false) => {
             let next_index;
             carousel_item_els[this.current_carousel_index].classList.add('prev');
             carousel_item_els[this.current_carousel_index].classList.remove('active');
@@ -130,7 +117,9 @@ const EnumPageType = {
             carousel_item_els[this.current_carousel_index].classList.remove('next');
             carousel_item_els[next_index].classList.add('next');
 
-            this._setIntervalForAutoCarousel(carousel_item_els);
+            if (!is_auto_event) {
+                this._setIntervalForAutoCarousel(carousel_item_els);
+            }
         }
 
         _handleMoveToPrevCarousel = (carousel_item_els) => {
@@ -155,10 +144,12 @@ const EnumPageType = {
 
         _addCarouselClickEvent = (carousel_el, carousel_item_el, prev_btn, next_btn) => {
             const _prevBtnEventHandler = () => {
+                this._clearIntervalBeforeDoEvent();
                 this._handleMoveToPrevCarousel(carousel_item_el);
             }
 
             const _nextBtnEventHandler = () => {
+                this._clearIntervalBeforeDoEvent();
                 this._handleMoveToNextCarousel(carousel_item_el);
             }
 
@@ -176,10 +167,7 @@ const EnumPageType = {
             if (!carousel_item_els.length) return;
 
             const _touchEndEventHandler = () => {
-                // Stop Auto Carousel
-                if (this.carousel_interval) {
-                    clearInterval(this.carousel_interval);
-                }
+                this._clearIntervalBeforeDoEvent();
 
                 const long_move = touch_start_x - touch_move_x;
 
