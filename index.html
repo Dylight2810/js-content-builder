@@ -321,8 +321,9 @@
         width: 100%;
     }
 
-    .product-image--wrapper .ompi-carousel {
+    .ompi-carousel {
         width: 100%;
+        height: 100%;
         overflow-x: hidden;
         position: relative;
     }
@@ -359,6 +360,14 @@
         height: 100%;
         z-index: 2;
         transition: transform 0.5s, opacity 0.5s, z-index 0.5s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .ompi-carousel--image img {
+        max-width: 100%;
+        max-height: 100%;
     }
 
     .ompi-carousel--image.active {
@@ -537,13 +546,13 @@
         height: fit-content;
     }
 
-    .omp-banner-carousel {
-        height: 100%;
+    [id^=OMP_CAROUSEL] .omp-banner-carousel {
+        height: var(--omp-banner-height);
     }
 
-    [id^=OMP_CAROUSEL] .omp-banner-carousel img {
+    .omp-banner-carousel img {
         max-width: 100%;
-        max-height: var(--omp-banner-height);
+        max-height: 100%;
     }
 
     [id^=OMP_ONE_IMAGE] .omp-wp__one-image {
@@ -1238,7 +1247,7 @@
     <div id="OMP_ONE_IMAGE_1"></div>
     <div id="OMP_OUTSTANDING_PRODUCT_1"></div>
     <div id="OMP_ONE_IMAGE_2"></div>
-    <div id="OMP_HEADER"></div>
+    <div id="OMP_CAROUSEL_1"></div>
     <div id="OMP_ALL_PRODUCTS">
         <div class="omp-landing-block--title">
             <div class="skeleton-item"></div>
@@ -1420,38 +1429,25 @@
         }, {
             "element_id": "OMP_ONE_IMAGE_1",
             "element_name": "OMP_ONE_IMAGE",
-            "element_index": 6,
+            "element_index": 7,
             "element_height": 10,
             "element_title": "page_editor.origin_block_title.one_image",
             "config": {
                 "images": [{
                     "index": 1,
                     "url": "https://storage.googleapis.com/boxme/omisocial/30/2021/06/banner_2_cWdscK_202106.jpg",
+                    "reference_link": "/products/san-pham-test-checkout-001.30.8",
                     "reference_data": {
-                        "id": 347,
-                        "sku": "DISK_201",
-                        "full_name": "Đĩa Tròn Phẳng Trang Trí Bàn Ăn Phong Cách Bắc Âu Macaroon Hồng XLL",
-                        "name": "Hồng XLL",
-                        "slug": null,
-                        "description": null,
-                        "weight": 100,
-                        "volume": "10x5x6",
-                        "min_quantity": 1,
-                        "listed_price": 30000,
-                        "price": 99000,
+                        "id": 8,
+                        "sku": "SKU1001",
+                        "slug": "san-pham-test-checkout-001",
+                        "name": "Sản phẩm test Checkout 001",
+                        "link": "/products/san-pham-test-checkout-001.30.8",
+                        "avatar_image": "https://storage.googleapis.com/omisell-dev/products/images/501/vn/2ec3065e226c5663d4dc08c7518bb744.png",
+                        "listed_price": 1111110,
+                        "price": 1111110,
                         "currency": "VND",
-                        "is_active": true,
-                        "category_name": null,
-                        "avatar_image": "https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/c316faa35320115167fabc0f336e1542-9cb30218-54aa-487a-ba4f-e1497a23a986.jpeg",
-                        "images": [{"url": "https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/c316faa35320115167fabc0f336e1542-9cb30218-54aa-487a-ba4f-e1497a23a986.jpeg"}],
-                        "quantity": 100,
-                        "waiting": 0,
-                        "fulfillable": 100,
-                        "external_id": null,
-                        "is_selling": true,
-                        "landing": {"name": "Landing 2", "url": "https://landing2.guds.asia"},
-                        "variants": [],
-                        "is_parent": false
+                        "collections": [5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
                     },
                     "reference_type": 1
                 }]
@@ -1483,31 +1479,18 @@
                 "images": [{
                     "index": 1,
                     "url": "https://storage.googleapis.com/boxme/omisocial/30/2021/06/banner_product_mOpbxX_202106.jpg",
+                    "reference_link": "/products/dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-3.30.327",
                     "reference_data": {
-                        "id": 347,
-                        "sku": "DISK_201",
-                        "full_name": "Đĩa Tròn Phẳng Trang Trí Bàn Ăn Phong Cách Bắc Âu Macaroon Hồng XLL",
-                        "name": "Hồng XLL",
-                        "slug": null,
-                        "description": null,
-                        "weight": 100,
-                        "volume": "10x5x6",
-                        "min_quantity": 1,
+                        "id": 327,
+                        "sku": "DISK_200",
+                        "slug": "dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-3",
+                        "name": "Đĩa Tròn Phẳng Trang Trí Bàn Ăn Phong Cách Bắc Âu Macaroon",
+                        "link": "/products/dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-3.30.327",
+                        "avatar_image": "https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/7faa33ec309ae7e3a427fb1d1c7b6a7e-4294c721-d589-4871-9db1-023a46168771.jpeg",
                         "listed_price": 30000,
                         "price": 99000,
                         "currency": "VND",
-                        "is_active": true,
-                        "category_name": null,
-                        "avatar_image": "https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/c316faa35320115167fabc0f336e1542-9cb30218-54aa-487a-ba4f-e1497a23a986.jpeg",
-                        "images": [{"url": "https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/c316faa35320115167fabc0f336e1542-9cb30218-54aa-487a-ba4f-e1497a23a986.jpeg"}],
-                        "quantity": 100,
-                        "waiting": 0,
-                        "fulfillable": 100,
-                        "external_id": null,
-                        "is_selling": true,
-                        "landing": {"name": "Landing 2", "url": "https://landing2.guds.asia"},
-                        "variants": [],
-                        "is_parent": false
+                        "collections": []
                     },
                     "reference_type": 1
                 }]
@@ -1527,6 +1510,77 @@
                     "reference_type": null
                 }]
             }
+        }, {
+            "element_id": "OMP_CAROUSEL_1",
+            "element_name": "OMP_CAROUSEL",
+            "element_index": 1,
+            "element_height": 10,
+            "element_title": "page_editor.origin_block_title.carousel",
+            "config": {
+                "images": [{
+                    "index": 1,
+                    "url": "https://storage.googleapis.com/boxme/omisocial/30/2021/06/banner_1_zTKDXK_202106.jpg",
+                    "reference_link": "/products/dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-3.30.327",
+                    "reference_data": {
+                        "id": 327,
+                        "sku": "DISK_200",
+                        "slug": "dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-3",
+                        "name": "Đĩa Tròn Phẳng Trang Trí Bàn Ăn Phong Cách Bắc Âu Macaroon",
+                        "link": "/products/dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-3.30.327",
+                        "avatar_image": "https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/7faa33ec309ae7e3a427fb1d1c7b6a7e-4294c721-d589-4871-9db1-023a46168771.jpeg",
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "collections": []
+                    },
+                    "reference_type": 1
+                }, {
+                    "index": 2,
+                    "url": "https://storage.googleapis.com/boxme/omisocial/30/2021/06/banner_2_qAcwHj_202106.jpg",
+                    "reference_link": "/products/san-pham-test-checkout-001.30.8",
+                    "reference_data": {
+                        "id": 8,
+                        "sku": "SKU1001",
+                        "slug": "san-pham-test-checkout-001",
+                        "name": "Sản phẩm test Checkout 001",
+                        "link": "/products/san-pham-test-checkout-001.30.8",
+                        "avatar_image": "https://storage.googleapis.com/omisell-dev/products/images/501/vn/2ec3065e226c5663d4dc08c7518bb744.png",
+                        "listed_price": 1111110,
+                        "price": 1111110,
+                        "currency": "VND",
+                        "collections": [5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+                    },
+                    "reference_type": 1
+                }, {
+                    "index": 3,
+                    "url": "https://storage.googleapis.com/boxme/omisocial/30/2021/06/banner_product_ZiqoIf_202106.jpg",
+                    "reference_link": "/collections/aasdsdsdsdsd.30.aasdsdsdsdsd",
+                    "reference_data": {
+                        "id": 23,
+                        "name": "aasdsdsdsdsd",
+                        "slug": "aasdsdsdsdsd",
+                        "description": "test",
+                        "is_active": true,
+                        "landing": {"name": "Landing 2", "url": "https://landing2.guds.asia"},
+                        "link": "/collections/aasdsdsdsdsd.30.aasdsdsdsdsd"
+                    },
+                    "reference_type": 2
+                }, {
+                    "index": 4,
+                    "url": "https://storage.googleapis.com/boxme/omisocial/30/2021/06/voucher_NehDRr_202106.jpg",
+                    "reference_link": "/collections/aasdsdsdsdsd.30.aasdsdsdsdsd",
+                    "reference_data": {
+                        "id": 23,
+                        "name": "aasdsdsdsdsd",
+                        "slug": "aasdsdsdsdsd",
+                        "description": "test",
+                        "is_active": true,
+                        "landing": {"name": "Landing 2", "url": "https://landing2.guds.asia"},
+                        "link": "/collections/aasdsdsdsdsd.30.aasdsdsdsdsd"
+                    },
+                    "reference_type": 2
+                }]
+            }
         }]
     }
 };
@@ -1536,7 +1590,7 @@ window.page_configs = {
     "url": "https://landing2.guds.asia",
     "created_time": 1619410821,
     "sync_integration": false,
-    "last_released_time": 1624878524,
+    "last_released_time": 1624931785,
     "config": {
         "logo": "https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324.jpg?w=795&h=530",
         "favicon": "https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324.jpg?w=80&h=80",

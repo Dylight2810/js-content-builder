@@ -75,6 +75,33 @@ const EnumPageType = {
 
             window.addEventListener('resize', _eventHandler);
         }
+
+        _addAutoCarouselEvent = (block_element) => {
+            const carousel_wrapper_el = block_element.getElementsByClassName('ompi-carousel');
+            const carousel_item_els = block_element.querySelectorAll('div[class^="ompi-carousel--image"]');
+
+            if (!carousel_item_els.length) return;
+
+            setInterval(() => {
+                const item_prev_index = Array.from(carousel_item_els).findIndex(e => e.classList.contains('prev'));
+                const item_active_index = Array.from(carousel_item_els).findIndex(e => e.classList.contains('active'));
+                const item_next_index = Array.from(carousel_item_els).findIndex(e => e.classList.contains('next'));
+                const new_next_index = item_next_index === carousel_item_els.length - 1
+                    ? 0 : item_next_index + 1;
+                Array.from(carousel_item_els).forEach((el, index) => {
+                    if (index === item_prev_index) el.classList.remove('prev');
+                    if (index === item_active_index) {
+                        el.classList.remove('active');
+                        el.classList.add('prev')
+                    }
+                    if (index === item_next_index) {
+                        el.classList.remove('next');
+                        el.classList.add('active');
+                    }
+                    if (index === new_next_index) el.classList.add('next');
+                });
+            }, 3000);
+        }
     }
 
     class DataService {
@@ -126,7 +153,7 @@ const EnumPageType = {
         }
 
         _formatCurrency = (country_locale, currency_code, value) => {
-            return new Intl.NumberFormat(country_locale, { style: 'currency', currency: currency_code }).format(value);
+            return new Intl.NumberFormat(country_locale, {style: 'currency', currency: currency_code}).format(value);
         }
 
         _showLoading = () => {
@@ -346,8 +373,47 @@ const EnumPageType = {
                     </div>`
         }
 
-        _bannerCarouselContentBuilder = (images) => {
-            if (!images.length) return '';
+        _bannerCarouselContentBuilder = (images_config, landing_url) => {
+            if (!images_config || !images_config.length) return '';
+
+            let innerHtml = '';
+
+            images_config.forEach((img, index) => {
+                switch (index) {
+                    case 0:
+                        innerHtml += `
+                            <div class="ompi-carousel--image active">
+                                <img src="${img.url}" alt="${img.url}">
+                                <a href="${landing_url}${img.reference_data.link}"></a>
+                            </div>
+                        `;
+                        break;
+                    case 1:
+                        innerHtml += `
+                           <div class="ompi-carousel--image next">
+                                <img src="${img.url}" alt="${img.url}">
+                                <a href="${landing_url}${img.reference_data.link}"></a>
+                            </div>
+                        `;
+                        break;
+                    default:
+                        innerHtml += `
+                            <div class="ompi-carousel--image">
+                                <img src="${img.url}" alt="${img.url}">
+                                <a href="${landing_url}${img.reference_data.link}"></a>
+                            </div>
+                        `;
+                        break;
+                }
+            })
+
+            return `
+                <div class="omp-banner-carousel ompi-carousel--wrapper">
+                    <div class="ompi-carousel">
+                        ${innerHtml}
+                    </div>
+                </div>
+            `
         }
 
         _bannerOneImageContentBuilder = (image_config, landing_url) => {
@@ -359,19 +425,12 @@ const EnumPageType = {
                     </div>`
         }
 
-        _bannerTwoImageProductContentBuilder = (title, arr_product) => {
-            if (!arr_product.length) {
+        _bannerTwoImageProductContentBuilder = (images_config, landing_url) => {
+            if (!images_config || !images_config.length) {
                 return '';
             }
 
-            let innerHtml = '';
-
-            return `<div class="omp-landing-block--title">${title}</div>
-                    <div class="omp-landing-block--content">
-                        <div class="omp-wp__outstanding-product">
-                            <div class="omp-row">${innerHtml}</div>
-                        </div>
-                    </div>`
+            return ``
         }
 
         _bannerVideoProductContentBuilder = (title, arr_product) => {
@@ -418,7 +477,7 @@ const EnumPageType = {
                 _product_price_els.forEach(e => e.removeAttribute('style'))
             }
 
-            const _product_cart_els = this.content_builder._queryAllElementsByClass('a','omp-product-card');
+            const _product_cart_els = this.content_builder._queryAllElementsByClass('a', 'omp-product-card');
             _product_cart_els.forEach(e => {
                 const _product_cart_top_els = this.content_builder._queryElementsByClass('div', 'omp-product-card__top', e);
                 _product_cart_top_els.setAttribute('style', `height: ${_product_cart_top_els.offsetWidth}px`);
@@ -537,13 +596,14 @@ const EnumPageType = {
             const _el_config = config?.config
             switch (config.element_name) {
                 case EnumLandingBlockElementName.DESIGN_CAROUSEL:
-                    element.innerHTML = this.content_builder._bannerOneImageContentBuilder(_el_config.images);
+                    element.innerHTML = this.content_builder._bannerCarouselContentBuilder(_el_config.images, this.page_configs.url);
+                    this.global_event._addAutoCarouselEvent(element);
                     break;
                 case EnumLandingBlockElementName.DESIGN_ONE_IMAGE:
                     element.innerHTML = this.content_builder._bannerOneImageContentBuilder(_el_config.images, this.page_configs.url);
                     break;
                 case EnumLandingBlockElementName.DESIGN_TWO_IMAGE:
-                    element.innerHTML = this.content_builder._bannerOneImageContentBuilder(_el_config.images);
+                    element.innerHTML = this.content_builder._bannerTwoImageProductContentBuilder(_el_config.images);
                     break;
             }
         }
