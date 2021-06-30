@@ -100,14 +100,24 @@ const EBannerImgReferenceLinkType = {
             this._setIntervalForAutoCarousel(carousel_item_els);
         }
 
+        _removePrevAndNextBeforeMove = (carousel_item_els) => {
+            let _left_id = this.current_carousel_index - 1;
+            let _right_id = this.current_carousel_index + 1;
+
+            if (_left_id === -1) _left_id = carousel_item_els.length - 1;
+            if (_right_id === carousel_item_els.length) _right_id = 0;
+
+            carousel_item_els[_left_id].classList.remove('prev');
+            carousel_item_els[_left_id].classList.remove('next');
+
+            carousel_item_els[_right_id].classList.remove('prev');
+            carousel_item_els[_right_id].classList.remove('next');
+        }
+
         _handleMoveToNextCarousel = (carousel_item_els, is_auto_event = false) => {
             let next_index;
 
-            if (this.current_carousel_index !== 0) {
-                carousel_item_els[this.current_carousel_index - 1].classList.remove('prev');
-            } else {
-                carousel_item_els[carousel_item_els.length - 1].classList.remove('prev');
-            }
+            this._removePrevAndNextBeforeMove(carousel_item_els);
 
             carousel_item_els[this.current_carousel_index].classList.add('prev');
             carousel_item_els[this.current_carousel_index].classList.remove('active');
@@ -132,11 +142,7 @@ const EBannerImgReferenceLinkType = {
         _handleMoveToPrevCarousel = (carousel_item_els) => {
             let next_index;
 
-            if (this.current_carousel_index !== carousel_item_els.length - 1) {
-                carousel_item_els[this.current_carousel_index + 1].classList.remove('prev');
-            } else {
-                carousel_item_els[0].classList.remove('prev');
-            }
+            this._removePrevAndNextBeforeMove(carousel_item_els);
 
             carousel_item_els[this.current_carousel_index].classList.add('prev');
             carousel_item_els[this.current_carousel_index].classList.remove('active');
@@ -435,39 +441,42 @@ const EBannerImgReferenceLinkType = {
                     </div>`
         }
 
-        _bestSellingProductContentBuilder = (title, arr_product) => {
-            if (!arr_product.length) {
-                return '';
-            }
+        _bestSellingProductContentBuilder = (title, arr_product, country, currency) => {
+            if (!arr_product.length) return '';
 
-            let innerHtml = '';
-
-            arr_product.forEach(p => {
-                innerHtml += ``
-            });
+            const innerHtml = this._renderListProduct(
+                arr_product,
+                country,
+                currency,
+                'omp-product-wrapper',
+                `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                            </svg>`
+            );
 
             return `<div class="omp-landing-block--title">${title}</div>
                     <div class="omp-landing-block--content">
-                        <div class="omp-wp__outstanding-product">
-                            <div class="omp-row">${innerHtml}</div>
-                        </div>
+                        <div class="omp-wp__best-selling-product">${innerHtml}</div>
                     </div>`
         }
 
-        _newProductContentBuilder = (title, arr_product) => {
+        _newProductContentBuilder = (title, arr_product, country, currency) => {
             if (!arr_product.length) return '';
 
-            let innerHtml = '';
-
-            arr_product.forEach(p => {
-                innerHtml += ``
-            });
+            const innerHtml = this._renderListProduct(
+                arr_product,
+                country,
+                currency,
+                'omp-product-wrapper',
+                `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-check" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M10.354 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                <path d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>
+                            </svg>`
+            );
 
             return `<div class="omp-landing-block--title">${title}</div>
                     <div class="omp-landing-block--content">
-                        <div class="omp-wp__outstanding-product">
-                            <div class="omp-row">${innerHtml}</div>
-                        </div>
+                        <div class="omp-wp__new-product">${innerHtml}</div>
                     </div>`
         }
 
@@ -716,8 +725,17 @@ const EBannerImgReferenceLinkType = {
                     )
                     break;
 
-                case EnumLandingBlockElementName.DESIGN_TWO_IMAGE:
-                    element.innerHTML = this.content_builder._flashSaleProductContentBuilder(
+                case EnumLandingBlockElementName.DESIGN_NEW_PRODUCT:
+                    element.innerHTML = this.content_builder._newProductContentBuilder(
+                        config.element_title,
+                        arr_products,
+                        this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
+                        this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
+                    )
+                    break;
+
+                case EnumLandingBlockElementName.DESIGN_BEST_SELLING_PRODUCT:
+                    element.innerHTML = this.content_builder._bestSellingProductContentBuilder(
                         config.element_title,
                         arr_products,
                         this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
