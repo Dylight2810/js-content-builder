@@ -244,7 +244,7 @@ const EBannerImgReferenceLinkType = {
 
         _getDomain = () => {
             const _env = document.querySelectorAll('meta[name="environment"]')[0];
-            this.api_domain = _env.getAttribute('content') === 'production' ? 'https://omipage.com' : 'https://dev.omipage.com';
+            this.api_domain = _env.getAttribute('content') === 'production' ? 'https://s.omisocial.com' : 'https://dev.omisocial.com';
         }
     }
 

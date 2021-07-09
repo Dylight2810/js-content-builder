@@ -194,7 +194,7 @@ const EnumNotifyType = {
 
         _getDomain = () => {
             const _env = document.querySelectorAll('meta[name="environment"]')[0];
-            this.api_domain = _env.getAttribute('content') === 'production' ? 'https://omipage.com' : 'https://dev.omipage.com';
+            this.api_domain = _env.getAttribute('content') === 'production' ? 'https://s.omisocial.com' : 'https://dev.omisocial.com';
         }
     }
 
@@ -901,7 +901,7 @@ const EnumNotifyType = {
             this.content_builder._showLoading();
             const _arr_url_split = window.location.href.split('.');
             const _product_id = _arr_url_split[_arr_url_split.length - 1];
-            this._getProductDetailById(327).then();
+            this._getProductDetailById(_product_id).then();
         }
     }
 
