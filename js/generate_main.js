@@ -737,8 +737,7 @@ const EBannerImgReferenceLinkType = {
         }
 
         _renderAllProductBlock = async (page) => {
-            const response = await this.data_service.getLandingProductAsync(page);
-            const response_obj = JSON.parse(response);
+            const response_obj = await this.data_service.getLandingProductAsync(page);
             this.total_product_in_landing = response_obj.count;
             const _products = response_obj.results;
 
@@ -756,8 +755,7 @@ const EBannerImgReferenceLinkType = {
         }
 
         _renderMoreProductOfLanding = async (page) => {
-            const response = await this.data_service.getLandingProductAsync(page);
-            const response_obj = JSON.parse(response);
+            const response_obj = await this.data_service.getLandingProductAsync(page);
             const _products = response_obj.results;
 
             if (_products && _products.length) {
@@ -895,7 +893,7 @@ const EBannerImgReferenceLinkType = {
             switch (element_config.element_name) {
                 case EnumLandingBlockElementName.DESIGN_FLASH_SALE:
                     const response = await this.data_service.getFlashSaleDataAsync();
-                    let arr_flash_sales = JSON.parse(response).results;
+                    let arr_flash_sales = response.results;
                     const _timeNow = (new Date()).getTime() / 1000
                     arr_flash_sales = arr_flash_sales.filter(fs => !!fs.products.length && fs.end_time > _timeNow);
 
@@ -912,7 +910,7 @@ const EBannerImgReferenceLinkType = {
                     if (element_config.config) {
                         if (element_config.config.collection) {
                             const response = await this.data_service.getCollectionDataAsync(element_config.config.collection.id);
-                            const products_of_collection = JSON.parse(response).results;
+                            const products_of_collection = response.results;
 
                             this._appendProductElementInnerHtml(_el, element_config, products_of_collection);
                         } else if (element_config.config.products) {
