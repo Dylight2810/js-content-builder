@@ -2,6 +2,7 @@
 
 const API_URL = {
     PRODUCT_DETAIL: '/api/v1/products/',
+    PRODUCT_FLASH_SALE: '/flash-sales/'
 };
 
 const EnumLandingBlockElementName = {
@@ -27,6 +28,7 @@ const EnumElementAttributeName = {
 };
 
 const EnumPDElementAttributeValue = {
+    PRODUCT_FLASH_SALE: 'product-flash-sale',
     PRODUCT_IMAGE: 'product-image',
     PRODUCT_NAME: 'product-name',
     PRODUCT_LISTED_PRICE: 'product-listed-price',
@@ -50,8 +52,45 @@ const EnumNotifyType = {
 (function (window) {
     class GlobalEvent {
         current_carousel_index = 0;
+        content_builder
 
-        constructor() {
+        constructor(_content_builder) {
+            var _this = this;
+            _this.content_builder = _content_builder;
+        }
+
+        addCountDownEvent = (countable_time) => {
+            const _day_by_seconds = 24 * 60 * 60 * 1000;
+            const _hour_by_seconds = 60 * 60 * 1000;
+            const _minute_by_seconds = 60 * 1000;
+            let _interval;
+
+            const _hourEl = this.content_builder._queryElementsById('fsCountdownHours');
+            const _minuteEl = this.content_builder._queryElementsById('fsCountdownMinutes');
+            const _secondEl = this.content_builder._queryElementsById('fsCountdownSeconds');
+
+            const _timerRunning = () => {
+                const _now_time = (new Date()).getTime();
+                const _different_time = countable_time * 1000 - _now_time;
+
+                if (_different_time < 0) {
+                    clearInterval(_interval);
+                    const _block_countdown_el = this.content_builder._queryElementsByClass('div', 'block-countdown');
+                    _block_countdown_el.innerHTML = '';
+                    return
+                }
+
+                const hours = Math.floor((_different_time % _day_by_seconds) / _hour_by_seconds);
+                const minutes = Math.floor((_different_time % _hour_by_seconds) / _minute_by_seconds);
+                const seconds = Math.round(_different_time % _minute_by_seconds / 1000);
+
+                _hourEl.innerHTML = hours >= 10 ? hours.toString() : `0${hours.toString()}`;
+                _minuteEl.innerHTML = minutes >= 10 ? minutes.toString() : `0${minutes.toString()}`;
+                _secondEl.innerHTML = seconds >= 10 ? seconds.toString() : `0${seconds.toString()}`;
+            }
+
+            _timerRunning();
+            _interval = setInterval(_timerRunning, 1000);
         }
 
         _handleMoveToNextCarousel = (carousel_item_els) => {
@@ -169,27 +208,41 @@ const EnumNotifyType = {
             _this._getDomain();
         }
 
-        _createGetRequest = (url) => {
-            return new Promise((resolve, reject) => {
-                const xmlHttp = new XMLHttpRequest();
-                xmlHttp.onreadystatechange = () => {
-                    if (xmlHttp.readyState === 4) {
-                        if (xmlHttp.status === 200) {
-                            return resolve(xmlHttp.responseText);
-                        } else {
-                            return resolve(null);
-                        }
+        _createGetRequest = async (url) => {
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': this.landing_token
                     }
-                }
-                xmlHttp.open('GET', url, true); // true for asynchronous
-                xmlHttp.setRequestHeader('Authorization', this.landing_token);
-                xmlHttp.send();
-            })
+                });
+
+                return response.json();
+            } catch (error) {
+                return error.json();
+            }
+        }
+
+        _createMultiRequest = async (urls) => {
+            try {
+                return Promise.all(urls.map(url => fetch(
+                    url,
+                    {
+                        method: 'GET',
+                        headers: {'Authorization': this.landing_token}
+                    }
+                ).then(res => res.json())));
+            } catch (error) {
+                return error.json();
+            }
         }
 
         getProductDetailById = async (product_id) => {
-            const request_url = `${this.api_domain}${API_URL.PRODUCT_DETAIL}${product_id}/`;
-            return await this._createGetRequest(request_url);
+            const request_urls = [
+                `${this.api_domain}${API_URL.PRODUCT_DETAIL}${product_id}/`,
+                `${this.api_domain}${API_URL.PRODUCT_DETAIL}${product_id}${API_URL.PRODUCT_FLASH_SALE}`
+            ];
+            return await this._createMultiRequest(request_urls);
         }
 
         _getDomain = () => {
@@ -271,6 +324,43 @@ const EnumNotifyType = {
 
         _queryElementsLikeClassName = (parent_node, class_name) => {
             return parent_node.querySelectorAll(`div[class^=${class_name}]`);
+        }
+
+        _productFlashSaleBuilder = () => {
+            return `
+                <div class="omp-container">
+                    <div class="flash-sale--banner">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-lightning-fill" viewBox="0 0 16 16">
+                            <path d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5z"/>
+                        </svg>
+                        <span>Flash Sale</span>
+                    </div>
+                    <div class="flash-sale--sold">
+                        Đã bán 10
+                    </div>
+                </div>
+                <div class="omp-container">
+                    <div class="flash-sale--price">
+                        10.000 đ - 20.000 đ
+                    </div>
+                    <div class="flash-sale--countdown">
+                        <span id="fsStatusText">Kết thúc trong</span>
+                        <div class="block-countdown">
+                            <div id="fsCountdownHours">
+                                00
+                            </div>
+                            <div class="colon-space">:</div>
+                            <div id="fsCountdownMinutes">
+                                00
+                            </div>
+                            <div class="colon-space">:</div>
+                            <div id="fsCountdownSeconds">
+                                00
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
         }
 
         _productImageCarouselBuilder = (arr_images) => {
@@ -496,16 +586,6 @@ const EnumNotifyType = {
             if (!variant) return;
             const _country_locale = this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE;
             const _currency_code = this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE;
-
-            // if (variant.images.length) {
-            //     // Update product Image
-            //     const product_image_el = this.element_content_builder._queryElementsByAttribute(
-            //         document,
-            //         EnumElementAttributeName.DATA_OMP_ELEMENT,
-            //         EnumPDElementAttributeValue.PRODUCT_IMAGE
-            //     );
-            //     product_image_el.innerHTML = `<img src="${variant.images[0].url}" alt="ProductImage">`;
-            // }
 
             // Update product name
             const product_name_el = this.element_content_builder._queryElementsByAttribute(
@@ -766,9 +846,9 @@ const EnumNotifyType = {
     }
 
     class ProductDetail {
-        global_event = new GlobalEvent();
         data_service = null;
         content_builder = new ElementContentBuilder();
+        global_event = new GlobalEvent(this.content_builder);
         select_variant_button = null;
         group_quantity_button = null;
         page_els = null;
@@ -877,13 +957,36 @@ const EnumNotifyType = {
             }
         }
 
+        _generateProductFlashSale = (product_flash_sale) => {
+            const flash_sale_el = this.content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                EnumPDElementAttributeValue.PRODUCT_FLASH_SALE
+            );
+
+            if (!product_flash_sale.discount_amount || !product_flash_sale.variants?.length) return;
+
+            flash_sale_el.innerHTML = this.content_builder._productFlashSaleBuilder();
+            flash_sale_el.setAttribute('style', 'visibility: visible');
+            this.global_event.addCountDownEvent();
+        }
+
         _getProductDetailById = async (product_id) => {
-            const response = await this.data_service.getProductDetailById(product_id);
-            const product_detail = this._addVariantAttributesId(JSON.parse(response));
+            const responses = await this.data_service.getProductDetailById(product_id);
+            let product_detail;
+            let product_flash_sale;
+
+            if (responses.length) {
+                product_detail = this._addVariantAttributesId(responses[0]);
+                product_flash_sale = responses[1];
+            }
 
             if (!product_detail) {
                 return;
             }
+
+            // Generate product Flash Sale
+            this._generateProductFlashSale(product_flash_sale);
 
             // Generate product detail element content
             this._generateProductSelectVariant(product_detail);

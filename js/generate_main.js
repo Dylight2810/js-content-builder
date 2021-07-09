@@ -1,7 +1,8 @@
 'use strict';
 
 const API_URL = {
-    COLLECTION_PRODUCTS: '/api/v1/products/simple/'
+    COLLECTION_PRODUCTS: '/api/v1/products/simple/',
+    FLASH_SALES: '/api/v1/discounts/flash-sales/'
 };
 
 const API_LIST_PAGE_SIZE = 10;
@@ -51,11 +52,46 @@ const EBannerImgReferenceLinkType = {
     class GlobalEvent {
         carousel_interval;
         current_carousel_index = 0;
+        content_builder = new ElementContentBuilder();
 
         constructor() {
         }
 
-        _addScrollEvent = (scroll_element, call_back) => {
+        addCountDownEvent = (countable_time) => {
+            const _day_by_seconds = 24 * 60 * 60 * 1000;
+            const _hour_by_seconds = 60 * 60 * 1000;
+            const _minute_by_seconds = 60 * 1000;
+            let _interval;
+
+            const _hourEl = this.content_builder._queryElementsById('fsCountdownHours');
+            const _minuteEl = this.content_builder._queryElementsById('fsCountdownMinutes');
+            const _secondEl = this.content_builder._queryElementsById('fsCountdownSeconds');
+
+            const _timerRunning = () => {
+                const _now_time = (new Date()).getTime();
+                const _different_time = countable_time * 1000 - _now_time;
+
+                if (_different_time < 0) {
+                    clearInterval(_interval);
+                    const _block_countdown_el = this.content_builder._queryElementsByClass('div', 'block-countdown');
+                    _block_countdown_el.innerHTML = '';
+                    return
+                }
+
+                const hours = Math.floor((_different_time % _day_by_seconds) / _hour_by_seconds);
+                const minutes = Math.floor((_different_time % _hour_by_seconds) / _minute_by_seconds);
+                const seconds = Math.round(_different_time % _minute_by_seconds / 1000);
+
+                _hourEl.innerHTML = hours >= 10 ? hours.toString() : `0${hours.toString()}`;
+                _minuteEl.innerHTML = minutes >= 10 ? minutes.toString() : `0${minutes.toString()}`;
+                _secondEl.innerHTML = seconds >= 10 ? seconds.toString() : `0${seconds.toString()}`;
+            }
+
+            _timerRunning();
+            _interval = setInterval(_timerRunning, 1000);
+        }
+
+        addScrollEvent = (scroll_element, call_back) => {
             let _last_scroll_top = 0;
             const _eventHandler = (e) => {
                 const _el_scroll = e.target.scrollingElement;
@@ -92,7 +128,7 @@ const EBannerImgReferenceLinkType = {
             }, 8000);
         }
 
-        _addAutoCarouselEvent = (block_element) => {
+        addAutoCarouselEvent = (block_element) => {
             const carousel_item_els = block_element.querySelectorAll('div[class^="ompi-carousel--image"]');
 
             if (!carousel_item_els.length) return;
@@ -177,7 +213,7 @@ const EBannerImgReferenceLinkType = {
             next_btn.addEventListener('click', _nextBtnEventHandler);
         }
 
-        _addCarouselTouchEvent = (carousel_el) => {
+        addCarouselTouchEvent = (carousel_el) => {
             let touch_move_x;
             let touch_start_x;
             const carousel_item_els = carousel_el.querySelectorAll('div[class^="ompi-carousel--image"]');
@@ -211,34 +247,42 @@ const EBannerImgReferenceLinkType = {
 
     class DataService {
         landing_token;
+        landing_id;
 
-        constructor(landing_token) {
+        constructor(landing_token, landing_id) {
             const _this = this;
             _this.landing_token = `Landing ${landing_token}`;
+            _this.landing_id = landing_id
             _this._getDomain();
         }
 
-        _createGetRequest = (url) => {
-            return new Promise((resolve, reject) => {
-                const xmlHttp = new XMLHttpRequest();
-                xmlHttp.onreadystatechange = () => {
-                    if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                        return resolve(xmlHttp.responseText);
+        _createGetRequest = async (url) => {
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': this.landing_token
                     }
-                }
-                xmlHttp.open('GET', url, true); // true for asynchronous
-                xmlHttp.setRequestHeader('Authorization', this.landing_token);
-                xmlHttp.send();
-            })
+                });
+
+                return response.json();
+            } catch (error) {
+                return error.json();
+            }
+        }
+
+        getFlashSaleDataAsync = async () => {
+            const request_url = `${this.api_domain}${API_URL.FLASH_SALES}?landing_id=${this.landing_id}`;
+            return await this._createGetRequest(request_url);
         }
 
         getCollectionDataAsync = async (collection_id) => {
-            const request_url = `${this.api_domain}${API_URL.COLLECTION_PRODUCTS}?collection_id=${collection_id}&is_parent=true`;
+            const request_url = `${this.api_domain}${API_URL.COLLECTION_PRODUCTS}?landing_id=${this.landing_id}&collection_id=${collection_id}&is_parent=true`;
             return await this._createGetRequest(request_url);
         }
 
         getLandingProductAsync = async (page) => {
-            const request_url = `${this.api_domain}${API_URL.COLLECTION_PRODUCTS}?page=${page}&page_size=${API_LIST_PAGE_SIZE}&is_parent=true`;
+            const request_url = `${this.api_domain}${API_URL.COLLECTION_PRODUCTS}?page=${page}&page_size=${API_LIST_PAGE_SIZE}&landing_id=${this.landing_id}&is_parent=true`;
             return await this._createGetRequest(request_url);
         }
 
@@ -288,9 +332,9 @@ const EBannerImgReferenceLinkType = {
             return _parent_node.getElementById(`${id_name}`);
         }
 
-        _queryElementsLikeClassName = (class_name, parent_node) => {
+        _queryAllElementsLikeClassName = (wrapper_tag, class_name, parent_node) => {
             const _parent_node = parent_node || document;
-            return _parent_node.querySelectorAll(`div[class^=${class_name}]`);
+            return _parent_node.querySelectorAll(`${wrapper_tag}[class^=${class_name}]`);
         }
 
         _convertImageLink = (image_config, landing_url) => {
@@ -480,11 +524,52 @@ const EBannerImgReferenceLinkType = {
                     </div>`
         }
 
-        _flashSaleProductContentBuilder = (title, arr_product, country, currency) => {
+        _renderListProductOfFlashSale = (arr_product, country, currency, class_wrapper, product_tag) => {
             if (!arr_product.length) return '';
+            let innerHtml = '';
 
-            const innerHtml = this._renderListProduct(
-                arr_product,
+            arr_product.forEach(p => {
+                const price = this._formatCurrency(country, currency, p.price);
+                const discounted_price = this._formatCurrency(country, currency, p.discounted_amount);
+                const range_discounted_start = this._formatCurrency(country, currency, p.range_discounted_start);
+                const range_discounted_end = this._formatCurrency(country, currency, p.range_discounted_end);
+
+                const cart_premium_content = product_tag ? `<span class="product-card--premium">${product_tag}</span>` : '';
+                const image = p.avatar_image ? p.avatar_image : p.images.length ? p.images[0] : '';
+
+                const card_price_html = p.is_single
+                    ? `<p class="omp-mr-1 omp-mb-0">${discounted_price}</p>
+                          <small>
+                              <del>${price}</del>
+                          </small>`
+                    : `<p class="omp-mr-1 omp-mb-0">${range_discounted_start} - ${range_discounted_end}</p>`;
+
+                innerHtml += `<div class="${class_wrapper}">
+                                <a class="omp-product-card omp-flash-sale-card" href="${this.landing_domain}${p.link}">
+                                    <div class="omp-product-card__top">
+                                        ${cart_premium_content}
+                                        <img alt="${image}" class="mb-2" src="${image}">
+                                    </div>
+                                    <div class="omp-product-card__bottom">
+                                        <div class="omp-product-card--name">${p.name}</div>
+                                        <div class="omp-product-card--price">${card_price_html}</div>
+                                        <div class="omp-product-card--selling-status">
+                                            <span>Đã bán 12</span>
+                                            <div class="number-product-sold" style="width: 12%; background-color: #fd7e14"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                              </div>`
+            });
+
+            return innerHtml;
+        }
+
+        _flashSaleProductContentBuilder = (title, arr_products, country, currency) => {
+            if (!arr_products.length) return '';
+
+            const innerHtml = this._renderListProductOfFlashSale(
+                arr_products,
                 country,
                 currency,
                 'omp-product-wrapper',
@@ -493,7 +578,28 @@ const EBannerImgReferenceLinkType = {
                             </svg>`
             );
 
-            return `<div class="omp-landing-block--title">${title}</div>
+            return `<div class="omp-landing-block--title">
+                        <div class="block-name">${title}</div>
+                        <div class="block-countdown">
+                            <div id="fsCountdownHours">
+                                00
+                            </div>
+                            <div class="colon-space">:</div>
+                            <div id="fsCountdownMinutes">
+                                00
+                            </div>
+                            <div class="colon-space">:</div>
+                            <div id="fsCountdownSeconds">
+                                00
+                            </div>
+                        </div>
+                        <div class="block-see-more">
+                            <span>Xem thêm</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </div>
+                    </div>
                     <div class="omp-landing-block--content">
                         <div class="omp-wp__flash-sale">${innerHtml}</div>
                     </div>`
@@ -607,7 +713,7 @@ const EBannerImgReferenceLinkType = {
             const _this = this;
             _this.page_els = window.page_elements;
             _this.page_configs = window.page_configs;
-            _this.data_service = new DataService(_this.page_configs?.access_token || '');
+            _this.data_service = new DataService(_this.page_configs?.access_token || '', _this.page_configs?.id || 0);
         }
 
         initialMainPage = () => {
@@ -622,12 +728,11 @@ const EBannerImgReferenceLinkType = {
                 _product_price_els.forEach(e => e.removeAttribute('style'))
             }
 
-            const _product_cart_els = this.content_builder._queryAllElementsByClass('a', 'omp-product-card');
+            const _product_cart_els = this.content_builder._queryAllElementsLikeClassName('a', 'omp-product-card');
             _product_cart_els.forEach(e => {
                 const _product_cart_top_els = this.content_builder._queryElementsByClass('div', 'omp-product-card__top', e);
                 _product_cart_top_els.setAttribute('style', `height: ${_product_cart_top_els.offsetWidth}px`);
-
-                e.setAttribute('style', `height: ${_product_cart_top_els.offsetWidth + 125}px`)
+                e.setAttribute('style', `height: max-content`)
             })
         }
 
@@ -716,15 +821,6 @@ const EBannerImgReferenceLinkType = {
                     );
                     break;
 
-                case EnumLandingBlockElementName.DESIGN_FLASH_SALE:
-                    element.innerHTML = this.content_builder._flashSaleProductContentBuilder(
-                        config.element_title,
-                        arr_products,
-                        this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
-                        this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
-                    )
-                    break;
-
                 case EnumLandingBlockElementName.DESIGN_NEW_PRODUCT:
                     element.innerHTML = this.content_builder._newProductContentBuilder(
                         config.element_title,
@@ -745,6 +841,35 @@ const EBannerImgReferenceLinkType = {
             }
         }
 
+        _takeProductsFromFlashSale = (flash_sale) => {
+            if (!flash_sale?.products?.length) return [];
+
+            const arr_products = [];
+            flash_sale.products.forEach(p => {
+                if (p.product.is_single) {
+                    p.product.discounted_amount = p.discounted_amount;
+                    p.product.discounted_price = Math.round((p.amount / p.product.price) * 100);
+                } else {
+                    p.product.range_discounted_start = p.product.price[0];
+                    p.product.range_discounted_end = p.product.price[1];
+                }
+
+                arr_products.push(p.product);
+            })
+
+            return arr_products;
+        }
+
+        _appendFlashSaleInnerHtml = (element, config, arr_flash_sales) => {
+            const arr_products = this._takeProductsFromFlashSale(arr_flash_sales[arr_flash_sales.length - 1]);
+            element.innerHTML = this.content_builder._flashSaleProductContentBuilder(
+                config.element_title,
+                arr_products,
+                this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
+                this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
+            )
+        }
+
         _appendImageElementInnerHtml = (element, config) => {
             if (!config || !config.config) return;
 
@@ -752,8 +877,8 @@ const EBannerImgReferenceLinkType = {
             switch (config.element_name) {
                 case EnumLandingBlockElementName.DESIGN_CAROUSEL:
                     element.innerHTML = this.content_builder._bannerCarouselContentBuilder(_el_config.images, this.page_configs.url);
-                    this.global_event._addAutoCarouselEvent(element);
-                    this.global_event._addCarouselTouchEvent(element);
+                    this.global_event.addAutoCarouselEvent(element);
+                    this.global_event.addCarouselTouchEvent(element);
                     break;
                 case EnumLandingBlockElementName.DESIGN_ONE_IMAGE:
                     element.innerHTML = this.content_builder._bannerOneImageContentBuilder(_el_config.images, this.page_configs.url);
@@ -767,17 +892,36 @@ const EBannerImgReferenceLinkType = {
         _renderProductElement = async (element_config, is_last_dynamic_element) => {
             const _el = document.getElementById(element_config.element_id);
 
-            if (element_config.config) {
-                if (element_config.config.collection) {
-                    const response = await this.data_service.getCollectionDataAsync(element_config.config.collection.id);
-                    const products_of_collection = JSON.parse(response).results;
+            switch (element_config.element_name) {
+                case EnumLandingBlockElementName.DESIGN_FLASH_SALE:
+                    const response = await this.data_service.getFlashSaleDataAsync();
+                    let arr_flash_sales = JSON.parse(response).results;
+                    const _timeNow = (new Date()).getTime() / 1000
+                    arr_flash_sales = arr_flash_sales.filter(fs => !!fs.products.length && fs.end_time > _timeNow);
 
-                    this._appendProductElementInnerHtml(_el, element_config, products_of_collection);
-                } else if (element_config.config.products) {
-                    this._appendProductElementInnerHtml(_el, element_config, element_config.config.products);
-                } else if (element_config.config.images) {
-                    this._appendImageElementInnerHtml(_el, element_config);
-                }
+                    this._appendFlashSaleInnerHtml(_el, element_config, arr_flash_sales);
+                    if (arr_flash_sales.length > 0) {
+                        if (arr_flash_sales[0].start_time > _timeNow) {
+                            this.global_event.addCountDownEvent(arr_flash_sales[0]?.start_time);
+                        } else {
+                            this.global_event.addCountDownEvent(arr_flash_sales[0]?.end_time);
+                        }
+                    }
+                    break;
+                default:
+                    if (element_config.config) {
+                        if (element_config.config.collection) {
+                            const response = await this.data_service.getCollectionDataAsync(element_config.config.collection.id);
+                            const products_of_collection = JSON.parse(response).results;
+
+                            this._appendProductElementInnerHtml(_el, element_config, products_of_collection);
+                        } else if (element_config.config.products) {
+                            this._appendProductElementInnerHtml(_el, element_config, element_config.config.products);
+                        } else if (element_config.config.images) {
+                            this._appendImageElementInnerHtml(_el, element_config);
+                        }
+                    }
+                    break;
             }
 
             if (is_last_dynamic_element) {
@@ -798,7 +942,7 @@ const EBannerImgReferenceLinkType = {
                 this.content_builder._hideLoading();
             }
 
-            this.global_event._addScrollEvent(
+            this.global_event.addScrollEvent(
                 document,
                 _loadMoreProduct
             );
