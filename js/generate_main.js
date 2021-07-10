@@ -542,6 +542,12 @@ const EBannerImgReferenceLinkType = {
                                     <div class="omp-product-card__top">
                                         ${cart_premium_content}
                                         <img alt="${image}" class="mb-2" src="${image}">
+                                        <div class="product-card--sale">
+                                            <div class="sale-text">
+                                                <p>10%</p>
+                                                <p>Giảm</p>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="omp-product-card__bottom">
                                         <div class="omp-product-card--name">${p.name}</div>
@@ -558,7 +564,7 @@ const EBannerImgReferenceLinkType = {
             return innerHtml;
         }
 
-        _flashSaleProductContentBuilder = (title, arr_products, country, currency) => {
+        _flashSaleProductContentBuilder = (title, flash_sale, arr_products, country, currency) => {
             if (!arr_products.length) return '';
 
             const innerHtml = this._renderListProductOfFlashSale(
@@ -571,9 +577,13 @@ const EBannerImgReferenceLinkType = {
                             </svg>`
             );
 
+            const _now = (new Date()).getTime() / 1000;
+            const _statusText = flash_sale.start_time < _now && flash_sale.end_time > _now ? 'Kết thúc trong' : flash_sale.start_time > _now ? 'Bắt đầu trong' : '';
+
             return `<div class="omp-landing-block--title">
                         <div class="block-name">${title}</div>
                         <div class="block-countdown">
+                            <span id="fsStatusText">${_statusText}</span>
                             <div id="fsCountdownHours">
                                 00
                             </div>
@@ -587,10 +597,10 @@ const EBannerImgReferenceLinkType = {
                             </div>
                         </div>
                         <div class="block-see-more">
-                            <span>Xem thêm</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                              <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                            </svg>
+<!--                            <span>Xem thêm</span>-->
+<!--                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">-->
+<!--                              <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>-->
+<!--                            </svg>-->
                         </div>
                     </div>
                     <div class="omp-landing-block--content">
@@ -848,9 +858,10 @@ const EBannerImgReferenceLinkType = {
 
             const arr_products = [];
             flash_sale.products.forEach(p => {
-                if (p.product.is_single) {
+                if (p.product.is_single || !p.variants?.length) {
+                    p.product.is_single = true;
                     p.product.discounted_amount = p.discounted_amount;
-                    p.product.discounted_price = Math.round((p.amount / p.product.price) * 100);
+                    p.product.discounted_percent = Math.round((p.amount / p.product.price) * 100);
                 } else {
                     p.product.range_discounted_start = p.product.price[0];
                     p.product.range_discounted_end = p.product.price[1];
@@ -863,9 +874,10 @@ const EBannerImgReferenceLinkType = {
         }
 
         _appendFlashSaleInnerHtml = (element, config, arr_flash_sales) => {
-            const arr_products = this._takeProductsFromFlashSale(arr_flash_sales[arr_flash_sales.length - 1]);
+            const arr_products = this._takeProductsFromFlashSale(arr_flash_sales[0]);
             element.innerHTML = this.content_builder._flashSaleProductContentBuilder(
                 config.element_title,
+                arr_flash_sales[0],
                 arr_products,
                 this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
                 this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
