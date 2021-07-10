@@ -1,16 +1,16 @@
 <html lang="vi">
 <head>
-    <meta charSet="utf-8">
-    <meta name="environment" content="development">
+    <meta charset="utf-8">
+    <meta name="environment" content="production">
     <link rel="icon" type="image/x-icon" href="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <meta name="description" content="Landing 21">
+    <meta name="description" content="thegioiskinfood">
     <meta name="keywords" content="omipage">
-    <meta name="omp_key" content="zX9E0jJY5woE4dYoGSty6sXxZ">
+    <meta name="omp_key" content="oJAKAkoO2Fhj4qqwQERcb5eR6">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preload"
           href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap">
-    <title>Landing 21</title>
+    <title>thegioiskinfood</title>
     <meta property="og:type" content="website">
     <meta property="og:title" content="omipage">
     <meta property="og:description" content="Create by Omipage">
@@ -35,15 +35,16 @@
         --omp-purple: #6f42c1;
         --omp-pink: #e83e8c;
         --omp-red: #dc3545;
-        --omp-orange: #fd7e14;
-        --omp-yellow: #ffd507;
+        --omp-orange: #ee4d2d;
+        --omp-yellow: #fff200;
         --omp-green: #28a745;
         --omp-teal: #20c997;
         --omp-cyan: #17a2b8;
+        --omp-white: #fff;
         --omp-gray: #6c757d;
         --omp-dark-light: #898989;
         --omp-silver: #f7f7f7;
-        --omp-silver-dark: #e4e4e4;
+        --omp-silver-darken: #e4e4e4;
         --omp-text-hint: #717171;
         --omp-yellow-rgb: 255 193 7;
         --omp-green-rgb: 23 175 57;
@@ -126,7 +127,7 @@
     }
 
     #omp_wrapper .omp-landing-block--title {
-        padding: 0 var(--omp-space);
+        padding: 0 calc(var(--omp-space) * 2);
         font-weight: 500;
         height: var(--omp-block-title-height);
         display: flex;
@@ -144,29 +145,14 @@
         text-transform: uppercase;
     }
 
-    .omp-landing-block--title .block-countdown {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: var(--omp-cowdown-width);
-        margin-bottom: 2px;
-    }
-
-    .block-countdown :is(#fsCountdownHours, #fsCountdownMinutes, #fsCountdownSeconds) {
+    .omp-landing-block--title .block-countdown :is(#fsCountdownHours, #fsCountdownMinutes, #fsCountdownSeconds) {
         background-color: #4F4F4F;
-        padding: 0 6px;
-        border-radius: 2px;
-        color: #ffffff;
     }
 
     .omp-landing-block--title .block-see-more {
         display: flex;
         align-items: center;
         font-weight: normal !important;
-    }
-
-    .block-see-more span {
-        margin-right: var(--omp-space);
     }
 
     #omp_wrapper .omp-landing-block--content {
@@ -364,7 +350,52 @@
         margin-bottom: var(--omp-space);
     }
 
-    .product-detail--meta-data .omp-container {
+    .product-detail--flash-sale {
+        visibility: hidden;
+        background-color: var(--omp-orange);
+        padding: calc(var(--omp-space) * 2) var(--omp-space);
+        margin-bottom: var(--omp-space);
+        color: #ffffff;
+    }
+
+    .product-detail--flash-sale .omp-container {
+        align-items: center;
+    }
+
+    .product-detail--flash-sale .omp-container:first-child {
+        margin-bottom: calc(var(--omp-space) * 2);
+    }
+
+    .product-detail--flash-sale .flash-sale--banner {
+        background-color: var(--omp-yellow);
+        display: flex;
+        align-items: center;
+        padding: 2px;
+        border-radius: 1px;
+        font-size: 0.8rem;
+    }
+
+    .product-detail--flash-sale .flash-sale--banner svg {
+        margin: 0 5px;
+    }
+
+    .product-detail--flash-sale .flash-sale--banner span {
+        background-color: var(--omp-orange);
+        padding: 0 4px;
+        text-transform: uppercase;
+        border-radius: 1px;
+    }
+
+    .product-detail--flash-sale .block-countdown {
+        margin-bottom: 0;
+    }
+
+    .product-detail--flash-sale .flash-sale--price {
+        font-size: 1rem !important;
+    }
+
+    .product-detail--meta-data .omp-container,
+    .product-detail--flash-sale .omp-container {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -418,11 +449,11 @@
     }
 
     .product-detail--select-product .p-variant-item {
-        padding: var(--omp-space);
+        padding: var(--omp-space) calc(var(--omp-space) * 4);
         border-radius: 2px;
         background-color: var(--omp-silver);
-        margin-right: var(--omp-space);
-        margin-bottom: var(--omp-space);
+        margin-right: calc(var(--omp-space) * 2);
+        margin-bottom: calc(var(--omp-space) * 2);
         cursor: pointer;
     }
 
@@ -544,7 +575,6 @@
     }
 
     [id^=OMP_OUTSTANDING_PRODUCT] .omp-wp__outstanding-product {
-        height: var(--omp-vertical-scroll-product-height);
         width: 100%;
         padding: var(--omp-space);
     }
@@ -590,6 +620,7 @@
         max-height: var(--omp-product-list-img-height);
         width: 100%;
         position: relative;
+        overflow: hidden;
     }
 
     .omp-product-card .omp-product-card__top .product-card--premium {
@@ -652,13 +683,15 @@
 
     .omp-product-card .omp-product-card__bottom .omp-product-card--price {
         font-size: 0.9rem;
-        display: block;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
         width: 100%;
-        height: 38px;
     }
 
     .omp-flash-sale-card .omp-product-card__bottom .omp-product-card--price {
         margin: calc(var(--omp-space) * 2) 0;
+        height: -webkit-max-content;
         height: max-content;
     }
 
@@ -680,10 +713,17 @@
         margin: auto;
         text-align: center;
         position: relative;
-        background-color: var(--omp-silver-dark);
+        background-color: var(--omp-silver-darken);
         border-radius: 10px;
         color: #ffffff;
         text-transform: uppercase;
+        font-size: 0.8rem;
+        height: 20px;
+    }
+
+    .omp-product-card--selling-status span {
+        position: relative;
+        z-index: 2;
     }
 
     .omp-product-card--selling-status .number-product-sold {
@@ -1238,7 +1278,22 @@
             height: calc(var(--omp-product-image-height) * 1.5);
         }
     }
-    </style>
+
+    .block-countdown {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: var(--omp-cowdown-width);
+        margin-bottom: 2px;
+    }
+
+    .block-countdown :is(#fsCountdownHours, #fsCountdownMinutes, #fsCountdownSeconds) {
+        background-color: transparent;
+        padding: 0 6px;
+        border-radius: 2px;
+        color: #ffffff;
+        border: 1px solid #ffffff;
+    }</style>
 </head>
 <body>
 <div id="omp_wrapper">
@@ -1268,7 +1323,9 @@
             </div>
         </div>
     </div>
+    <div id="OMP_ONE_IMAGE_1"></div>
     <div id="OMP_FLASH_SALE_1"></div>
+    <div id="OMP_OUTSTANDING_PRODUCT_1"></div>
     <div id="OMP_ALL_PRODUCTS">
         <div class="omp-landing-block--title">
             <div class="skeleton-item"></div>
@@ -1416,8 +1473,7 @@
     <p>Vui lòng chọn mẫu mã</p>
 </div>
 <script>window.page_elements = {
-    "page_id": "home",
-    "page_elements": {
+    "page_id": "home", "page_elements": {
         "statics_elements": [{
             "element_index": null,
             "element_id": "OMP_HEADER",
@@ -1434,29 +1490,194 @@
             "is_static": true
         }],
         "dynamic_elements": [{
+            "element_id": "OMP_ONE_IMAGE_1",
+            "element_name": "OMP_ONE_IMAGE",
+            "element_index": 1,
+            "element_height": 10,
+            "element_title": "page_editor.origin_block_title.one_image",
+            "config": {"images": []}
+        }, {
             "element_id": "OMP_FLASH_SALE_1",
             "element_name": "OMP_FLASH_SALE",
-            "element_index": 1,
+            "element_index": 2,
             "element_height": 23,
-            "element_title": "Flash Sale",
+            "element_title": "page_editor.origin_block_title.flash_sale",
             "config": {"background_color": "#ee2020"}
+        }, {
+            "element_id": "OMP_OUTSTANDING_PRODUCT_1",
+            "element_name": "OMP_OUTSTANDING_PRODUCT",
+            "element_index": 3,
+            "element_height": 23,
+            "element_title": "Sản phẩm nổi bật",
+            "config": {
+                "products": [{
+                    "id": 1713,
+                    "sku": "8850029032498",
+                    "slug": "eucerin-sensitive-skin-dermatoclean-hyaluron-toner-200ml-vn",
+                    "name": "Eucerin Sensitive Skin Dermatoclean Hyaluron Toner 200ml (VN)",
+                    "link": "/products/eucerin-sensitive-skin-dermatoclean-hyaluron-toner-200ml-vn.34.1713",
+                    "avatar_image": "https://cf.shopee.vn/file/6089cfa5d827f1a9fe1e5605a4dacbba",
+                    "listed_price": 549000,
+                    "price": 549000,
+                    "currency": "VND",
+                    "collections": [],
+                    "quantity": 0,
+                    "waiting": 0,
+                    "fulfillable": 0,
+                    "options": []
+                }, {
+                    "id": 1712,
+                    "sku": "8850029032559",
+                    "slug": "eucerin-sensitive-skin-dermatoclean-hyaluron-micellar-foam-150ml-vn",
+                    "name": "Eucerin Sensitive Skin Dermatoclean Hyaluron Micellar Foam 150ml (VN)",
+                    "link": "/products/eucerin-sensitive-skin-dermatoclean-hyaluron-micellar-foam-150ml-vn.34.1712",
+                    "avatar_image": "https://cf.shopee.vn/file/0e50fcf70efed3bfa611d19b4ddb549f",
+                    "listed_price": 429000,
+                    "price": 429000,
+                    "currency": "VND",
+                    "collections": [],
+                    "quantity": 0,
+                    "waiting": 0,
+                    "fulfillable": 0,
+                    "options": []
+                }, {
+                    "id": 1711,
+                    "sku": "8809533814311",
+                    "slug": "cosnori-always-fit-bodetox-body-gel-150ml-vn",
+                    "name": "Cosnori Always Fit Bodetox Body Gel 150ml (VN)",
+                    "link": "/products/cosnori-always-fit-bodetox-body-gel-150ml-vn.34.1711",
+                    "avatar_image": "https://cf.shopee.vn/file/fe0bb720b9f33108fd42eac37790603f",
+                    "listed_price": 288000,
+                    "price": 288000,
+                    "currency": "VND",
+                    "collections": [],
+                    "quantity": 0,
+                    "waiting": 0,
+                    "fulfillable": 0,
+                    "options": []
+                }, {
+                    "id": 1710,
+                    "sku": "8809583810400",
+                    "slug": "cosnori-glow-touch-lipstick-03-vn",
+                    "name": "Cosnori Glow Touch Lipstick #03 (VN)",
+                    "link": "/products/cosnori-glow-touch-lipstick-03-vn.34.1710",
+                    "avatar_image": "https://cf.shopee.vn/file/1e5a84a3015e5dfc146550fad3030219",
+                    "listed_price": 175000,
+                    "price": 175000,
+                    "currency": "VND",
+                    "collections": [],
+                    "quantity": 0,
+                    "waiting": 0,
+                    "fulfillable": 0,
+                    "options": []
+                }, {
+                    "id": 1709,
+                    "sku": "8809583810424",
+                    "slug": "cosnori-glow-touch-lipstick-05-vn",
+                    "name": "Cosnori Glow Touch Lipstick #05 (VN)",
+                    "link": "/products/cosnori-glow-touch-lipstick-05-vn.34.1709",
+                    "avatar_image": "https://cf.shopee.vn/file/68602fe47381141962ae6a934a15a3f2",
+                    "listed_price": 175000,
+                    "price": 175000,
+                    "currency": "VND",
+                    "collections": [],
+                    "quantity": 0,
+                    "waiting": 0,
+                    "fulfillable": 0,
+                    "options": []
+                }, {
+                    "id": 1708,
+                    "sku": "8809583810691",
+                    "slug": "cosnori-creamy-velvet-tint-01-vn",
+                    "name": "Cosnori Creamy Velvet Tint #01 (VN)",
+                    "link": "/products/cosnori-creamy-velvet-tint-01-vn.34.1708",
+                    "avatar_image": "https://cf.shopee.vn/file/56fa78903a1908724dfc1d38203af9fd",
+                    "listed_price": 175000,
+                    "price": 175000,
+                    "currency": "VND",
+                    "collections": [],
+                    "quantity": 0,
+                    "waiting": 0,
+                    "fulfillable": 0,
+                    "options": []
+                }, {
+                    "id": 1707,
+                    "sku": "SP8708872823",
+                    "slug": "g9skin-white-in-creamy-pack-vn-sp-uu-dai-hd1500k",
+                    "name": "G9Skin White In Creamy Pack (VN) (sp ưu đãi HD1500K)",
+                    "link": "/products/g9skin-white-in-creamy-pack-vn-sp-uu-dai-hd1500k.34.1707",
+                    "avatar_image": "https://product.hstatic.net/1000006063/product/g9skin_white_in_creamy_pack_79k.1500_9f5a1eb165624c35853a95d8f0e58080.jpg",
+                    "listed_price": 79000,
+                    "price": 79000,
+                    "currency": "VND",
+                    "collections": [],
+                    "quantity": 0,
+                    "waiting": 0,
+                    "fulfillable": 0,
+                    "options": []
+                }, {
+                    "id": 1706,
+                    "sku": "SP8708872822",
+                    "slug": "lilybyred-glassy-layer-fixing-tint-07-sp-uu-dai-hd1500k",
+                    "name": "Lilybyred Glassy Layer Fixing Tint #07 (sp ưu đãi HD1500K)",
+                    "link": "/products/lilybyred-glassy-layer-fixing-tint-07-sp-uu-dai-hd1500k.34.1706",
+                    "avatar_image": "https://product.hstatic.net/1000006063/product/lilybyred_glassy_layer_fixing_tint__07_79k.1500_20778de90bce468e932f14c4ccf3a24e.jpg",
+                    "listed_price": 79000,
+                    "price": 79000,
+                    "currency": "VND",
+                    "collections": [],
+                    "quantity": 0,
+                    "waiting": 0,
+                    "fulfillable": 0,
+                    "options": []
+                }, {
+                    "id": 1705,
+                    "sku": "SP8708872824",
+                    "slug": "merzy-the-heritage-all-day-lip-care-lb2-moon-balm-vn-sp-uu-dai-hd1200k",
+                    "name": "Merzy The Heritage All Day Lip Care #LB2. Moon Balm (VN) (sp ưu đãi HD1200K)",
+                    "link": "/products/merzy-the-heritage-all-day-lip-care-lb2-moon-balm-vn-sp-uu-dai-hd1200k.34.1705",
+                    "avatar_image": "https://product.hstatic.net/1000006063/product/merzy_the_heritage_all_day_lip_care__l02.__moon_balm_79k.1200_91177a9c027048bfbf99cf684a11d9f3.jpg",
+                    "listed_price": 79000,
+                    "price": 79000,
+                    "currency": "VND",
+                    "collections": [],
+                    "quantity": 0,
+                    "waiting": 0,
+                    "fulfillable": 0,
+                    "options": []
+                }, {
+                    "id": 1704,
+                    "sku": "SP8708872820",
+                    "slug": "combo-sp-jkosmec-ultimate-hydrating-essence-mask-green-tea-vn-3-mieng",
+                    "name": "Combo SP: Jkosmec Ultimate Hydrating Essence Mask #Green Tea (VN) (3 miếng)",
+                    "link": "/products/combo-sp-jkosmec-ultimate-hydrating-essence-mask-green-tea-vn-3-mieng.34.1704",
+                    "avatar_image": "https://cf.shopee.vn/file/eb784912074f9ad87c64bdb32f5bcd8a",
+                    "listed_price": 26000,
+                    "price": 26000,
+                    "currency": "VND",
+                    "collections": [],
+                    "quantity": 0,
+                    "waiting": 0,
+                    "fulfillable": 0,
+                    "options": []
+                }]
+            }
         }]
     }
 };
 window.page_configs = {
-    "id": 26,
-    "name": "Landing 21",
-    "url": "https://landing21.guds.asia",
-    "domain": "landing21.guds.asia",
-    "created_time": 1619159020,
+    "id": 34,
+    "name": "thegioiskinfood",
+    "url": "https://thegioiskinfood.omisocial.com",
+    "domain": "thegioiskinfood.omisocial.com",
+    "created_time": 1625805554,
     "sync_integration": false,
-    "last_released_time": 1625651301,
-    "access_token": "zX9E0jJY5woE4dYoGSty6sXxZ",
+    "last_released_time": 1625886344,
+    "access_token": "oJAKAkoO2Fhj4qqwQERcb5eR6",
     "language": "vi",
     "currency": "VND",
     "active": true
 }</script>
-<script type="text/javascript"
-        src="js/generate_main.js"></script>
+<script type="text/javascript" src="js/generate_main.js"></script>
 </body>
 </html>

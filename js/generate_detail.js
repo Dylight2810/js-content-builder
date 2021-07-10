@@ -231,7 +231,7 @@ const EnumNotifyType = {
                         method: 'GET',
                         headers: {'Authorization': this.landing_token}
                     }
-                ).then(res => res.json())));
+                ).then(res => res.json(), error => error.json())));
             } catch (error) {
                 return error.json();
             }
@@ -963,6 +963,8 @@ const EnumNotifyType = {
                 EnumElementAttributeName.DATA_OMP_ELEMENT,
                 EnumPDElementAttributeValue.PRODUCT_FLASH_SALE
             );
+
+            if (!flash_sale_el) return;
 
             if (!product_flash_sale.discount_amount || !product_flash_sale.variants?.length) return;
 
