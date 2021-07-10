@@ -725,14 +725,14 @@ const EBannerImgReferenceLinkType = {
             this._getElementConfigs().then();
         }
 
-        _resizeProductImage = () => {
-            const _product_price_els = this.content_builder._queryAllElementsByClass('div', 'omp-product-card--price');
+        _resizeProductImage = (wrapper_el) => {
+            const _product_price_els = this.content_builder._queryAllElementsByClass('div', 'omp-product-card--price', wrapper_el);
             if (window.innerWidth > 576) {
                 _product_price_els.forEach(e => e.setAttribute('style', 'display: flex;'))
             } else {
                 _product_price_els.forEach(e => e.removeAttribute('style'))
             }
-            const _product_cart_els = this.content_builder._queryAllElementsLikeClassName('a', 'omp-product-card');
+            const _product_cart_els = this.content_builder._queryAllElementsLikeClassName('a', 'omp-product-card', wrapper_el);
             let max_cart_bottom_height = 0;
 
             _product_cart_els.forEach(e => {
@@ -760,9 +760,8 @@ const EBannerImgReferenceLinkType = {
                     this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
                     this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
                 );
+                this._resizeProductImage(_all_product_element);
             }
-
-            this._resizeProductImage();
         }
 
         _renderMoreProductOfLanding = async (page) => {
@@ -779,9 +778,8 @@ const EBannerImgReferenceLinkType = {
                     this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE,
                     'omp-product-col omp-product-wrapper'
                 );
+                this._resizeProductImage(_all_product_element);
             }
-
-            this._resizeProductImage();
 
             return new Promise((resolve, reject) => resolve(true));
         }
@@ -851,6 +849,8 @@ const EBannerImgReferenceLinkType = {
                     )
                     break;
             }
+
+            this._resizeProductImage(element);
         }
 
         _takeProductsFromFlashSale = (flash_sale) => {
@@ -961,7 +961,7 @@ const EBannerImgReferenceLinkType = {
                 _loadMoreProduct
             );
 
-            this.global_event._addWindowResizeEvent(this._resizeProductImage);
+            // this.global_event._addWindowResizeEvent(this._resizeProductImage);
         }
     }
 
