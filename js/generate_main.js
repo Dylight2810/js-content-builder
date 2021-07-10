@@ -430,6 +430,7 @@ const EBannerImgReferenceLinkType = {
                                                 <del>${price}</del>
                                             </small>
                                         </div>
+                                        <div class="omp-product-card--sold">Đã bán 0</div>
                                     </div>
                                 </a>
                               </div>`
@@ -553,8 +554,8 @@ const EBannerImgReferenceLinkType = {
                                         <div class="omp-product-card--name">${p.name}</div>
                                         <div class="omp-product-card--price">${card_price_html}</div>
                                         <div class="omp-product-card--selling-status">
-                                            <span>Đã bán 12</span>
-                                            <div class="number-product-sold" style="width: 12%; background-color: #fd7e14"></div>
+                                            <span>Đã bán 0</span>
+                                            <div class="number-product-sold" style="width: 0; background-color: #fd7e14"></div>
                                         </div>
                                     </div>
                                 </a>
