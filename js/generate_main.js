@@ -12,6 +12,17 @@ const DefaultVNLocale = {
     VN_CURRENCY_CODE: 'VND'
 }
 
+const LocalStorageTitle = {
+    CART_LOCAL_STORAGE_TITLE: 'omp_cart',
+    CART_ID_STORAGE_TITLE: 'omp_cart_id',
+    ACCESS_TOKEN_STORAGE_TITLE: 'omp_key',
+    LANDING_STORAGE_TITLE: 'omp_title',
+    USER_SETTING_STORAGE_TITLE: 'omp_setting',
+    UTM_TAG_STORAGE_TITLE: 'utm_tag',
+    REFERRAL_HOST_STORAGE_TITLE: 'referral_host',
+    REFERRAL_URL_STORAGE_TITLE: 'referral_url'
+}
+
 const EnumLandingBlockElementName = {
     NONE: '',
     // Landing Header
@@ -355,6 +366,13 @@ const EBannerImgReferenceLinkType = {
             return _image_link;
         }
 
+        _countCartItems = () => {
+            const _local_cart = localStorage.getItem(LocalStorageTitle.CART_LOCAL_STORAGE_TITLE)
+
+            if (!_local_cart) return 0
+            return JSON.parse(_local_cart).length
+        }
+
         _headerElementBuilder = (landing_domain, image_url) => {
             const _landing_name = landing_domain?.split('.')[0] || '';
             const _landing_logo = image_url ? `<img  alt="Landing Logo" src="${image_url}">` : `<div class="omp-header--landing-name">${_landing_name}</div>`
@@ -365,7 +383,7 @@ const EBannerImgReferenceLinkType = {
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
                                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                             </svg>
-                            <span class="cart-item-count">0</span>
+                            <span class="cart-item-count">${this._countCartItems()}</span>
                         </div>
                     </div>`
         }
@@ -390,7 +408,7 @@ const EBannerImgReferenceLinkType = {
                                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
                                             <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                                         </svg>
-                                        <span class="cart-item-count">0</span>
+                                        <span class="cart-item-count">${this._countCartItems()}</span>
                                     </p>
                                     <span>Giỏ hàng</span>
                                 </div>

@@ -15,6 +15,17 @@ const DefaultVNLocale = {
     VN_CURRENCY_CODE: 'VND'
 }
 
+const LocalStorageTitle = {
+    CART_LOCAL_STORAGE_TITLE: 'omp_cart',
+    CART_ID_STORAGE_TITLE: 'omp_cart_id',
+    ACCESS_TOKEN_STORAGE_TITLE: 'omp_key',
+    LANDING_STORAGE_TITLE: 'omp_title',
+    USER_SETTING_STORAGE_TITLE: 'omp_setting',
+    UTM_TAG_STORAGE_TITLE: 'utm_tag',
+    REFERRAL_HOST_STORAGE_TITLE: 'referral_host',
+    REFERRAL_URL_STORAGE_TITLE: 'referral_url'
+}
+
 const EnumElementAttributeName = {
     DATA_OMP_ELEMENT: 'data-omp-element',
     DATA_ACTION: 'data-action',
@@ -973,6 +984,13 @@ const EnumNotifyType = {
             this.global_event.addCountDownEvent();
         }
 
+        _updateCartCount = () => {
+            const _cart_el = this.content_builder._queryElementsByClass(document, 'cart-item-count', 'span');
+            const _local_cart = localStorage.getItem(LocalStorageTitle.CART_LOCAL_STORAGE_TITLE)
+
+            _cart_el.innerHTML = _local_cart ? JSON.parse(_local_cart).length : 0;
+        }
+
         _getProductDetailById = async (product_id) => {
             const responses = await this.data_service.getProductDetailById(product_id);
             let product_detail;
@@ -986,6 +1004,9 @@ const EnumNotifyType = {
             if (!product_detail) {
                 return;
             }
+
+            // Update cart items number
+            this._updateCartCount();
 
             // Generate product Flash Sale
             this._generateProductFlashSale(product_flash_sale);
