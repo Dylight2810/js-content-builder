@@ -40,6 +40,7 @@ const EnumElementAttributeName = {
 
 const EnumPDElementAttributeValue = {
     PRODUCT_FLASH_SALE: 'product-flash-sale',
+    PRODUCT_FS_UPCOMING: 'product-fs-upcoming',
     PRODUCT_IMAGE: 'product-image',
     PRODUCT_NAME: 'product-name',
     PRODUCT_LISTED_PRICE: 'product-listed-price',
@@ -60,13 +61,19 @@ const EnumNotifyType = {
     ADDED_TO_CART: 2
 };
 
+const EnumFlashSaleType = {
+    ALL: 'all',
+    PROCESSING: 'processing',
+    UPCOMING: 'upcoming'
+};
+
 (function (window) {
     class GlobalEvent {
         current_carousel_index = 0;
         content_builder
 
         constructor(_content_builder) {
-            var _this = this;
+            const _this = this;
             _this.content_builder = _content_builder;
         }
 
@@ -76,9 +83,9 @@ const EnumNotifyType = {
             const _minute_by_seconds = 60 * 1000;
             let _interval;
 
-            const _hourEl = this.content_builder._queryElementsById('fsCountdownHours');
-            const _minuteEl = this.content_builder._queryElementsById('fsCountdownMinutes');
-            const _secondEl = this.content_builder._queryElementsById('fsCountdownSeconds');
+            const _hourEl = document.getElementById('fsCountdownHours');
+            const _minuteEl = document.getElementById('fsCountdownMinutes');
+            const _secondEl = document.getElementById('fsCountdownSeconds');
 
             const _timerRunning = () => {
                 const _now_time = (new Date()).getTime();
@@ -337,7 +344,32 @@ const EnumNotifyType = {
             return parent_node.querySelectorAll(`div[class^=${class_name}]`);
         }
 
-        _productFlashSaleBuilder = () => {
+        _generateFlashSaleCountdown = (fs_text) => {
+            return `
+                <div class="flash-sale--countdown">
+                    <span id="fsStatusText">${fs_text}</span>
+                    <div class="block-countdown">
+                        <div id="fsCountdownHours">
+                            00
+                        </div>
+                        <div class="colon-space">:</div>
+                        <div id="fsCountdownMinutes">
+                            00
+                        </div>
+                        <div class="colon-space">:</div>
+                        <div id="fsCountdownSeconds">
+                            00
+                        </div>
+                    </div>
+                </div>
+            `
+        }
+
+        _productFlashSaleBuilder = (flash_sale, page_configs) => {
+            const _country_locale = page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE;
+            const _currency_code = page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE;
+            const _origin_price = this.formatCurrency(_country_locale, _currency_code, flash_sale.before_discount_amount);
+            const _flash_sale_price = this.formatCurrency(_country_locale, _currency_code, flash_sale.discounted_amount);
             return `
                 <div class="omp-container">
                     <div class="flash-sale--banner">
@@ -347,28 +379,32 @@ const EnumNotifyType = {
                         <span>Flash Sale</span>
                     </div>
                     <div class="flash-sale--sold">
-                        Đã bán 10
+                        Đã bán 0
                     </div>
                 </div>
                 <div class="omp-container">
                     <div class="flash-sale--price">
-                        10.000 đ - 20.000 đ
+                        ${_flash_sale_price} <small style="margin-left: 5px;text-decoration: line-through;">${_origin_price}</small>
                     </div>
-                    <div class="flash-sale--countdown">
-                        <span id="fsStatusText">Kết thúc trong</span>
-                        <div class="block-countdown">
-                            <div id="fsCountdownHours">
-                                00
-                            </div>
-                            <div class="colon-space">:</div>
-                            <div id="fsCountdownMinutes">
-                                00
-                            </div>
-                            <div class="colon-space">:</div>
-                            <div id="fsCountdownSeconds">
-                                00
-                            </div>
-                        </div>
+                    ${this._generateFlashSaleCountdown('Kết thúc trong')}
+                </div>
+            `
+        }
+
+        _productFlashSaleUpcomingBuilder = () => {
+            return `
+                <div class="omp-container">
+                    <div class="flash-sale--banner">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-lightning-fill" viewBox="0 0 16 16">
+                            <path d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5z"/>
+                        </svg>
+                        <span>Flash Sale</span>
+                    </div>
+                    ${this._generateFlashSaleCountdown('Bắt đầu trong')}
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>
                     </div>
                 </div>
             `
@@ -968,20 +1004,48 @@ const EnumNotifyType = {
             }
         }
 
-        _generateProductFlashSale = (product_flash_sale) => {
-            const flash_sale_el = this.content_builder._queryElementsByAttribute(
-                document,
-                EnumElementAttributeName.DATA_OMP_ELEMENT,
-                EnumPDElementAttributeValue.PRODUCT_FLASH_SALE
-            );
+        _generateProductFlashSale = (product_discount) => {
+            if (!product_discount.flash_sales) return;
 
-            if (!flash_sale_el) return;
+            const processing_flash_sale = product_discount.flash_sales.find(fs => fs.discount?.group === EnumFlashSaleType.PROCESSING);
 
-            if (!product_flash_sale.discount_amount || !product_flash_sale.variants?.length) return;
+            if (processing_flash_sale) {
+                const flash_sale_el = this.content_builder._queryElementsByAttribute(
+                    document,
+                    EnumElementAttributeName.DATA_OMP_ELEMENT,
+                    EnumPDElementAttributeValue.PRODUCT_FLASH_SALE
+                );
 
-            flash_sale_el.innerHTML = this.content_builder._productFlashSaleBuilder();
-            flash_sale_el.setAttribute('style', 'visibility: visible');
-            this.global_event.addCountDownEvent();
+                if (!flash_sale_el) return;
+
+                flash_sale_el.innerHTML = this.content_builder._productFlashSaleBuilder(product_discount, this.page_configs);
+                flash_sale_el.setAttribute('style', 'visibility: visible');
+                this.content_builder._queryElementsByClass(document, 'price-sale', 'h5')?.setAttribute('style', 'display: none');
+                this.global_event.addCountDownEvent(processing_flash_sale.discount.end_time);
+                return;
+            }
+
+            let upcoming_flash_sale = product_discount.flash_sales[0];
+            const arr_upcoming_flash_sale = product_discount.flash_sales.filter(fs => fs.discount?.group === EnumFlashSaleType.UPCOMING);
+            arr_upcoming_flash_sale.forEach(fs => {
+                if (fs.discount.start_time < upcoming_flash_sale.start_time) {
+                    upcoming_flash_sale = fs;
+                }
+            });
+
+            if (upcoming_flash_sale) {
+                const fs_upcoming_el = this.content_builder._queryElementsByAttribute(
+                    document,
+                    EnumElementAttributeName.DATA_OMP_ELEMENT,
+                    EnumPDElementAttributeValue.PRODUCT_FS_UPCOMING
+                );
+
+                if (!fs_upcoming_el) return;
+
+                fs_upcoming_el.innerHTML = this.content_builder._productFlashSaleUpcomingBuilder();
+                fs_upcoming_el.setAttribute('style', 'visibility: visible');
+                this.global_event.addCountDownEvent(upcoming_flash_sale.discount.start_time);
+            }
         }
 
         _updateCartCount = () => {
@@ -994,11 +1058,11 @@ const EnumNotifyType = {
         _getProductDetailById = async (product_id) => {
             const responses = await this.data_service.getProductDetailById(product_id);
             let product_detail;
-            let product_flash_sale;
+            let product_discount;
 
             if (responses.length) {
                 product_detail = this._addVariantAttributesId(responses[0]);
-                product_flash_sale = responses[1];
+                product_discount = responses[1];
             }
 
             if (!product_detail) {
@@ -1009,7 +1073,7 @@ const EnumNotifyType = {
             this._updateCartCount();
 
             // Generate product Flash Sale
-            this._generateProductFlashSale(product_flash_sale);
+            this._generateProductFlashSale(product_discount);
 
             // Generate product detail element content
             this._generateProductSelectVariant(product_detail);
@@ -1027,7 +1091,7 @@ const EnumNotifyType = {
             this.content_builder._showLoading();
             const _arr_url_split = window.location.href.split('.');
             const _product_id = _arr_url_split[_arr_url_split.length - 1];
-            this._getProductDetailById(_product_id).then();
+            this._getProductDetailById(5).then();
         }
     }
 

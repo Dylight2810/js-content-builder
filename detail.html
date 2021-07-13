@@ -2,15 +2,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="environment" content="development">
-    <link rel="icon" type="image/x-icon" href="">
+    <link rel="icon" type="image/x-icon"
+          href="https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324.jpg?w=80&amp;h=80">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <meta name="description" content="Landing 21">
+    <meta name="description" content="Seconhand of Luis Vuition">
     <meta name="keywords" content="omipage">
-    <meta name="omp_key" content="zX9E0jJY5woE4dYoGSty6sXxZ">
+    <meta name="omp_key" content="CmGLLXPN8JBgw2JjwJMaqrsJo">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preload"
           href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap">
-    <title>Landing 21</title>
+    <title>Luis Vuition</title>
+    <script>console.log('Done ------------')</script>
     <meta property="og:url" content="{{og_url}}">
     <meta property="og:type" content="{{og_type}}">
     <meta property="og:title" content="{{og_title}}">
@@ -32,13 +34,16 @@
         --omp-block-title-height: 2rem;
         --omp-skeleton-size: 1.5rem;
         --omp-cowdown-width: 6.8rem;
+        --omp-color-primary: #007bff;
         --omp-blue: #007bff;
         --omp-indigo: #6610f2;
         --omp-purple: #6f42c1;
         --omp-pink: #e83e8c;
         --omp-red: #dc3545;
+        --omp-orange-light: #ee4d2d;
         --omp-orange: #ee4d2d;
-        --omp-yellow: #ffd507;
+        --omp-yellow: #fff200;
+        --omp-yellow-darken: #fcd511;
         --omp-green: #28a745;
         --omp-teal: #20c997;
         --omp-cyan: #17a2b8;
@@ -129,7 +134,7 @@
     }
 
     #omp_wrapper .omp-landing-block--title {
-        padding: 0 1rem;
+        padding: 0 calc(var(--omp-space) * 2);
         font-weight: 500;
         height: var(--omp-block-title-height);
         display: flex;
@@ -149,22 +154,6 @@
 
     .omp-landing-block--title .block-countdown :is(#fsCountdownHours, #fsCountdownMinutes, #fsCountdownSeconds) {
         background-color: #4F4F4F;
-    }
-
-    .block-countdown {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: var(--omp-cowdown-width);
-        margin-bottom: 2px;
-    }
-
-    .block-countdown :is(#fsCountdownHours, #fsCountdownMinutes, #fsCountdownSeconds) {
-        background-color: transparent;
-        padding: 0 6px;
-        border-radius: 2px;
-        color: #ffffff;
-        border: 1px solid #ffffff;
     }
 
     .omp-landing-block--title .block-see-more {
@@ -208,17 +197,39 @@
         max-height: 45px;
     }
 
+    .omp-header-block--content .omp-header--landing-name {
+        text-transform: uppercase;
+    }
+
     .omp-header-block--content .omp-header--space {
         width: 1.5rem;
     }
 
-    .omp-header-block--content .omp-header--cart {
+    .omp-header-block--content .omp-cart {
         margin-right: calc(var(--omp-space) * 2);
-        color: var(--omp-orange);
+        color: var(--omp-orange-light);
     }
 
-    .omp-header--cart i:before {
+    .omp-cart i:before {
         font-size: 1.5rem;
+    }
+
+    .omp-cart {
+        position: relative;
+    }
+
+    .cart-item-count {
+        position: absolute;
+        background: #ee4d2d;
+        border-radius: 50%;
+        top: -8px;
+        color: #ffffff;
+        right: -10px;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     #OMP_MENU_FOOTER {
@@ -260,7 +271,7 @@
     }
 
     #OMP_MENU_FOOTER .omp-menu-wrapper .omp-menu-item .omp-menu-item--content.active {
-        color: var(--omp-orange) !important;
+        color: var(--omp-orange-light) !important;
     }
 
     #OMP_MENU_FOOTER .omp-menu-wrapper .omp-menu-item span {
@@ -307,6 +318,12 @@
         color: #ffffff;
         cursor: pointer;
         margin-right: var(--omp-space);
+        position: relative;
+    }
+
+    .header-cart-icon .cart-item-count {
+        top: -6px;
+        right: -6px;
     }
 
     .omp-landing-detail--header .header-title {
@@ -368,14 +385,26 @@
         margin-bottom: var(--omp-space);
     }
 
-    .product-detail--flash-sale {
+    .product-detail--flash-sale,
+    .product-detail--fs-upcoming {
+        visibility: hidden;
         background-color: var(--omp-orange);
         padding: calc(var(--omp-space) * 2) var(--omp-space);
         margin-bottom: var(--omp-space);
         color: #ffffff;
     }
 
-    .product-detail--flash-sale .flash-sale--banner {
+    .product-detail--flash-sale .omp-container,
+    .product-detail--fs-upcoming .omp-container {
+        align-items: center;
+    }
+
+    .product-detail--flash-sale .omp-container:first-child {
+        margin-bottom: calc(var(--omp-space) * 2);
+    }
+
+    .product-detail--flash-sale .flash-sale--banner,
+    .product-detail--fs-upcoming .flash-sale--banner {
         background-color: var(--omp-yellow);
         display: flex;
         align-items: center;
@@ -384,39 +413,33 @@
         font-size: 0.8rem;
     }
 
-    .product-detail--flash-sale .flash-sale--banner svg {
+    .flash-sale--banner svg {
         margin: 0 5px;
     }
 
-    .product-detail--flash-sale .flash-sale--banner span {
+    .flash-sale--banner span {
         background-color: var(--omp-orange);
         padding: 0 4px;
         text-transform: uppercase;
         border-radius: 1px;
     }
 
-    .product-detail--flash-sale .flash-sale--countdown {
+    .flash-sale--countdown {
         display: flex;
         align-items: center;
-        justify-content: flex-end;
     }
 
-    .product-detail--flash-sale .flash-sale--countdown span {
-        text-transform: uppercase;
-        margin-right: 5px;
-    }
-
-    .product-detail--flash-sale .flash-sale--countdown .block-countdown {
-        margin-bottom: var(--omp-space);
+    .product-detail--flash-sale .block-countdown {
+        margin-bottom: 0;
     }
 
     .product-detail--flash-sale .flash-sale--price {
-        margin-top: var(--omp-space);
         font-size: 1rem !important;
     }
 
     .product-detail--meta-data .omp-container,
-    .product-detail--flash-sale .omp-container {
+    .product-detail--flash-sale .omp-container,
+    .product-detail--fs-upcoming .omp-container {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -431,7 +454,7 @@
     }
 
     .product-detail--meta-data .p-name-price .price-sale {
-        color: var(--omp-orange);
+        color: var(--omp-orange-light);
         font-weight: 500 !important;
     }
 
@@ -470,11 +493,11 @@
     }
 
     .product-detail--select-product .p-variant-item {
-        padding: var(--omp-space);
+        padding: var(--omp-space) calc(var(--omp-space) * 4);
         border-radius: 2px;
         background-color: var(--omp-silver);
-        margin-right: var(--omp-space);
-        margin-bottom: var(--omp-space);
+        margin-right: calc(var(--omp-space) * 2);
+        margin-bottom: calc(var(--omp-space) * 2);
         cursor: pointer;
     }
 
@@ -596,7 +619,6 @@
     }
 
     [id^=OMP_OUTSTANDING_PRODUCT] .omp-wp__outstanding-product {
-        height: var(--omp-vertical-scroll-product-height);
         width: 100%;
         padding: var(--omp-space);
     }
@@ -645,17 +667,54 @@
         overflow: hidden;
     }
 
+    .omp-product-card__top .product-card--sale {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: var(--omp-yellow-darken);
+        width: 2.5rem;
+    }
+
+    .product-card--sale .sale-text {
+        font-size: 0.8rem;
+        text-align: center;
+        color: var(--omp-orange);
+    }
+
+    .product-card--sale .sale-text p {
+        margin-bottom: 0;
+    }
+
+    .product-card--sale .sale-text p:not(:first-child) {
+        color: #ffffff;
+        text-transform: uppercase;
+    }
+
+    .product-card--sale .sale-text:after {
+        content: "";
+        width: 0;
+        height: 0;
+        left: 0;
+        top: 100%;
+        position: absolute;
+        border-color: transparent #fff;
+        border-style: solid;
+        border-width: 0 1.25rem 0.75rem;
+        border-left-color: var(--omp-yellow-darken);
+        border-right-color: var(--omp-yellow-darken);
+    }
+
     .omp-product-card .omp-product-card__top .product-card--premium {
         position: absolute;
         top: 8px;
         left: 0;
         padding: 2px 4px;
         font-size: 10px;
-        font-weight: 500;
+        text-transform: uppercase;
         color: white;
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
-        background-color: var(--omp-yellow);
+        background-color: var(--omp-yellow-darken);
         z-index: 1;
     }
 
@@ -705,9 +764,10 @@
 
     .omp-product-card .omp-product-card__bottom .omp-product-card--price {
         font-size: 0.9rem;
-        display: block;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
         width: 100%;
-        height: 38px;
     }
 
     .omp-flash-sale-card .omp-product-card__bottom .omp-product-card--price {
@@ -720,13 +780,19 @@
         font-weight: 800;
         font-style: normal;
         letter-spacing: 0.05px;
-        color: var(--omp-orange);
+        color: var(--omp-orange-light);
     }
 
     .omp-product-card .omp-product-card__bottom .omp-product-card--price small {
         font-style: normal;
         letter-spacing: 0.05px;
         color: #b8b8b8;
+    }
+
+    .omp-product-card .omp-product-card__bottom .omp-product-card--sold {
+        text-align: right;
+        font-size: 0.8rem;
+        color: var(--omp-text-hint);
     }
 
     .omp-product-card__bottom .omp-product-card--selling-status {
@@ -959,7 +1025,7 @@
         border-color: #27AE60;
     }
 
-    .omp-btn-danger {
+    .omp-btn-orange {
         color: #fff;
         background-color: var(--omp-orange);
         border-color: var(--omp-orange);
@@ -1299,6 +1365,32 @@
             height: calc(var(--omp-product-image-height) * 1.5);
         }
     }
+
+    .block-countdown {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2px;
+    }
+
+    .block-countdown :is(#fsCountdownHours, #fsCountdownMinutes, #fsCountdownSeconds) {
+        background-color: transparent;
+        padding: 0 6px;
+        border-radius: 2px;
+        color: #ffffff;
+        border: 1px solid #ffffff;
+    }
+
+    .block-countdown > div {
+        margin-left: 2px;
+        margin-right: 2px;
+    }
+
+    .block-countdown #fsStatusText {
+        margin-top: 1px;
+        margin-right: 5px;
+        text-transform: uppercase;
+    }
     </style>
 </head>
 <body>
@@ -1319,6 +1411,7 @@
                          class="bi bi-cart3" viewBox="0 0 16 16">
                         <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
                     </svg>
+                    <span class="cart-item-count">0</span>
                 </div>
             </div>
         </div>
@@ -1331,8 +1424,7 @@
                 </div>
             </div>
             <div class="omp-product-detail--information">
-                <div class="product-detail--flash-sale" data-omp-element="product-flash-sale">
-                </div>
+                <div class="product-detail--flash-sale" data-omp-element="product-flash-sale"></div>
                 <div class="product-detail--meta-data">
                     <div class="omp-container">
                         <div class="p-name-price">
@@ -1347,9 +1439,6 @@
                             <i class="bi bi-heart"></i>
                         </div>
                     </div>
-
-
-
                     <div class="omp-container">
                         <div class="product--rating-stars">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -1380,6 +1469,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="product-detail--fs-upcoming" data-omp-element="product-fs-upcoming"></div>
                 <div class="product-detail--select-product" data-omp-element="variant-select">
                 </div>
                 <div class="product-detail--description">
@@ -1407,7 +1497,7 @@
                 <button class="omp-btn omp-btn-primary omp-btn-add-to-cart" data-action="add_to_cart">
                     Thêm vào giỏ hàng
                 </button>
-                <button class="omp-btn omp-btn-danger omp-btn-checkout" data-action="checkout">
+                <button class="omp-btn omp-btn-orange omp-btn-checkout" data-action="checkout">
                     Mua ngay
                 </button>
             </div>
@@ -1450,19 +1540,30 @@
     }
 };
 window.page_configs = {
-    "id": 26,
-    "name": "Landing 21",
-    "url": "https://landing21.guds.asia",
-    "domain": "landing21.guds.asia",
-    "created_time": 1619159020,
+    "id": 30,
+    "name": "Landing 2",
+    "url": "https://landing2.guds.asia",
+    "domain": "landing2.guds.asia",
+    "created_time": 1619410821,
     "sync_integration": false,
-    "last_released_time": 1625801116,
-    "access_token": "zX9E0jJY5woE4dYoGSty6sXxZ",
+    "last_released_time": 1626148370,
+    "access_token": "CmGLLXPN8JBgw2JjwJMaqrsJo",
     "language": "vi",
     "currency": "VND",
-    "active": true
+    "active": true,
+    "config": {
+        "logo": "https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324.jpg?w=795&h=530",
+        "favicon": "https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324.jpg?w=80&h=80",
+        "meta_title": "Luis Vuition",
+        "meta_description": "Seconhand of Luis Vuition",
+        "meta_keyword": null,
+        "google_tracking_id": "162890002483695",
+        "facebook_pixel_id": "162890002483695",
+        "google_tag_manage_id": null,
+        "scripts": null
+    }
 }</script>
-<script type="text/javascript"
-        src="js/generate_detail.js"></script>
+<script type="text/javascript" src="js/generate_detail.js"></script>
+<script type="text/javascript" src="https://cdn.omisocial.com/cart-embed/omisocial-cart-embed.min.js"></script>
 </body>
 </html>
