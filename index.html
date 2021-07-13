@@ -2,18 +2,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="environment" content="development">
-    <link rel="icon" type="image/x-icon" href="">
+    <link rel="icon" type="image/x-icon"
+          href="https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324.jpg?w=80&amp;h=80">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <meta name="description" content="Landing 2">
+    <meta name="description" content="Seconhand of Luis Vuition">
     <meta name="keywords" content="omipage">
     <meta name="omp_key" content="CmGLLXPN8JBgw2JjwJMaqrsJo">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preload"
           href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap">
-    <title>Landing 2</title>
+    <title>Luis Vuition</title>
+    <script>console.log('Done ------------')</script>
     <meta property="og:type" content="website">
-    <meta property="og:title" content="omipage">
-    <meta property="og:description" content="Create by Omipage">
+    <meta property="og:title" content="Luis Vuition">
+    <meta property="og:description" content="Seconhand of Luis Vuition">
     <style type="text/css">:root {
         --omp-font-size: 15px;
         --omp-body-max-width: 1000px;
@@ -201,13 +203,31 @@
         width: 1.5rem;
     }
 
-    .omp-header-block--content .omp-header--cart {
+    .omp-header-block--content .omp-cart {
         margin-right: calc(var(--omp-space) * 2);
         color: var(--omp-orange-light);
     }
 
-    .omp-header--cart i:before {
+    .omp-cart i:before {
         font-size: 1.5rem;
+    }
+
+    .omp-cart {
+        position: relative;
+    }
+
+    .cart-item-count {
+        position: absolute;
+        background: #ee4d2d;
+        border-radius: 50%;
+        top: -8px;
+        color: #ffffff;
+        right: -10px;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     #OMP_MENU_FOOTER {
@@ -296,6 +316,12 @@
         color: #ffffff;
         cursor: pointer;
         margin-right: var(--omp-space);
+        position: relative;
+    }
+
+    .header-cart-icon .cart-item-count {
+        top: -6px;
+        right: -6px;
     }
 
     .omp-landing-detail--header .header-title {
@@ -357,15 +383,15 @@
         margin-bottom: var(--omp-space);
     }
 
-    .product-detail--flash-sale {
+    .product-detail--flash-sale,
+    .product-detail--fs-upcoming {
         visibility: hidden;
         background-color: var(--omp-orange);
         padding: calc(var(--omp-space) * 2) var(--omp-space);
-        margin-bottom: var(--omp-space);
         color: #ffffff;
     }
 
-    .product-detail--flash-sale .omp-container {
+    :is(.product-detail--flash-sale, .product-detail--fs-upcoming) .omp-container {
         align-items: center;
     }
 
@@ -373,8 +399,8 @@
         margin-bottom: calc(var(--omp-space) * 2);
     }
 
-    .product-detail--flash-sale .flash-sale--banner {
-        background-color: var(--omp-yellow);
+    :is(.product-detail--flash-sale, .product-detail--fs-upcoming) .flash-sale--banner {
+        background-color: var(--omp-yellow-darken);
         display: flex;
         align-items: center;
         padding: 2px;
@@ -382,15 +408,20 @@
         font-size: 0.8rem;
     }
 
-    .product-detail--flash-sale .flash-sale--banner svg {
+    :is(.product-detail--flash-sale, .product-detail--fs-upcoming) .flash-sale--banner svg {
         margin: 0 5px;
     }
 
-    .product-detail--flash-sale .flash-sale--banner span {
+    :is(.product-detail--flash-sale, .product-detail--fs-upcoming) .flash-sale--banner span {
         background-color: var(--omp-orange);
         padding: 0 4px;
         text-transform: uppercase;
         border-radius: 1px;
+    }
+
+    :is(.product-detail--flash-sale, .product-detail--fs-upcoming) .flash-sale--countdown {
+        display: flex;
+        align-items: center;
     }
 
     .product-detail--flash-sale .block-countdown {
@@ -401,8 +432,7 @@
         font-size: 1rem !important;
     }
 
-    .product-detail--meta-data .omp-container,
-    .product-detail--flash-sale .omp-container {
+    :is(.product-detail--meta-data, .product-detail--flash-sale, .product-detail--fs-upcoming) .omp-container {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -654,7 +684,7 @@
     }
 
     .product-card--sale .sale-text:after {
-        content: '';
+        content: "";
         width: 0;
         height: 0;
         left: 0;
@@ -673,7 +703,7 @@
         left: 0;
         padding: 2px 4px;
         font-size: 10px;
-        font-weight: 500;
+        text-transform: uppercase;
         color: white;
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
@@ -750,6 +780,12 @@
         font-style: normal;
         letter-spacing: 0.05px;
         color: #b8b8b8;
+    }
+
+    .omp-product-card .omp-product-card__bottom .omp-product-card--sold {
+        text-align: right;
+        font-size: 0.8rem;
+        color: var(--omp-text-hint);
     }
 
     .omp-product-card__bottom .omp-product-card--selling-status {
@@ -1332,7 +1368,8 @@
 
     .block-countdown :is(#fsCountdownHours, #fsCountdownMinutes, #fsCountdownSeconds) {
         background-color: transparent;
-        padding: 0 6px;
+        width: 2rem;
+        text-align: center;
         border-radius: 2px;
         color: #ffffff;
         border: 1px solid #ffffff;
@@ -1343,9 +1380,9 @@
         margin-right: 2px;
     }
 
-    .block-countdown #fsStatusText {
+    #fsStatusText {
         margin-top: 1px;
-        margin-right: 5px;
+        margin-right: 10px;
         text-transform: uppercase;
     }
     </style>
@@ -1382,6 +1419,7 @@
     <div id="OMP_ONE_IMAGE_2"></div>
     <div id="OMP_ONE_IMAGE_1"></div>
     <div id="OMP_OUTSTANDING_PRODUCT_1"></div>
+    <div id="OMP_BEST_SELLING_PRODUCT_1"></div>
     <div id="OMP_ALL_PRODUCTS">
         <div class="omp-landing-block--title">
             <div class="skeleton-item"></div>
@@ -1618,7 +1656,500 @@
             "element_name": "OMP_OUTSTANDING_PRODUCT",
             "element_index": 4,
             "element_height": 23,
-            "element_title": "page_editor.origin_block_title.outstanding_product",
+            "element_title": "List of connected products",
+            "config": {
+                "products": [{
+                    "id": 5,
+                    "sku": "VI20201120004",
+                    "full_name": "Dép cao su giả cói - 40, Kem",
+                    "name": "Dép cao su giả cói - 40, Kem",
+                    "slug": "dep-cao-su-gia-coi---40-kem",
+                    "description": "<p>Dép cao su giả cói - 40 Kem, Dép cao su giả cói - 40 Kem,&nbsp;Dép cao su giả cói - 40 Kem,&nbsp;Dép cao su giả cói - 40 Kem,&nbsp;Dép cao su giả cói - 40 Kem,&nbsp;Dép cao su giả cói - 40 Kem</p>",
+                    "weight": 400,
+                    "volume": "10x20x30",
+                    "min_quantity": 0,
+                    "listed_price": 27000,
+                    "price": 120000,
+                    "currency": "VND",
+                    "is_active": true,
+                    "category_name": null,
+                    "avatar_image": "https://storage.googleapis.com/omisell-dev/products/images/501/vn/e2eac68bb6fc601bedb5aa182c7d7183.jpeg",
+                    "images": [{"url": "https://storage.googleapis.com/omisell-dev/products/images/501/vn/e2eac68bb6fc601bedb5aa182c7d7183.jpeg"}, {"url": "https://storage.googleapis.com/omisell-dev/products/images/501/vn/01948167742f3ffa5571fc892727b457.jpeg"}, {"url": "https://storage.googleapis.com/omisell-dev/products/images/501/vn/cc39af7dddc8c0f571ab65717d7b1e5f.jpeg"}, {"url": "https://storage.googleapis.com/omisell-dev/products/images/501/vn/0bd75ff3858a29dc806d55ff1d9f5fdd.jpeg"}, {"url": "https://storage.googleapis.com/omisell-dev/products/images/501/vn/0bd75ff3858a29dc806d55ff1d9f5fdd.jpeg"}],
+                    "quantity": 1000,
+                    "waiting": 0,
+                    "fulfillable": 1000,
+                    "sold_count": 0,
+                    "category": null,
+                    "variants": [],
+                    "is_parent": false,
+                    "is_single": true,
+                    "link": "/products/dep-cao-su-gia-coi---40-kem.30.5",
+                    "full_link": "https://landing2.guds.asia/products/dep-cao-su-gia-coi---40-kem.30.5",
+                    "landing": {"name": "Landing 2", "url": "https://landing2.guds.asia"},
+                    "options": [],
+                    "is_selected": true
+                }, {
+                    "id": 4,
+                    "sku": "VI20201120003",
+                    "full_name": "Dép cao su giả cói - 39, Đen",
+                    "name": "Dép cao su giả cói - 39, Đen",
+                    "slug": "dep-cao-su-gia-coi---39-den",
+                    "description": "<p>Dép cao su giả cói - 39 Đen, Dép cao su giả cói - 39 Đen, Dép cao su giả cói - 39 Đen, Dép cao su giả cói - 39 Đen, Dép cao su giả cói - 39 Đen</p>",
+                    "weight": 400,
+                    "volume": "10x20x30",
+                    "min_quantity": 0,
+                    "listed_price": 27000,
+                    "price": 120000,
+                    "currency": "VND",
+                    "is_active": true,
+                    "category_name": null,
+                    "avatar_image": "https://storage.googleapis.com/omisell-dev/products/images/501/vn/37d3e49340d7bd42aeba1907375cf34e.jpeg",
+                    "images": [{"url": "https://storage.googleapis.com/omisell-dev/products/images/501/vn/37d3e49340d7bd42aeba1907375cf34e.jpeg"}, {"url": "https://storage.googleapis.com/omisell-dev/products/images/501/vn/50e4c5ee49cff7b4b8265c8cfae86c3b.jpeg"}, {"url": "https://storage.googleapis.com/omisell-dev/products/images/501/vn/0bd75ff3858a29dc806d55ff1d9f5fdd.jpeg"}, {"url": "https://storage.googleapis.com/omisell-dev/products/images/501/vn/01948167742f3ffa5571fc892727b457.jpeg"}, {"url": "https://storage.googleapis.com/omisell-dev/products/images/501/vn/0bd75ff3858a29dc806d55ff1d9f5fdd.jpeg"}],
+                    "quantity": 956,
+                    "waiting": 14,
+                    "fulfillable": 942,
+                    "sold_count": 0,
+                    "category": null,
+                    "variants": [],
+                    "is_parent": false,
+                    "is_single": true,
+                    "link": "/products/dep-cao-su-gia-coi---39-den.30.4",
+                    "full_link": "https://landing2.guds.asia/products/dep-cao-su-gia-coi---39-den.30.4",
+                    "landing": {"name": "Landing 2", "url": "https://landing2.guds.asia"},
+                    "options": [],
+                    "is_selected": true
+                }, {
+                    "id": 327,
+                    "sku": "DISK_200",
+                    "full_name": "Đĩa Tròn Phẳng Trang Trí Bàn Ăn Phong Cách Bắc Âu Macaroon",
+                    "name": "Đĩa Tròn Phẳng Trang Trí Bàn Ăn Phong Cách Bắc Âu Macaroon",
+                    "slug": "dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-3",
+                    "description": "<div>\n<div>\n<div>\n<div>Đĩa nướng macaroon 6 màu Trang Trí Bàn Ăn Phong Cách Bắc Âu Macaroon Lấy cảm hứng từ những chiếc bánh macaroon xinh đẹp với đủ loại màu sắc, bộ sưu tập đĩa macaroon với 6 màu: hồng, kem sữa, vàng, xanh navy, xanh bộ đội, xám, vàng sẽ khiến bàn ăn nổi bật ❤</div>\n\n<div> </div>\n\n<div>Thoải mái dùng trong lò vi sóng, lò nướng, máy rửa bát... Màu sắc: vàng, kem sữa, xám, hồng, xanh navy, xanh bộ đội Kích thước: 21cm và 26.5cm Aura Home Decor luôn tự tin cung cấp cho khách hàng những sản phẩm đạt chất lượng cao, bằng thái độ phục vụ và phong cách bán hàng chuyên nghiệp. Sự đa dạng về mẫu mã, kiểu dáng thiết kế, độ mĩ thuật cao của sản phẩm đã và đang đáp ứng mọi nhu cầu của khách hàng.</div>\n\n<div> </div>\n\n<div>➡ Click mua ngay để sở hữu sản phẩm tuyệt vời này!</div>\n\n<div>❌ Lưu ý: Trong trường hợp bạn cho rằng mặt hàng đã được gửi đi có bất kỳ lỗi nào thuộc về Shop, hoặc nếu bị hư hại trong quá trình vận chuyển, chúng tôi rất sẵn lòng được hỗ trợ. Vui lòng thông báo cho Aura Home Decor về hàng lỗi trong vòng 24 giờ kể từ lúc nhận hàng. Đừng ngần ngại liên hệ với chúng tôi hoặc Chat trực tiếp trên SHOPEE để được hỗ trợ tốt nhất. ==>CÁCH ĐẶT HÀNG - Chọn mua ngay >> để thêm sản phẩm vào giỏ hàng - Điền thông tin nhận hàng của bạn và chọn</div>\n\n<div> </div>\n\n<div>- Đặt hàng để Shop có thể giao hàng cho bạn trong thời gian sớm nhất Aura Home Decor CAM KẾT</div>\n\n<div>☑ Sản phẩm 100% giống như hình ảnh đăng tải</div>\n\n<div>☑ Giao hàng đúng hẹn</div>\n\n<div>☑ Ship COD toàn quốc</div>\n\n<div>☑ Tư vấn, hỗ trợ khách hàng mọi lúc mọi nơi</div>\n\n<div>☑ Đóng gói hàng hóa cẩn thận</div>\n\n<div>☑ Miễn phí đổi trả với các sản phẩm hư hại trong quá trình vận chuyển</div>\n\n<div>☑ Tất cả sản phẩm đều được kiểm tra CHU ĐÁO và đóng gói CẨN THẬN trước khi chuyển đi, sản phẩm có nhiều đánh giá THẤP sẽ không được bán trên shop</div>\n\n<div>☑ Vì vậy bạn có quyền ĐƯỢC YÊN TÂM khi mua hàng của chúng tôi</div>\n\n<div>➡ Hãy click MUA NGAY để sở hữu sản phẩm tuyệt vời này NGAY HÔM NAY! Aura Home - Tổ ấm nhỏ, tình yêu lớn</div>\n\n<div>☎️Hotline: 090 6789 246</div>\n\n<div>🏡Địa chỉ: C14, Lô 19, Khu Đô Thị Mới Định Công, Hoàng Mai, Hà Nội</div>\n</div>\n</div>\n</div>",
+                    "weight": 200,
+                    "volume": "0x0x0",
+                    "min_quantity": 1,
+                    "listed_price": 30000,
+                    "price": 99000,
+                    "currency": "VND",
+                    "is_active": true,
+                    "category_name": null,
+                    "avatar_image": "https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/7faa33ec309ae7e3a427fb1d1c7b6a7e-4294c721-d589-4871-9db1-023a46168771.jpeg",
+                    "images": [{"url": "https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/7faa33ec309ae7e3a427fb1d1c7b6a7e-4294c721-d589-4871-9db1-023a46168771.jpeg"}, {"url": "https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/f124cecec4e9c89ec34fa9442a9394cc-bb01a764-0053-49db-a392-df68da25c64f.jpeg"}, {"url": "https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/3c00ffec66bca1827bae4898a692459c-ec96b132-8458-4902-b7c4-62847cbb40c4.jpeg"}, {"url": "https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/c316faa35320115167fabc0f336e1542-9cb30218-54aa-487a-ba4f-e1497a23a986.jpeg"}],
+                    "quantity": 2000,
+                    "waiting": 0,
+                    "fulfillable": 2000,
+                    "sold_count": 0,
+                    "category": null,
+                    "variants": [{
+                        "id": 347,
+                        "sku": "DISK_201",
+                        "name": "Hồng XLL",
+                        "weight": 100,
+                        "volume": "10x5x6",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [{"url": "https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/c316faa35320115167fabc0f336e1542-9cb30218-54aa-487a-ba4f-e1497a23a986.jpeg"}],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 39, "name": "Hồng"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 29, "name": "XLL"}
+                        }]
+                    }, {
+                        "id": 346,
+                        "sku": "DISK_202",
+                        "name": "Hồng XL",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 39, "name": "Hồng"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 30, "name": "XL"}
+                        }]
+                    }, {
+                        "id": 345,
+                        "sku": "DISK_203",
+                        "name": "Hồng L",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 39, "name": "Hồng"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 31, "name": "L"}
+                        }]
+                    }, {
+                        "id": 344,
+                        "sku": "DISK_204",
+                        "name": "Hồng M",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 39, "name": "Hồng"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 32, "name": "M"}
+                        }]
+                    }, {
+                        "id": 343,
+                        "sku": "DISK_205",
+                        "name": "Hồng S",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 39, "name": "Hồng"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 33, "name": "S"}
+                        }]
+                    }, {
+                        "id": 342,
+                        "sku": "DISK_206",
+                        "name": "Xanh đen XLL",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 34, "name": "Xanh đen"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 29, "name": "XLL"}
+                        }]
+                    }, {
+                        "id": 341,
+                        "sku": "DISK_207",
+                        "name": "Xanh đen XL",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 34, "name": "Xanh đen"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 30, "name": "XL"}
+                        }]
+                    }, {
+                        "id": 340,
+                        "sku": "DISK_208",
+                        "name": "Xanh đen L",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 34, "name": "Xanh đen"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 31, "name": "L"}
+                        }]
+                    }, {
+                        "id": 339,
+                        "sku": "DISK_209",
+                        "name": "Xanh đen M",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 34, "name": "Xanh đen"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 32, "name": "M"}
+                        }]
+                    }, {
+                        "id": 338,
+                        "sku": "DISK_210",
+                        "name": "Xanh đen S",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 34, "name": "Xanh đen"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 33, "name": "S"}
+                        }]
+                    }, {
+                        "id": 337,
+                        "sku": "DISK_211",
+                        "name": "Đen XLL",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 35, "name": "Đen"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 29, "name": "XLL"}
+                        }]
+                    }, {
+                        "id": 336,
+                        "sku": "DISK_212",
+                        "name": "Đen XL",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 35, "name": "Đen"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 30, "name": "XL"}
+                        }]
+                    }, {
+                        "id": 335,
+                        "sku": "DISK_213",
+                        "name": "Đen L",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 35, "name": "Đen"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 31, "name": "L"}
+                        }]
+                    }, {
+                        "id": 334,
+                        "sku": "DISK_214",
+                        "name": "Đen M",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 35, "name": "Đen"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 32, "name": "M"}
+                        }]
+                    }, {
+                        "id": 333,
+                        "sku": "DISK_215",
+                        "name": "Đen S",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 35, "name": "Đen"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 33, "name": "S"}
+                        }]
+                    }, {
+                        "id": 332,
+                        "sku": "DISK_216",
+                        "name": "Vàng XLL",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 36, "name": "Vàng"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 29, "name": "XLL"}
+                        }]
+                    }, {
+                        "id": 331,
+                        "sku": "DISK_217",
+                        "name": "Vàng XL",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 36, "name": "Vàng"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 30, "name": "XL"}
+                        }]
+                    }, {
+                        "id": 330,
+                        "sku": "DISK_218",
+                        "name": "Vàng L",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 36, "name": "Vàng"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 31, "name": "L"}
+                        }]
+                    }, {
+                        "id": 329,
+                        "sku": "DISK_219",
+                        "name": "Vàng M",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 36, "name": "Vàng"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 32, "name": "M"}
+                        }]
+                    }, {
+                        "id": 328,
+                        "sku": "DISK_220",
+                        "name": "Vàng S",
+                        "weight": 100,
+                        "volume": "0x0x0",
+                        "min_quantity": 1,
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "images": [],
+                        "quantity": 100,
+                        "waiting": 0,
+                        "fulfillable": 100,
+                        "attributes": [{"id": 4, "name": "Màu sắc", "value": {"id": 36, "name": "Vàng"}}, {
+                            "id": 8,
+                            "name": "Kích thước",
+                            "value": {"id": 33, "name": "S"}
+                        }]
+                    }],
+                    "is_parent": true,
+                    "is_single": false,
+                    "link": "/products/dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-3.30.327",
+                    "full_link": "https://landing2.guds.asia/products/dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-3.30.327",
+                    "landing": {"name": "Landing 2", "url": "https://landing2.guds.asia"},
+                    "options": [{
+                        "id": 4,
+                        "name": "Màu sắc",
+                        "values": [{"id": 39, "name": "Hồng"}, {"id": 34, "name": "Xanh đen"}, {
+                            "id": 35,
+                            "name": "Đen"
+                        }, {"id": 36, "name": "Vàng"}]
+                    }, {
+                        "id": 8,
+                        "name": "Kích thước",
+                        "values": [{"id": 29, "name": "XLL"}, {"id": 30, "name": "XL"}, {
+                            "id": 31,
+                            "name": "L"
+                        }, {"id": 32, "name": "M"}, {"id": 33, "name": "S"}]
+                    }],
+                    "is_selected": true
+                }]
+            }
+        }, {
+            "element_id": "OMP_BEST_SELLING_PRODUCT_1",
+            "element_name": "OMP_BEST_SELLING_PRODUCT",
+            "element_index": 5,
+            "element_height": 23,
+            "element_title": "List of best-selling products",
             "config": {
                 "collection": {
                     "id": 23,
@@ -1640,12 +2171,25 @@ window.page_configs = {
     "domain": "landing2.guds.asia",
     "created_time": 1619410821,
     "sync_integration": false,
-    "last_released_time": 1625893556,
+    "last_released_time": 1626159019,
     "access_token": "CmGLLXPN8JBgw2JjwJMaqrsJo",
     "language": "vi",
     "currency": "VND",
-    "active": true
+    "active": true,
+    "config": {
+        "logo": "https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324.jpg?w=795&h=530",
+        "favicon": "https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324.jpg?w=80&h=80",
+        "meta_title": "Luis Vuition",
+        "meta_description": "Seconhand of Luis Vuition",
+        "meta_keyword": null,
+        "google_tracking_id": "162890002483695",
+        "facebook_pixel_id": "162890002483695",
+        "google_tag_manage_id": null,
+        "scripts": null
+    }
 }</script>
-<script type="text/javascript" src="js/generate_main.js"></script>
+<script type="text/javascript"
+        src="js/generate_main.js"></script>
+<script type="text/javascript" src="https://cdn.omisocial.com/cart-embed/omisocial-cart-embed.min.js"></script>
 </body>
 </html>
