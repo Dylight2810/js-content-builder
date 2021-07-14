@@ -2,7 +2,8 @@
 
 const API_URL = {
     PRODUCT_DETAIL: '/api/v1/products/',
-    PRODUCT_FLASH_SALE: '/flash-sales/'
+    PRODUCT_FLASH_SALE: '/flash-sales/',
+    VARIANT_PRICING: '/variant/pricing'
 };
 
 const EnumLandingBlockElementName = {
@@ -30,6 +31,7 @@ const EnumElementAttributeName = {
     DATA_OMP_ELEMENT: 'data-omp-element',
     DATA_ACTION: 'data-action',
     DATA_SKU: 'data-sku',
+    DATA_ID: 'data-id',
     DATA_QUANTITY: 'data-quantity',
     DATA_NAME: 'data-name',
     DATA_PRICE: 'data-price',
@@ -263,6 +265,10 @@ const EnumFlashSaleType = {
             return await this._createMultiRequest(request_urls);
         }
 
+        getVariantPricingById = async (variant_id) => {
+            return await this._createGetRequest(`${this.api_domain}${API_URL.PRODUCT_DETAIL}${variant_id}${API_URL.VARIANT_PRICING}`)
+        }
+
         _getDomain = () => {
             const _env = document.querySelectorAll('meta[name="environment"]')[0];
             this.api_domain = _env.getAttribute('content') === 'production' ? 'https://s.omisocial.com' : 'https://dev.omisocial.com';
@@ -365,11 +371,32 @@ const EnumFlashSaleType = {
             `
         }
 
-        _productFlashSaleBuilder = (flash_sale, page_configs) => {
+        _updateFlashSaleInformation = (new_info, country_locale, currency_code) => {
+            const flash_sale_el = this._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                EnumPDElementAttributeValue.PRODUCT_FLASH_SALE
+            );
+
+            const flash_sale_price_el = this._queryElementsByClass(flash_sale_el, 'flash-sale--price');
+            flash_sale_price_el.innerHTML = this._generateFlashSalePrice(
+                this.formatCurrency(country_locale, currency_code, new_info.discounted_amount),
+                this.formatCurrency(country_locale, currency_code, new_info.before_discount_amount)
+            );
+
+            const flash_sale_sold_el = this._queryElementsByClass(flash_sale_el, 'flash-sale--sold');
+            flash_sale_sold_el.innerHTML = `Đã bán ${new_info.flash_sale.sold_count}/${new_info.flash_sale.max_sellable}`
+        }
+
+        _generateFlashSalePrice = (discounted_price, origin_price) => {
+            return `${discounted_price} <small style="margin-left: 5px;text-decoration: line-through;">${origin_price}</small>`
+        }
+
+        _productFlashSaleBuilder = (product_flash_sale, page_configs) => {
             const _country_locale = page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE;
             const _currency_code = page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE;
-            const _origin_price = this.formatCurrency(_country_locale, _currency_code, flash_sale.before_discount_amount);
-            const _flash_sale_price = this.formatCurrency(_country_locale, _currency_code, flash_sale.discounted_amount);
+            const _origin_price = this.formatCurrency(_country_locale, _currency_code, product_flash_sale.before_discount_amount);
+            const _flash_sale_price = this.formatCurrency(_country_locale, _currency_code, product_flash_sale.discounted_amount);
             return `
                 <div class="omp-container">
                     <div class="flash-sale--banner">
@@ -384,7 +411,7 @@ const EnumFlashSaleType = {
                 </div>
                 <div class="omp-container">
                     <div class="flash-sale--price">
-                        ${_flash_sale_price} <small style="margin-left: 5px;text-decoration: line-through;">${_origin_price}</small>
+                        ${this._generateFlashSalePrice(_flash_sale_price, _origin_price)}
                     </div>
                     ${this._generateFlashSaleCountdown('Kết thúc trong')}
                 </div>
@@ -493,6 +520,7 @@ const EnumFlashSaleType = {
             if (!product) return;
 
             const _updateAttributeValue = (btn_el) => {
+                btn_el.setAttribute(EnumElementAttributeName.DATA_ID, product.id);
                 btn_el.setAttribute(EnumElementAttributeName.DATA_SKU, product.sku);
                 btn_el.setAttribute(EnumElementAttributeName.DATA_QUANTITY, 1);
                 btn_el.setAttribute(EnumElementAttributeName.DATA_NAME, product.name);
@@ -554,14 +582,16 @@ const EnumFlashSaleType = {
         store_variant_group = [];
         select_product_el;
         page_configs;
+        data_service;
 
-        constructor(product, content_builder, group_quantity, select_product_el, page_configs) {
+        constructor(product, content_builder, group_quantity, select_product_el, page_configs, data_service) {
             const _this = this;
             _this.product_detail = product;
             _this.element_content_builder = content_builder;
             _this.group_quantity_button = group_quantity;
             _this.select_product_el = select_product_el;
             _this.page_configs = page_configs;
+            _this.data_service = data_service;
         }
 
         _queryProductVariantGroupElements = () => {
@@ -629,42 +659,43 @@ const EnumFlashSaleType = {
             _option_must_disable.forEach(e => e.classList.add('disabled'));
         }
 
-        _updateProductInfoFollowVariantSelected = (variant) => {
+        _updateOMPElementInnerHTML = (element_attribute_value, inner_content) => {
+            const _element = this.element_content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                element_attribute_value
+            );
+            _element.innerHTML = inner_content;
+        }
+
+        _updateProductInfoFollowVariantSelected = async (variant) => {
             if (!variant) return;
             const _country_locale = this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE;
             const _currency_code = this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE;
 
-            // Update product name
-            const product_name_el = this.element_content_builder._queryElementsByAttribute(
-                document,
-                EnumElementAttributeName.DATA_OMP_ELEMENT,
-                EnumPDElementAttributeValue.PRODUCT_NAME
-            );
-            product_name_el.innerHTML = `${variant.name}`;
+            const variant_pricing = await this.data_service.getVariantPricingById(variant.id);
+            if (variant_pricing.flash_sale) {
+                this.element_content_builder._updateFlashSaleInformation(
+                    variant_pricing,
+                    _country_locale,
+                    _currency_code
+                );
+            } else {
+                // Update product price
+                this._updateOMPElementInnerHTML(
+                    EnumPDElementAttributeValue.PRODUCT_PRICE,
+                    `${this.element_content_builder.formatCurrency(_country_locale, _currency_code, variant.price)}`
+                );
+            }
 
-            // Update product price
-            const product_price_el = this.element_content_builder._queryElementsByAttribute(
-                document,
-                EnumElementAttributeName.DATA_OMP_ELEMENT,
-                EnumPDElementAttributeValue.PRODUCT_PRICE
-            );
-            product_price_el.innerHTML = `${this.element_content_builder.formatCurrency(_country_locale, _currency_code, variant.price)}`;
+            // Update product name
+            this._updateOMPElementInnerHTML(EnumPDElementAttributeValue.PRODUCT_NAME, `${variant.name}`);
 
             // Update product listed price
-            const product_listed_price_el = this.element_content_builder._queryElementsByAttribute(
-                document,
-                EnumElementAttributeName.DATA_OMP_ELEMENT,
-                EnumPDElementAttributeValue.PRODUCT_LISTED_PRICE
+            this._updateOMPElementInnerHTML(
+                EnumPDElementAttributeValue.PRODUCT_LISTED_PRICE,
+                `${this.element_content_builder.formatCurrency(_country_locale, _currency_code, variant.listed_price)}`
             );
-            product_listed_price_el.innerHTML = `${this.element_content_builder.formatCurrency(_country_locale, _currency_code, variant.listed_price)}`;
-
-            // Update product description
-            const product_description_el = this.element_content_builder._queryElementsByAttribute(
-                document,
-                EnumElementAttributeName.DATA_OMP_ELEMENT,
-                EnumPDElementAttributeValue.PRODUCT_DESCRIPTION
-            );
-            product_description_el.innerHTML = `${variant.description}`;
 
             // Rerender product button action
             this.element_content_builder._removeInvalidClass(this.select_product_el, 'invalid-product');
@@ -692,7 +723,7 @@ const EnumFlashSaleType = {
                     _arr_group_selected = this.store_variant_group.filter(g => g.variant_group_id !== group.variant_group_id);
                     this._addDisabledClassForVariantOption(_arr_group_selected, group);
                 });
-                this._updateProductInfoFollowVariantSelected(this._findSelectedVariant());
+                void this._updateProductInfoFollowVariantSelected(this._findSelectedVariant());
             } else {
                 this.element_content_builder._removeGroupButtonAttribute();
             }
@@ -791,6 +822,7 @@ const EnumFlashSaleType = {
 
     class GroupQuantityButtonAction {
         element_content_builder;
+        data_service;
         increase_btn;
         decrease_btn;
         add_to_cart_btn;
@@ -798,9 +830,10 @@ const EnumFlashSaleType = {
         quantity_element;
         select_product_el;
 
-        constructor(content_builder, select_product_el) {
+        constructor(content_builder, data_service, select_product_el) {
             const _this = this;
             _this.element_content_builder = content_builder;
+            _this.data_service = data_service;
             _this.select_product_el = select_product_el;
             _this.decrease_btn = _this.element_content_builder._queryElementsByAttribute(
                 document,
@@ -836,13 +869,34 @@ const EnumFlashSaleType = {
         }
 
         _addIncreaseProductQuantityEvent = (total_quantity) => {
-            const _eventHandler = () => {
+            const _group_quantity_el = this.element_content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                EnumPDElementAttributeValue.PRODUCT_GROUP_BUTTON_ACTION
+            );
+            const _quantity_warning_el = document.getElementById('quantityWarning');
+
+            const _eventHandler = async () => {
                 if (!this.add_to_cart_btn.getAttribute(EnumElementAttributeName.DATA_SKU)) {
                     this._actionForInvalidProduct();
                     return;
                 }
 
+                const _product_id = this.add_to_cart_btn.getAttribute(EnumElementAttributeName.DATA_ID);
+                const _variant_pricing = await this.data_service.getVariantPricingById(_product_id);
+
+                _quantity_warning_el.innerHTML = `Số sản phẩm được áp dụng khuyến mại hiện tại đã đạt tới giới hạn. Nếu mua nhiều hơn, giá sản phẩm có thể sẽ thay đổi`;
+
                 const _quantity_v = parseInt(this.quantity_element.innerHTML);
+
+                if (_quantity_v === _variant_pricing?.flash_sale?.purchase_limit) {
+                    _quantity_warning_el.innerHTML = `Số sản phẩm được áp dụng khuyến mại hiện tại đã đạt tới giới hạn. Nếu mua nhiều hơn, giá sản phẩm có thể sẽ thay đổi`;
+                }
+
+                if (_quantity_v > _variant_pricing?.flash_sale?.purchase_limit) {
+                    const _quantity_warning_el = _group_quantity_el.getElementById('quantityWarning');
+                    _quantity_warning_el.innerHTML = `Giá sản phẩm đã thay đổi vì số lượng mua đã vượt quá tổng số sản phẩm được khuyến mại`;
+                }
 
                 if (_quantity_v >= total_quantity) return;
 
@@ -853,13 +907,31 @@ const EnumFlashSaleType = {
         }
 
         _addDecreaseProductQuantityEvent = () => {
-            const _eventHandler = () => {
+            const _group_quantity_el = this.element_content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                EnumPDElementAttributeValue.PRODUCT_GROUP_BUTTON_ACTION
+            );
+            const _quantity_warning_el = document.getElementById('quantityWarning');
+
+            const _eventHandler = async () => {
                 if (!this.add_to_cart_btn.getAttribute(EnumElementAttributeName.DATA_SKU)) {
                     this._actionForInvalidProduct();
                     return;
                 }
 
+                const _product_id = this.add_to_cart_btn.getAttribute(EnumElementAttributeName.DATA_ID);
+                const _variant_pricing = await this.data_service.getVariantPricingById(_product_id);
+
                 const _quantity_v = parseInt(this.quantity_element.innerHTML);
+
+                if (_quantity_v === _variant_pricing?.flash_sale?.purchase_limit) {
+                    _quantity_warning_el.innerHTML = `Số sản phẩm được áp dụng khuyến mại hiện tại đã đạt tới giới hạn. Nếu mua nhiều hơn, giá sản phẩm có thể sẽ thay đổi`;
+                }
+
+                if (_quantity_v < _variant_pricing?.flash_sale?.purchase_limit) {
+                    _quantity_warning_el.innerHTML = '';
+                }
 
                 if (_quantity_v < 2) return;
 
@@ -988,7 +1060,7 @@ const EnumFlashSaleType = {
             }
 
             // Handle select variant event
-            this.group_quantity_button = new GroupQuantityButtonAction(this.content_builder, select_product_el);
+            this.group_quantity_button = new GroupQuantityButtonAction(this.content_builder, this.data_service, select_product_el);
 
             if (product_detail.options && product_detail.options.length) {
                 this.select_variant_button = new SelectVariantButton(
@@ -996,7 +1068,8 @@ const EnumFlashSaleType = {
                     this.content_builder,
                     this.group_quantity_button,
                     select_product_el,
-                    this.page_configs
+                    this.page_configs,
+                    this.data_service
                 );
                 this.select_variant_button.handleSelectEvent();
             } else {
@@ -1004,12 +1077,8 @@ const EnumFlashSaleType = {
             }
         }
 
-        _generateProductFlashSale = (product_discount) => {
-            if (!product_discount.flash_sales) return;
-
-            const processing_flash_sale = product_discount.flash_sales.find(fs => fs.discount?.group === EnumFlashSaleType.PROCESSING);
-
-            if (processing_flash_sale) {
+        _handleGenerateFlashSaleForSingleProduct = (product_flash_sale) => {
+            if (product_flash_sale.flash_sale) {
                 const flash_sale_el = this.content_builder._queryElementsByAttribute(
                     document,
                     EnumElementAttributeName.DATA_OMP_ELEMENT,
@@ -1018,22 +1087,14 @@ const EnumFlashSaleType = {
 
                 if (!flash_sale_el) return;
 
-                flash_sale_el.innerHTML = this.content_builder._productFlashSaleBuilder(product_discount, this.page_configs);
-                flash_sale_el.setAttribute('style', 'visibility: visible');
+                flash_sale_el.innerHTML = this.content_builder._productFlashSaleBuilder(product_flash_sale, this.page_configs);
+                flash_sale_el.setAttribute('style', 'display: block');
                 this.content_builder._queryElementsByClass(document, 'price-sale', 'h5')?.setAttribute('style', 'display: none');
-                this.global_event.addCountDownEvent(processing_flash_sale.discount.end_time);
+                this.global_event.addCountDownEvent(product_flash_sale.flash_sale.discount.end_time);
                 return;
             }
 
-            let upcoming_flash_sale = product_discount.flash_sales[0];
-            const arr_upcoming_flash_sale = product_discount.flash_sales.filter(fs => fs.discount?.group === EnumFlashSaleType.UPCOMING);
-            arr_upcoming_flash_sale.forEach(fs => {
-                if (fs.discount.start_time < upcoming_flash_sale.start_time) {
-                    upcoming_flash_sale = fs;
-                }
-            });
-
-            if (upcoming_flash_sale) {
+            if (product_flash_sale.upcoming_flash_sale) {
                 const fs_upcoming_el = this.content_builder._queryElementsByAttribute(
                     document,
                     EnumElementAttributeName.DATA_OMP_ELEMENT,
@@ -1043,9 +1104,15 @@ const EnumFlashSaleType = {
                 if (!fs_upcoming_el) return;
 
                 fs_upcoming_el.innerHTML = this.content_builder._productFlashSaleUpcomingBuilder();
-                fs_upcoming_el.setAttribute('style', 'visibility: visible');
-                this.global_event.addCountDownEvent(upcoming_flash_sale.discount.start_time);
+                fs_upcoming_el.setAttribute('style', 'display: block');
+                this.global_event.addCountDownEvent(product_flash_sale.upcoming_flash_sale.discount.start_time);
             }
+        }
+
+        _generateProductFlashSale = (product_flash_sale) => {
+            if (!product_flash_sale.flash_sale && !product_flash_sale.upcoming_flash_sale) return;
+
+            this._handleGenerateFlashSaleForSingleProduct(product_flash_sale);
         }
 
         _updateCartCount = () => {
@@ -1058,11 +1125,11 @@ const EnumFlashSaleType = {
         _getProductDetailById = async (product_id) => {
             const responses = await this.data_service.getProductDetailById(product_id);
             let product_detail;
-            let product_discount;
+            let product_flash_sale;
 
             if (responses.length) {
                 product_detail = this._addVariantAttributesId(responses[0]);
-                product_discount = responses[1];
+                product_flash_sale = responses[1];
             }
 
             if (!product_detail) {
@@ -1073,7 +1140,7 @@ const EnumFlashSaleType = {
             this._updateCartCount();
 
             // Generate product Flash Sale
-            this._generateProductFlashSale(product_discount);
+            this._generateProductFlashSale(product_flash_sale);
 
             // Generate product detail element content
             this._generateProductSelectVariant(product_detail);
@@ -1091,7 +1158,7 @@ const EnumFlashSaleType = {
             this.content_builder._showLoading();
             const _arr_url_split = window.location.href.split('.');
             const _product_id = _arr_url_split[_arr_url_split.length - 1];
-            this._getProductDetailById(_product_id).then();
+            this._getProductDetailById(327).then();
         }
     }
 

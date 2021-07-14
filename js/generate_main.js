@@ -283,7 +283,7 @@ const EBannerImgReferenceLinkType = {
         }
 
         getFlashSaleDataAsync = async () => {
-            const request_url = `${this.api_domain}${API_URL.FLASH_SALES}?landing_id=${this.landing_id}`;
+            const request_url = `${this.api_domain}${API_URL.FLASH_SALES}?landing_id=${this.landing_id}&is_valid=1`;
             return await this._createGetRequest(request_url);
         }
 

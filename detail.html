@@ -387,15 +387,17 @@
 
     .product-detail--flash-sale,
     .product-detail--fs-upcoming {
-        visibility: hidden;
+        display: none;
         background-color: var(--omp-orange);
         padding: calc(var(--omp-space) * 2) var(--omp-space);
-        margin-bottom: var(--omp-space);
         color: #ffffff;
     }
 
-    .product-detail--flash-sale .omp-container,
-    .product-detail--fs-upcoming .omp-container {
+    .product-detail--fs-upcoming {
+        margin-bottom: var(--omp-space);
+    }
+
+    :is(.product-detail--flash-sale, .product-detail--fs-upcoming) .omp-container {
         align-items: center;
     }
 
@@ -403,9 +405,8 @@
         margin-bottom: calc(var(--omp-space) * 2);
     }
 
-    .product-detail--flash-sale .flash-sale--banner,
-    .product-detail--fs-upcoming .flash-sale--banner {
-        background-color: var(--omp-yellow);
+    :is(.product-detail--flash-sale, .product-detail--fs-upcoming) .flash-sale--banner {
+        background-color: var(--omp-yellow-darken);
         display: flex;
         align-items: center;
         padding: 2px;
@@ -413,18 +414,18 @@
         font-size: 0.8rem;
     }
 
-    .flash-sale--banner svg {
+    :is(.product-detail--flash-sale, .product-detail--fs-upcoming) .flash-sale--banner svg {
         margin: 0 5px;
     }
 
-    .flash-sale--banner span {
+    :is(.product-detail--flash-sale, .product-detail--fs-upcoming) .flash-sale--banner span {
         background-color: var(--omp-orange);
         padding: 0 4px;
         text-transform: uppercase;
         border-radius: 1px;
     }
 
-    .flash-sale--countdown {
+    :is(.product-detail--flash-sale, .product-detail--fs-upcoming) .flash-sale--countdown {
         display: flex;
         align-items: center;
     }
@@ -437,9 +438,7 @@
         font-size: 1rem !important;
     }
 
-    .product-detail--meta-data .omp-container,
-    .product-detail--flash-sale .omp-container,
-    .product-detail--fs-upcoming .omp-container {
+    :is(.product-detail--meta-data, .product-detail--flash-sale, .product-detail--fs-upcoming) .omp-container {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -1375,7 +1374,8 @@
 
     .block-countdown :is(#fsCountdownHours, #fsCountdownMinutes, #fsCountdownSeconds) {
         background-color: transparent;
-        padding: 0 6px;
+        width: 2rem;
+        text-align: center;
         border-radius: 2px;
         color: #ffffff;
         border: 1px solid #ffffff;
@@ -1386,9 +1386,9 @@
         margin-right: 2px;
     }
 
-    .block-countdown #fsStatusText {
+    #fsStatusText {
         margin-top: 1px;
-        margin-right: 5px;
+        margin-right: 10px;
         text-transform: uppercase;
     }
     </style>
@@ -1492,6 +1492,7 @@
                         <div class="p-quantity-button" data-omp-element="increase-quantity">+</div>
                     </div>
                 </div>
+                <div class="omp-container" id="quantityWarning"></div>
             </div>
             <div class="display-flex">
                 <button class="omp-btn omp-btn-primary omp-btn-add-to-cart" data-action="add_to_cart">
@@ -1546,7 +1547,7 @@ window.page_configs = {
     "domain": "landing2.guds.asia",
     "created_time": 1619410821,
     "sync_integration": false,
-    "last_released_time": 1626148370,
+    "last_released_time": 1626165838,
     "access_token": "CmGLLXPN8JBgw2JjwJMaqrsJo",
     "language": "vi",
     "currency": "VND",
@@ -1563,7 +1564,8 @@ window.page_configs = {
         "scripts": null
     }
 }</script>
-<script type="text/javascript" src="js/generate_detail.js"></script>
+<script type="text/javascript"
+        src="js/generate_detail.js"></script>
 <script type="text/javascript" src="https://cdn.omisocial.com/cart-embed/omisocial-cart-embed.min.js"></script>
 </body>
 </html>
