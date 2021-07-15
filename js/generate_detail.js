@@ -885,8 +885,6 @@ const EnumFlashSaleType = {
                 const _product_id = this.add_to_cart_btn.getAttribute(EnumElementAttributeName.DATA_ID);
                 const _variant_pricing = await this.data_service.getVariantPricingById(_product_id);
 
-                _quantity_warning_el.innerHTML = `Số sản phẩm được áp dụng khuyến mại hiện tại đã đạt tới giới hạn. Nếu mua nhiều hơn, giá sản phẩm có thể sẽ thay đổi`;
-
                 const _quantity_v = parseInt(this.quantity_element.innerHTML);
 
                 if (_quantity_v === _variant_pricing?.flash_sale?.purchase_limit) {
@@ -894,7 +892,6 @@ const EnumFlashSaleType = {
                 }
 
                 if (_quantity_v > _variant_pricing?.flash_sale?.purchase_limit) {
-                    const _quantity_warning_el = _group_quantity_el.getElementById('quantityWarning');
                     _quantity_warning_el.innerHTML = `Giá sản phẩm đã thay đổi vì số lượng mua đã vượt quá tổng số sản phẩm được khuyến mại`;
                 }
 
@@ -907,11 +904,6 @@ const EnumFlashSaleType = {
         }
 
         _addDecreaseProductQuantityEvent = () => {
-            const _group_quantity_el = this.element_content_builder._queryElementsByAttribute(
-                document,
-                EnumElementAttributeName.DATA_OMP_ELEMENT,
-                EnumPDElementAttributeValue.PRODUCT_GROUP_BUTTON_ACTION
-            );
             const _quantity_warning_el = document.getElementById('quantityWarning');
 
             const _eventHandler = async () => {
