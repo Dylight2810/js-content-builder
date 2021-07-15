@@ -31,7 +31,7 @@ const EnumElementAttributeName = {
     DATA_OMP_ELEMENT: 'data-omp-element',
     DATA_ACTION: 'data-action',
     DATA_SKU: 'data-sku',
-    DATA_ID: 'data-id',
+    DATA_PRODUCT_ID: 'data-product-id',
     DATA_QUANTITY: 'data-quantity',
     DATA_NAME: 'data-name',
     DATA_PRICE: 'data-price',
@@ -520,7 +520,7 @@ const EnumFlashSaleType = {
             if (!product) return;
 
             const _updateAttributeValue = (btn_el) => {
-                btn_el.setAttribute(EnumElementAttributeName.DATA_ID, product.id);
+                btn_el.setAttribute(EnumElementAttributeName.DATA_PRODUCT_ID, product.id);
                 btn_el.setAttribute(EnumElementAttributeName.DATA_SKU, product.sku);
                 btn_el.setAttribute(EnumElementAttributeName.DATA_QUANTITY, 1);
                 btn_el.setAttribute(EnumElementAttributeName.DATA_NAME, product.name);
@@ -538,6 +538,7 @@ const EnumFlashSaleType = {
 
         _removeGroupButtonAttribute = () => {
             const _removeAttribute = (btn_el) => {
+                btn_el.removeAttribute(EnumElementAttributeName.DATA_PRODUCT_ID);
                 btn_el.removeAttribute(EnumElementAttributeName.DATA_SKU);
                 btn_el.removeAttribute(EnumElementAttributeName.DATA_QUANTITY);
                 btn_el.removeAttribute(EnumElementAttributeName.DATA_NAME);
@@ -878,7 +879,7 @@ const EnumFlashSaleType = {
                     return;
                 }
 
-                const _product_id = this.add_to_cart_btn.getAttribute(EnumElementAttributeName.DATA_ID);
+                const _product_id = this.add_to_cart_btn.getAttribute(EnumElementAttributeName.DATA_PRODUCT_ID);
                 const _variant_pricing = await this.data_service.getVariantPricingById(_product_id);
 
                 const _quantity_v = parseInt(this.quantity_element.innerHTML);
@@ -910,7 +911,7 @@ const EnumFlashSaleType = {
                     return;
                 }
 
-                const _product_id = this.add_to_cart_btn.getAttribute(EnumElementAttributeName.DATA_ID);
+                const _product_id = this.add_to_cart_btn.getAttribute(EnumElementAttributeName.DATA_PRODUCT_ID);
                 const _variant_pricing = await this.data_service.getVariantPricingById(_product_id);
 
                 const _quantity_v = parseInt(this.quantity_element.innerHTML);
