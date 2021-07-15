@@ -359,6 +359,11 @@
         justify-content: flex-end;
     }
 
+    .product-detail--select-quantity #quantityWarning {
+        font-size: 10px;
+        color: var(--omp-red);
+    }
+
     #OMP_PRODUCT_DETAIL .omp-landing-block--content {
         background-color: transparent;
     }
@@ -385,10 +390,14 @@
 
     .product-detail--flash-sale,
     .product-detail--fs-upcoming {
-        visibility: hidden;
+        display: none;
         background-color: var(--omp-orange);
         padding: calc(var(--omp-space) * 2) var(--omp-space);
         color: #ffffff;
+    }
+
+    .product-detail--fs-upcoming {
+        margin-bottom: var(--omp-space);
     }
 
     :is(.product-detail--flash-sale, .product-detail--fs-upcoming) .omp-container {
@@ -422,6 +431,11 @@
     :is(.product-detail--flash-sale, .product-detail--fs-upcoming) .flash-sale--countdown {
         display: flex;
         align-items: center;
+    }
+
+    .product-detail--flash-sale .flash-sale--countdown {
+        margin-left: auto;
+        margin-right: 0;
     }
 
     .product-detail--flash-sale .block-countdown {
@@ -1382,44 +1396,624 @@
 
     #fsStatusText {
         margin-top: 1px;
-        margin-right: 10px;
+        margin-right: var(--omp-space);
         text-transform: uppercase;
     }
+
+    @media (min-width: 577px) {
+        #fsStatusText {
+            margin-right: calc(var(--omp-space) * 4);
+        }
+    }
     </style>
+    <style>#omp-cart-popup {
+        font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 10000; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        background-color: rgb(0, 0, 0); /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    }
+
+    #omp-cart-popup * {
+        box-sizing: border-box !important;
+    }
+
+    #omp-cart-popup.active {
+        display: block;
+    }
+
+    .omp-cart-title {
+        font-size: 22px;
+    }
+
+    .omp-cart-popup-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 100%;
+        max-width: 1000px;
+        height: 100%;
+    }
+
+    .omp-cart-row {
+        display: block;
+        margin: 5px 0px;
+        border-bottom: 1px solid #f2f2f2;
+        padding-bottom: 10px;
+    }
+
+    .omp-cart-row:last-child {
+        border-bottom: none;
+    }
+
+    .omp-cart-header {
+        display: flex;
+        justify-content: space-between;
+        align-item: center;
+    }
+
+    .omp-cart-close {
+        display: flex;
+        align-item: center;
+    }
+
+    .omp-cart-close button {
+        background: none;
+        border: none;
+        color: #333;
+    }
+
+    .omp-cart-close button:hover {
+        cursor: pointer;
+    }
+
+    .omp-text-center {
+        text-align: center;
+    }
+
+    .omp-cart-image {
+        width: 50px !important;
+        height: 50px;
+        float: left;
+    }
+
+    .omp-cart-image img {
+        width: 50px;
+        height: 50px;
+        border-radius: 3px;
+    }
+
+    .omp-cart-product-name {
+        font-size: 13px;
+        padding-left: 5px;
+        font-weight: 400;
+        min-width: 300px;
+    }
+
+    .omp-cart-quantity-content {
+        display: -webkit-inline-flex;
+        display: inline-flex;
+    }
+
+    .omp-cart-quantity-content input {
+        width: 50px;
+        height: 30px;
+        text-align: center;
+        border: 1px solid #cdcdcd;
+        border-radius: 0px;
+    }
+
+    .omp-cart-quantity-content button {
+        border: 1px solid #cdcdcd;
+        cursor: pointer;
+        text-align: center;
+        width: 21px;
+        height: 30px;
+        background: #cdcdcd;
+        padding: 8px !important;
+        border-radius: 0;
+
+    }
+
+    .omp-cart-quantity-content button:active {
+        height: 29px;
+    }
+
+    .omp-cart-price {
+        text-align: right;
+        color: red;
+        width: 180px;
+    }
+
+    .omp-cart-remove-item button {
+        border: 1px solid #cdcdcd;
+        cursor: pointer;
+        text-align: center;
+        width: 23px;
+        height: 30px;
+        margin-left: 5px;
+        font-size: 11px;
+        background: #cdcdcd;
+        padding: 8px !important;
+
+    }
+
+    .omp-cart-remove-item button:active {
+        height: 29px;
+    }
+
+    .omp-cart-action {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        max-width: 1000px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 20px 15px;
+        box-shadow: 0 -2px 6px 0 rgb(66 73 83 / 8%);
+    }
+
+    .omp-cart-action button {
+        height: 45px;
+        background: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        width: 100%;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .omp-cart-action button:active {
+        opacity: 0.9;
+    }
+
+    .omipage-checkout__products-item {
+        display: grid;
+        grid-template-columns: 5rem auto 10rem 2rem;
+        grid-template-areas:
+                                "thumbnail name discounted-price delete-button"
+                                "thumbnail quantity quantity delete-button";
+        grid-column-gap: 1rem;
+        grid-row-gap: 0.75rem;
+    }
+
+    .omipage-checkout__products-item--thumbnail {
+        grid-area: thumbnail;
+        align-self: center;
+        width: 5rem;
+        max-height: 5rem;
+        border-radius: 3px;
+    }
+
+    .omipage-checkout__products-item--name {
+        grid-area: name;
+        align-self: center;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .omipage-checkout__products-item--name .item-name__group--product-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: 400;
+    }
+
+    .omipage-checkout__products-item--discounted-price {
+        grid-area: discounted-price;
+        align-self: center;
+        white-space: normal;
+        word-break: break-word;
+        color: red;
+        text-align: right;
+    }
+
+    .omipage-checkout__products-item--delete-button {
+        grid-area: delete-button;
+        align-self: center;
+        color: red;
+        text-align: right
+    }
+
+    .omipage-checkout__products-item--quantity {
+        grid-area: quantity;
+        align-self: center;
+    }
+
+    /* When the browser is at least 600px and above */
+    /* Portrait and Landscape */
+    @media (max-width: 767.98px) {
+        .omipage-checkout__products-item--thumbnail {
+            width: 3rem;
+        }
+
+        .omipage-checkout__products-item {
+            grid-template-columns: 3rem auto 10rem 1.5rem;
+        }
+    }</style>
 </head>
 <body>
 <div id="omp_wrapper">
     <div id="OMP_HEADER">
         <div class="omp-header-block--content">
-            <div class="skeleton-item"></div>
-            <div class="skeleton-item"></div>
             <div class="omp-header--space"></div>
+            <img alt="Landing Logo"
+                 src="https://storage.googleapis.com/boxme/omisocial/30/2021/06/black_1c051766-72ab-4f23-9e9d-1ca48c6a0d50_180x_khZDFh_202106.png">
+            <div class="omp-cart" onclick="omipage.open_cart_popup()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-cart3"
+                     viewBox="0 0 16 16">
+                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                </svg>
+                <span class="cart-item-count">3</span>
+            </div>
         </div>
     </div>
     <div id="OMP_MENU_FOOTER">
-        <div class="omp-menu-wrapper">
-            <div class="omp-menu-item">
-                <div class="omp-menu-item--content active">
-                    <div class="skeleton-item"></div>
+        <div class="omp-header-block--content">
+            <div class="omp-menu-wrapper">
+                <div class="omp-menu-item ng-star-inserted">
+                    <div class="omp-menu-item--content active">
+                        <p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                 class="bi bi-house" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                      d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"></path>
+                                <path fill-rule="evenodd"
+                                      d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"></path>
+                            </svg>
+                        </p>
+                        <span>Trang chủ</span>
+                    </div>
                 </div>
-            </div>
-            <div class="omp-menu-item">
-                <div class="omp-menu-item--content">
-                    <div class="skeleton-item"></div>
+                <div class="omp-menu-item ng-star-inserted">
+                    <div class="omp-menu-item--content" onclick="omipage.open_cart_popup()">
+                        <p class="omp-cart">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                 class="bi bi-cart3" viewBox="0 0 16 16">
+                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                            </svg>
+                            <span class="cart-item-count">3</span>
+                        </p>
+                        <span>Giỏ hàng</span>
+                    </div>
                 </div>
-            </div>
-            <div class="omp-menu-item">
-                <div class="omp-menu-item--content">
-                    <div class="skeleton-item"></div>
+                <div class="omp-menu-item ng-star-inserted">
+                    <div class="omp-menu-item--content">
+                        <p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                 class="bi bi-heart" viewBox="0 0 16 16">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+                            </svg>
+                        </p>
+                        <span>Yêu thích</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div id="OMP_ONE_IMAGE_3">
+        <div class="omp-wp__one-image">
+            <img src="https://storage.googleapis.com/boxme/omisocial/30/2021/07/BU_KIDDO_X_GIGEL_OaXknE_202107.png"
+                 alt="https://storage.googleapis.com/boxme/omisocial/30/2021/07/BU_KIDDO_X_GIGEL_OaXknE_202107.png">
+            <a href="https://facebook.com"></a>
+        </div>
+    </div>
     <div id="OMP_FLASH_SALE_1"></div>
-    <div id="OMP_ONE_IMAGE_2"></div>
-    <div id="OMP_ONE_IMAGE_1"></div>
-    <div id="OMP_OUTSTANDING_PRODUCT_1"></div>
-    <div id="OMP_BEST_SELLING_PRODUCT_1"></div>
+    <div id="OMP_ONE_IMAGE_1">
+        <div class="omp-wp__one-image">
+            <img src="https://storage.googleapis.com/boxme/omisocial/30/2021/06/banner_product_mWggHl_202106.jpg"
+                 alt="https://storage.googleapis.com/boxme/omisocial/30/2021/06/banner_product_mWggHl_202106.jpg">
+            <a href="https://landing2.guds.asia/products/san-pham-test-checkout-002.30.7"></a>
+        </div>
+    </div>
+    <div id="OMP_ONE_IMAGE_4">
+        <div class="omp-wp__one-image">
+            <img src="https://storage.googleapis.com/boxme/omisocial/30/2021/07/voucher_ANaGux_202107.jpg"
+                 alt="https://storage.googleapis.com/boxme/omisocial/30/2021/07/voucher_ANaGux_202107.jpg">
+            <a href=""></a>
+        </div>
+    </div>
+    <div id="OMP_ONE_IMAGE_2">
+        <div class="omp-wp__one-image">
+            <img src="https://storage.googleapis.com/boxme/omisocial/30/2021/06/banner_2_jKgOBu_202106.jpg"
+                 alt="https://storage.googleapis.com/boxme/omisocial/30/2021/06/banner_2_jKgOBu_202106.jpg">
+            <a href="https://landing2.guds.asia/products/dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-2.30.280"></a>
+        </div>
+    </div>
+    <div id="OMP_ONE_IMAGE_5">
+        <div class="omp-wp__one-image">
+            <img src="https://storage.googleapis.com/boxme/omisocial/30/2021/07/BU_LEMONILO_MdbeBa_202107.jpg"
+                 alt="https://storage.googleapis.com/boxme/omisocial/30/2021/07/BU_LEMONILO_MdbeBa_202107.jpg">
+            <a href="https://landing2.guds.asia/products/cup-co-tai---corbeille-cover---33119---test-10.30.707"></a>
+        </div>
+    </div>
+    <div id="OMP_OUTSTANDING_PRODUCT_1">
+        <div class="omp-landing-block--title">
+            <div class="block-name">List of connected products</div>
+        </div>
+        <div class="omp-landing-block--content">
+            <div class="omp-wp__outstanding-product">
+                <div class="omp-row">
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/dep-cao-su-gia-coi---40-kem.30.5"
+                           style="height: 284px">
+                            <div class="omp-product-card__top" style="height: 182px">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/e2eac68bb6fc601bedb5aa182c7d7183.jpeg"
+                                     class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/e2eac68bb6fc601bedb5aa182c7d7183.jpeg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Dép cao su giả cói - 40, Kem</div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">27.000&nbsp;₫</p>
+                                    <small>
+                                        <del>120.000&nbsp;₫</del>
+                                    </small>
+                                </div>
+                                <div class="omp-product-card--sold">Đã bán 0</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/dep-cao-su-gia-coi---39-den.30.4"
+                           style="height: 284px">
+                            <div class="omp-product-card__top" style="height: 182px">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/37d3e49340d7bd42aeba1907375cf34e.jpeg"
+                                     class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/37d3e49340d7bd42aeba1907375cf34e.jpeg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Dép cao su giả cói - 39, Đen</div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">27.000&nbsp;₫</p>
+                                    <small>
+                                        <del>120.000&nbsp;₫</del>
+                                    </small>
+                                </div>
+                                <div class="omp-product-card--sold">Đã bán 0</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="omp-product-col omp-product-wrapper">
+                        <a class="omp-product-card"
+                           href="https://landing2.guds.asia/products/dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-3.30.327"
+                           style="height: 284px">
+                            <div class="omp-product-card__top" style="height: 182px">
+                                <span class="product-card--premium">Hot</span>
+                                <img alt="https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/7faa33ec309ae7e3a427fb1d1c7b6a7e-4294c721-d589-4871-9db1-023a46168771.jpeg"
+                                     class="mb-2"
+                                     src="https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/7faa33ec309ae7e3a427fb1d1c7b6a7e-4294c721-d589-4871-9db1-023a46168771.jpeg">
+                            </div>
+                            <div class="omp-product-card__bottom">
+                                <div class="omp-product-card--name">Đĩa Tròn Phẳng Trang Trí Bàn Ăn Phong Cách Bắc Âu
+                                    Macaroon
+                                </div>
+                                <div class="omp-product-card--price" style="display: flex;">
+                                    <p class="omp-mr-1 omp-mb-0">30.000&nbsp;₫</p>
+                                    <small>
+                                        <del>99.000&nbsp;₫</del>
+                                    </small>
+                                </div>
+                                <div class="omp-product-card--sold">Đã bán 0</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="OMP_BEST_SELLING_PRODUCT_1">
+        <div class="omp-landing-block--title">
+            <div class="block-name">List of best-selling products</div>
+        </div>
+        <div class="omp-landing-block--content">
+            <div class="omp-wp__best-selling-product">
+                <div class="omp-product-wrapper">
+                    <a class="omp-product-card"
+                       href="https://landing2.guds.asia/products/san-pham-test-checkout-001.30.8" style="height: 270px">
+                        <div class="omp-product-card__top" style="height: 150px">
+                                        <span class="product-card--premium"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 width="16" height="16"
+                                                                                 fill="currentColor"
+                                                                                 class="bi bi-star-fill"
+                                                                                 viewBox="0 0 16 16">
+                              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                            </svg></span>
+                            <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/2ec3065e226c5663d4dc08c7518bb744.png"
+                                 class="mb-2"
+                                 src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/2ec3065e226c5663d4dc08c7518bb744.png">
+                        </div>
+                        <div class="omp-product-card__bottom">
+                            <div class="omp-product-card--name">Sản phẩm test Checkout 001</div>
+                            <div class="omp-product-card--price" style="display: flex;">
+                                <p class="omp-mr-1 omp-mb-0">1.111.110&nbsp;₫</p>
+                                <small>
+                                    <del>1.111.110&nbsp;₫</del>
+                                </small>
+                            </div>
+                            <div class="omp-product-card--sold">Đã bán 0</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="omp-product-wrapper">
+                    <a class="omp-product-card"
+                       href="https://landing2.guds.asia/products/san-pham-test-checkout-002.30.7" style="height: 270px">
+                        <div class="omp-product-card__top" style="height: 150px">
+                                        <span class="product-card--premium"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 width="16" height="16"
+                                                                                 fill="currentColor"
+                                                                                 class="bi bi-star-fill"
+                                                                                 viewBox="0 0 16 16">
+                              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                            </svg></span>
+                            <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/11db3ff3a5473dc3e4c8ff5ff26e27ad.png"
+                                 class="mb-2"
+                                 src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/11db3ff3a5473dc3e4c8ff5ff26e27ad.png">
+                        </div>
+                        <div class="omp-product-card__bottom">
+                            <div class="omp-product-card--name">Sản phẩm test checkout 002</div>
+                            <div class="omp-product-card--price" style="display: flex;">
+                                <p class="omp-mr-1 omp-mb-0">121.110&nbsp;₫</p>
+                                <small>
+                                    <del>1.111.110&nbsp;₫</del>
+                                </small>
+                            </div>
+                            <div class="omp-product-card--sold">Đã bán 0</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="omp-product-wrapper">
+                    <a class="omp-product-card"
+                       href="https://landing2.guds.asia/products/san-pham-test-checkout-003.30.6" style="height: 270px">
+                        <div class="omp-product-card__top" style="height: 150px">
+                                        <span class="product-card--premium"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 width="16" height="16"
+                                                                                 fill="currentColor"
+                                                                                 class="bi bi-star-fill"
+                                                                                 viewBox="0 0 16 16">
+                              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                            </svg></span>
+                            <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/80343cf018acfc85247c2950809315fc.png"
+                                 class="mb-2"
+                                 src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/80343cf018acfc85247c2950809315fc.png">
+                        </div>
+                        <div class="omp-product-card__bottom">
+                            <div class="omp-product-card--name">Sản phẩm test checkout 003</div>
+                            <div class="omp-product-card--price" style="display: flex;">
+                                <p class="omp-mr-1 omp-mb-0">12.320&nbsp;₫</p>
+                                <small>
+                                    <del>123.230&nbsp;₫</del>
+                                </small>
+                            </div>
+                            <div class="omp-product-card--sold">Đã bán 0</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="omp-product-wrapper">
+                    <a class="omp-product-card"
+                       href="https://landing2.guds.asia/products/dep-cao-su-gia-coi---40-kem.30.5"
+                       style="height: 270px">
+                        <div class="omp-product-card__top" style="height: 150px">
+                                        <span class="product-card--premium"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 width="16" height="16"
+                                                                                 fill="currentColor"
+                                                                                 class="bi bi-star-fill"
+                                                                                 viewBox="0 0 16 16">
+                              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                            </svg></span>
+                            <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/e2eac68bb6fc601bedb5aa182c7d7183.jpeg"
+                                 class="mb-2"
+                                 src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/e2eac68bb6fc601bedb5aa182c7d7183.jpeg">
+                        </div>
+                        <div class="omp-product-card__bottom">
+                            <div class="omp-product-card--name">Dép cao su giả cói - 40, Kem</div>
+                            <div class="omp-product-card--price" style="display: flex;">
+                                <p class="omp-mr-1 omp-mb-0">27.000&nbsp;₫</p>
+                                <small>
+                                    <del>120.000&nbsp;₫</del>
+                                </small>
+                            </div>
+                            <div class="omp-product-card--sold">Đã bán 0</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="omp-product-wrapper">
+                    <a class="omp-product-card"
+                       href="https://landing2.guds.asia/products/dep-cao-su-gia-coi---39-den.30.4"
+                       style="height: 270px">
+                        <div class="omp-product-card__top" style="height: 150px">
+                                        <span class="product-card--premium"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 width="16" height="16"
+                                                                                 fill="currentColor"
+                                                                                 class="bi bi-star-fill"
+                                                                                 viewBox="0 0 16 16">
+                              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                            </svg></span>
+                            <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/37d3e49340d7bd42aeba1907375cf34e.jpeg"
+                                 class="mb-2"
+                                 src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/37d3e49340d7bd42aeba1907375cf34e.jpeg">
+                        </div>
+                        <div class="omp-product-card__bottom">
+                            <div class="omp-product-card--name">Dép cao su giả cói - 39, Đen</div>
+                            <div class="omp-product-card--price" style="display: flex;">
+                                <p class="omp-mr-1 omp-mb-0">27.000&nbsp;₫</p>
+                                <small>
+                                    <del>120.000&nbsp;₫</del>
+                                </small>
+                            </div>
+                            <div class="omp-product-card--sold">Đã bán 0</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="omp-product-wrapper">
+                    <a class="omp-product-card"
+                       href="https://landing2.guds.asia/products/dep-cao-su-gia-coi---38-den.30.3"
+                       style="height: 270px">
+                        <div class="omp-product-card__top" style="height: 150px">
+                                        <span class="product-card--premium"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 width="16" height="16"
+                                                                                 fill="currentColor"
+                                                                                 class="bi bi-star-fill"
+                                                                                 viewBox="0 0 16 16">
+                              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                            </svg></span>
+                            <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/0bd75ff3858a29dc806d55ff1d9f5fdd.jpeg"
+                                 class="mb-2"
+                                 src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/0bd75ff3858a29dc806d55ff1d9f5fdd.jpeg">
+                        </div>
+                        <div class="omp-product-card__bottom">
+                            <div class="omp-product-card--name">Dép cao su giả cói - 38, Đen</div>
+                            <div class="omp-product-card--price" style="display: flex;">
+                                <p class="omp-mr-1 omp-mb-0">27.000&nbsp;₫</p>
+                                <small>
+                                    <del>120.000&nbsp;₫</del>
+                                </small>
+                            </div>
+                            <div class="omp-product-card--sold">Đã bán 0</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="omp-product-wrapper">
+                    <a class="omp-product-card"
+                       href="https://landing2.guds.asia/products/dep-nhom-gia-coi---40-den.30.2" style="height: 270px">
+                        <div class="omp-product-card__top" style="height: 150px">
+                                        <span class="product-card--premium"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 width="16" height="16"
+                                                                                 fill="currentColor"
+                                                                                 class="bi bi-star-fill"
+                                                                                 viewBox="0 0 16 16">
+                              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                            </svg></span>
+                            <img alt="https://storage.googleapis.com/omisell-dev/products/images/501/vn/cc39af7dddc8c0f571ab65717d7b1e5f.jpeg"
+                                 class="mb-2"
+                                 src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/cc39af7dddc8c0f571ab65717d7b1e5f.jpeg">
+                        </div>
+                        <div class="omp-product-card__bottom">
+                            <div class="omp-product-card--name">Dép nhôm giả cói - 40, Đen</div>
+                            <div class="omp-product-card--price" style="display: flex;">
+                                <p class="omp-mr-1 omp-mb-0">27.000&nbsp;₫</p>
+                                <small>
+                                    <del>120.000&nbsp;₫</del>
+                                </small>
+                            </div>
+                            <div class="omp-product-card--sold">Đã bán 0</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="OMP_ALL_PRODUCTS">
         <div class="omp-landing-block--title">
             <div class="skeleton-item"></div>
@@ -1593,38 +2187,27 @@
             "is_static": true
         }],
         "dynamic_elements": [{
-            "element_id": "OMP_FLASH_SALE_1",
-            "element_name": "OMP_FLASH_SALE",
-            "element_index": 1,
-            "element_height": 23,
-            "element_title": "Flash Sale",
-            "config": {"background_color": "#ee2020"}
-        }, {
-            "element_id": "OMP_ONE_IMAGE_2",
+            "element_id": "OMP_ONE_IMAGE_3",
             "element_name": "OMP_ONE_IMAGE",
-            "element_index": 2,
+            "element_index": 1,
             "element_height": 10,
-            "element_title": "page_editor.origin_block_title.one_image",
+            "element_title": "List of one image banner",
             "config": {
                 "images": [{
                     "index": 1,
-                    "url": "https://storage.googleapis.com/boxme/omisocial/30/2021/06/banner_2_jKgOBu_202106.jpg",
-                    "reference_link": "/products/dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-2.30.280",
-                    "reference_data": {
-                        "id": 280,
-                        "sku": "DISK_100",
-                        "slug": "dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-2",
-                        "name": "Đĩa Tròn Phẳng Trang Trí Bàn Ăn Phong Cách Bắc Âu Macaroon - 6 Màu Khác Nhau",
-                        "link": "/products/dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-2.30.280",
-                        "avatar_image": "https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/7faa33ec309ae7e3a427fb1d1c7b6a7e-4294c721-d589-4871-9db1-023a46168771.jpeg",
-                        "listed_price": 30000,
-                        "price": 99000,
-                        "currency": "VND",
-                        "collections": []
-                    },
-                    "reference_type": 1
+                    "url": "https://storage.googleapis.com/boxme/omisocial/30/2021/07/BU_KIDDO_X_GIGEL_OaXknE_202107.png",
+                    "reference_link": "https://facebook.com",
+                    "reference_data": null,
+                    "reference_type": 3
                 }]
             }
+        }, {
+            "element_id": "OMP_FLASH_SALE_1",
+            "element_name": "OMP_FLASH_SALE",
+            "element_index": 2,
+            "element_height": 23,
+            "element_title": "Flash Sale",
+            "config": {"background_color": "#ee2020"}
         }, {
             "element_id": "OMP_ONE_IMAGE_1",
             "element_name": "OMP_ONE_IMAGE",
@@ -1652,9 +2235,80 @@
                 }]
             }
         }, {
+            "element_id": "OMP_ONE_IMAGE_4",
+            "element_name": "OMP_ONE_IMAGE",
+            "element_index": 4,
+            "element_height": 10,
+            "element_title": "List of one image banner",
+            "config": {
+                "images": [{
+                    "index": 1,
+                    "url": "https://storage.googleapis.com/boxme/omisocial/30/2021/07/voucher_ANaGux_202107.jpg",
+                    "reference_link": "",
+                    "reference_data": null,
+                    "reference_type": null
+                }]
+            }
+        }, {
+            "element_id": "OMP_ONE_IMAGE_2",
+            "element_name": "OMP_ONE_IMAGE",
+            "element_index": 5,
+            "element_height": 10,
+            "element_title": "page_editor.origin_block_title.one_image",
+            "config": {
+                "images": [{
+                    "index": 1,
+                    "url": "https://storage.googleapis.com/boxme/omisocial/30/2021/06/banner_2_jKgOBu_202106.jpg",
+                    "reference_link": "/products/dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-2.30.280",
+                    "reference_data": {
+                        "id": 280,
+                        "sku": "DISK_100",
+                        "slug": "dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-2",
+                        "name": "Đĩa Tròn Phẳng Trang Trí Bàn Ăn Phong Cách Bắc Âu Macaroon - 6 Màu Khác Nhau",
+                        "link": "/products/dia-tron-phang-trang-tri-ban-an-phong-cach-bac-au-macaroon---6-mau-khac-nhau-2.30.280",
+                        "avatar_image": "https://storage.googleapis.com/omisell-cloud/uploads/12699/file/vn/7faa33ec309ae7e3a427fb1d1c7b6a7e-4294c721-d589-4871-9db1-023a46168771.jpeg",
+                        "listed_price": 30000,
+                        "price": 99000,
+                        "currency": "VND",
+                        "collections": []
+                    },
+                    "reference_type": 1
+                }]
+            }
+        }, {
+            "element_id": "OMP_ONE_IMAGE_5",
+            "element_name": "OMP_ONE_IMAGE",
+            "element_index": 6,
+            "element_height": 10,
+            "element_title": "List of one image banner",
+            "config": {
+                "images": [{
+                    "index": 1,
+                    "url": "https://storage.googleapis.com/boxme/omisocial/30/2021/07/BU_LEMONILO_MdbeBa_202107.jpg",
+                    "reference_link": "/products/cup-co-tai---corbeille-cover---33119---test-10.30.707",
+                    "reference_data": {
+                        "id": 707,
+                        "sku": "S7615646602",
+                        "slug": "cup-co-tai---corbeille-cover---33119---test-10",
+                        "name": "Cúp có tai - Corbeille cover - 33119 - TEST",
+                        "link": "/products/cup-co-tai---corbeille-cover---33119---test-10.30.707",
+                        "avatar_image": "https://product.hstatic.net/1000262218/product/ao_cup_co_tai_corbeille_cover_33119---den---01_0fdd9dcffd2c4529b9caf8f7a632b8f5.jpg",
+                        "listed_price": 250000,
+                        "price": 250000,
+                        "currency": "VND",
+                        "collections": [],
+                        "quantity": 0,
+                        "waiting": 0,
+                        "fulfillable": 0,
+                        "options": []
+                    },
+                    "reference_type": 1
+                }]
+            }
+        }, {
             "element_id": "OMP_OUTSTANDING_PRODUCT_1",
             "element_name": "OMP_OUTSTANDING_PRODUCT",
-            "element_index": 4,
+            "element_index": 7,
             "element_height": 23,
             "element_title": "List of connected products",
             "config": {
@@ -2147,7 +2801,7 @@
         }, {
             "element_id": "OMP_BEST_SELLING_PRODUCT_1",
             "element_name": "OMP_BEST_SELLING_PRODUCT",
-            "element_index": 5,
+            "element_index": 8,
             "element_height": 23,
             "element_title": "List of best-selling products",
             "config": {
@@ -2171,7 +2825,7 @@ window.page_configs = {
     "domain": "landing2.guds.asia",
     "created_time": 1619410821,
     "sync_integration": false,
-    "last_released_time": 1626159019,
+    "last_released_time": 1626316684,
     "access_token": "CmGLLXPN8JBgw2JjwJMaqrsJo",
     "language": "vi",
     "currency": "VND",
@@ -2191,5 +2845,128 @@ window.page_configs = {
 <script type="text/javascript"
         src="js/generate_main.js"></script>
 <script type="text/javascript" src="https://cdn.omisocial.com/cart-embed/omisocial-cart-embed.min.js"></script>
+<div id="omp-cart-popup">
+    <div class="omp-cart-popup-content">
+        <div class="omp-cart-header">
+            <div class="omp-cart-close" onclick="omipage.close_cart_popup()">
+                <button>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                         class="bi bi-chevron-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"></path>
+                    </svg>
+                </button>
+            </div>
+            <p class="omp-text-center omp-cart-title">Giỏ hàng</p>
+            <p class="spacer"></p>
+        </div>
+        <div class="omp-cart-row" id="omp-cart-row-DISK_207">
+            <div class="col-12 omipage-checkout__products-item">
+                <img alt="Product image" class="omipage-checkout__products-item--thumbnail"
+                     src="https://storage.googleapis.com/omisell-cloud/omipage/product.png"
+                     onerror="this.src='https://storage.googleapis.com/omisell-cloud/omipage/product.png'">
+                <div class="omipage-checkout__products-item--name">
+                    <div class="item-name__group">
+                        <div class="item-name__group--product-name" title="Xanh đen XL"> Xanh đen XL</div>
+                    </div>
+                </div>
+                <div class="omipage-checkout__products-item--discounted-price text-danger"><span
+                        id="omp-cart-price-DISK_207">495,000 VNĐ</span>
+                </div>
+                <div class="omipage-checkout__products-item--quantity input-group">
+                    <div class="omp-cart-quantity-content">
+                        <button onclick="javascript: omipage.decrease_quantity('DISK_207', 1);" type="button">
+                            <span>-</span></button>
+                        <input id="omp-cart-quantity-input-DISK_207" type="number" min="1" value="5"
+                               oninput="javascript: omipage.set_quantity('DISK_207', this.value);">
+                        <button type="button" onclick="javascript: omipage.increase_quantity('DISK_207', 1);">
+                            <span>+</span></button>
+                    </div>
+                </div>
+                <div class="omipage-checkout__products-item--delete-button text-danger pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                        <path fill-rule="evenodd"
+                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="omp-cart-row" id="omp-cart-row-VI20201120004">
+            <div class="col-12 omipage-checkout__products-item">
+                <img alt="Product image" class="omipage-checkout__products-item--thumbnail"
+                     src="https://storage.googleapis.com/omisell-dev/products/images/501/vn/e2eac68bb6fc601bedb5aa182c7d7183.jpeg"
+                     onerror="this.src='https://storage.googleapis.com/omisell-cloud/omipage/product.png'">
+                <div class="omipage-checkout__products-item--name">
+                    <div class="item-name__group">
+                        <div class="item-name__group--product-name" title="Dép cao su giả cói - 40, Kem"> Dép cao su giả
+                            cói - 40, Kem
+                        </div>
+                    </div>
+                </div>
+                <div class="omipage-checkout__products-item--discounted-price text-danger"><span
+                        id="omp-cart-price-VI20201120004">240,000 VNĐ</span>
+                </div>
+                <div class="omipage-checkout__products-item--quantity input-group">
+                    <div class="omp-cart-quantity-content">
+                        <button onclick="javascript: omipage.decrease_quantity('VI20201120004', 1);" type="button">
+                            <span>-</span></button>
+                        <input id="omp-cart-quantity-input-VI20201120004" type="number" min="1" value="2"
+                               oninput="javascript: omipage.set_quantity('VI20201120004', this.value);">
+                        <button type="button" onclick="javascript: omipage.increase_quantity('VI20201120004', 1);">
+                            <span>+</span></button>
+                    </div>
+                </div>
+                <div class="omipage-checkout__products-item--delete-button text-danger pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                        <path fill-rule="evenodd"
+                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="omp-cart-row" id="omp-cart-row-DISK_203">
+            <div class="col-12 omipage-checkout__products-item">
+                <img alt="Product image" class="omipage-checkout__products-item--thumbnail"
+                     src="https://storage.googleapis.com/omisell-cloud/omipage/product.png"
+                     onerror="this.src='https://storage.googleapis.com/omisell-cloud/omipage/product.png'">
+                <div class="omipage-checkout__products-item--name">
+                    <div class="item-name__group">
+                        <div class="item-name__group--product-name" title="Hồng L"> Hồng L</div>
+                    </div>
+                </div>
+                <div class="omipage-checkout__products-item--discounted-price text-danger"><span
+                        id="omp-cart-price-DISK_203">99,000 VNĐ</span>
+                </div>
+                <div class="omipage-checkout__products-item--quantity input-group">
+                    <div class="omp-cart-quantity-content">
+                        <button onclick="javascript: omipage.decrease_quantity('DISK_203', 1);" type="button">
+                            <span>-</span></button>
+                        <input id="omp-cart-quantity-input-DISK_203" type="number" min="1" value="1"
+                               oninput="javascript: omipage.set_quantity('DISK_203', this.value);">
+                        <button type="button" onclick="javascript: omipage.increase_quantity('DISK_203', 1);">
+                            <span>+</span></button>
+                    </div>
+                </div>
+                <div class="omipage-checkout__products-item--delete-button text-danger pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                        <path fill-rule="evenodd"
+                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="omp-cart-action">
+        <a href="/checkout" onmouseover="this.style.cursor='pointer'">
+            <button data-action="checkout">THANH TOÁN NGAY</button>
+        </a>
+    </div>
+</div>
 </body>
 </html>

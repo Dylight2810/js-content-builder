@@ -878,8 +878,8 @@ const EBannerImgReferenceLinkType = {
                     p.product.discounted_amount = p.discounted_amount;
                     p.product.discounted_percent = Math.round((p.amount / p.product.price) * 100);
                 } else {
-                    p.product.range_discounted_start = p.product.price[0];
-                    p.product.range_discounted_end = p.product.price[1];
+                    p.product.range_discounted_start = p.product.price_range[0];
+                    p.product.range_discounted_end = p.product.price_range[1];
                 }
 
                 arr_products.push(p.product);
