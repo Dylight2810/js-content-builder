@@ -883,12 +883,14 @@ const EnumFlashSaleType = {
 
                 const _quantity_v = parseInt(this.quantity_element.innerHTML);
 
-                if (_quantity_v === _variant_pricing?.flash_sale?.purchase_limit) {
-                    _quantity_warning_el.innerHTML = `Số sản phẩm được áp dụng khuyến mại hiện tại đã đạt tới giới hạn. Nếu mua nhiều hơn, giá sản phẩm có thể sẽ thay đổi`;
-                }
+                if (_variant_pricing?.flash_sale?.purchase_limit) {
+                    if (_quantity_v === _variant_pricing?.flash_sale?.purchase_limit) {
+                        _quantity_warning_el.innerHTML = `Số sản phẩm được áp dụng khuyến mại hiện tại đã đạt tới giới hạn. Nếu mua nhiều hơn, giá sản phẩm có thể sẽ thay đổi`;
+                    }
 
-                if (_quantity_v > _variant_pricing?.flash_sale?.purchase_limit) {
-                    _quantity_warning_el.innerHTML = `Giá sản phẩm đã thay đổi vì số lượng mua đã vượt quá tổng số sản phẩm được khuyến mại`;
+                    if (_quantity_v > _variant_pricing?.flash_sale?.purchase_limit) {
+                        _quantity_warning_el.innerHTML = `Giá sản phẩm đã thay đổi vì số lượng mua đã vượt quá tổng số sản phẩm được khuyến mại`;
+                    }
                 }
 
                 if (_quantity_v >= total_quantity) return;
@@ -913,12 +915,14 @@ const EnumFlashSaleType = {
 
                 const _quantity_v = parseInt(this.quantity_element.innerHTML);
 
-                if (_quantity_v === _variant_pricing?.flash_sale?.purchase_limit) {
-                    _quantity_warning_el.innerHTML = `Số sản phẩm được áp dụng khuyến mại hiện tại đã đạt tới giới hạn. Nếu mua nhiều hơn, giá sản phẩm có thể sẽ thay đổi`;
-                }
+                if (_variant_pricing?.flash_sale?.purchase_limit) {
+                    if (_quantity_v === _variant_pricing?.flash_sale?.purchase_limit) {
+                        _quantity_warning_el.innerHTML = `Số sản phẩm được áp dụng khuyến mại hiện tại đã đạt tới giới hạn. Nếu mua nhiều hơn, giá sản phẩm có thể sẽ thay đổi`;
+                    }
 
-                if (_quantity_v < _variant_pricing?.flash_sale?.purchase_limit) {
-                    _quantity_warning_el.innerHTML = '';
+                    if (_quantity_v < _variant_pricing?.flash_sale?.purchase_limit) {
+                        _quantity_warning_el.innerHTML = '';
+                    }
                 }
 
                 if (_quantity_v < 2) return;
