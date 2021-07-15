@@ -348,15 +348,15 @@ const EBannerImgReferenceLinkType = {
             return _parent_node.querySelectorAll(`${wrapper_tag}[class^=${class_name}]`);
         }
 
-        _convertImageLink = (image_config, landing_url) => {
+        _convertImageLink = (image_config) => {
             let _image_link = '#';
 
             switch (image_config.reference_type) {
                 case EBannerImgReferenceLinkType.COLLECTION_DETAIL:
-                    _image_link = `${landing_url}${image_config.reference_data.link}`;
+                    _image_link = `${image_config.reference_data.link}`;
                     break;
                 case EBannerImgReferenceLinkType.PRODUCT_DETAIL:
-                    _image_link = `${landing_url}${image_config.reference_data.link}`;
+                    _image_link = `${image_config.reference_data.link}`;
                     break;
                 case EBannerImgReferenceLinkType.HARD_LINK:
                     _image_link = `${image_config.reference_link}`;
@@ -623,13 +623,13 @@ const EBannerImgReferenceLinkType = {
                     </div>`
         }
 
-        _bannerCarouselContentBuilder = (images_config, landing_url) => {
+        _bannerCarouselContentBuilder = (images_config) => {
             if (!images_config || !images_config.length) return '';
 
             let innerHtml = '';
 
             images_config.forEach((img, index) => {
-                const _img_link = this._convertImageLink(img, landing_url);
+                const _img_link = this._convertImageLink(img);
                 switch (index) {
                     case 0:
                         innerHtml += `
@@ -683,10 +683,10 @@ const EBannerImgReferenceLinkType = {
             `
         }
 
-        _bannerOneImageContentBuilder = (image_config, landing_url) => {
+        _bannerOneImageContentBuilder = (image_config) => {
             if (!image_config || !image_config.length) return '';
 
-            const _img_link = this._convertImageLink(image_config[0], landing_url);
+            const _img_link = this._convertImageLink(image_config[0]);
 
             return `<div class="omp-wp__one-image">
                         <img src="${image_config[0].url}" alt="${image_config[0].url}">
@@ -694,7 +694,7 @@ const EBannerImgReferenceLinkType = {
                     </div>`
         }
 
-        _bannerTwoImageProductContentBuilder = (images_config, landing_url) => {
+        _bannerTwoImageProductContentBuilder = (images_config) => {
             if (!images_config || !images_config.length) {
                 return '';
             }
@@ -702,7 +702,7 @@ const EBannerImgReferenceLinkType = {
             let innerHtml = '';
 
             images_config.forEach((img) => {
-                const _img_link = this._convertImageLink(img, landing_url);
+                const _img_link = this._convertImageLink(img);
                 innerHtml += `
                     <a href="${_img_link}">
                         <img src="${img.url}" alt="${img.url}">
@@ -918,12 +918,12 @@ const EBannerImgReferenceLinkType = {
             const _el_config = config?.config
             switch (config.element_name) {
                 case EnumLandingBlockElementName.DESIGN_CAROUSEL:
-                    element.innerHTML = this.content_builder._bannerCarouselContentBuilder(_el_config.images, this.page_configs.url);
+                    element.innerHTML = this.content_builder._bannerCarouselContentBuilder(_el_config.images);
                     this.global_event.addAutoCarouselEvent(element);
                     this.global_event.addCarouselTouchEvent(element);
                     break;
                 case EnumLandingBlockElementName.DESIGN_ONE_IMAGE:
-                    element.innerHTML = this.content_builder._bannerOneImageContentBuilder(_el_config.images, this.page_configs.url);
+                    element.innerHTML = this.content_builder._bannerOneImageContentBuilder(_el_config.images);
                     break;
                 case EnumLandingBlockElementName.DESIGN_TWO_IMAGE:
                     element.innerHTML = this.content_builder._bannerTwoImageProductContentBuilder(_el_config.images);
