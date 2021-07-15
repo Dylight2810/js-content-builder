@@ -525,7 +525,7 @@ const EnumFlashSaleType = {
                 btn_el.setAttribute(EnumElementAttributeName.DATA_QUANTITY, 1);
                 btn_el.setAttribute(EnumElementAttributeName.DATA_NAME, product.name);
                 btn_el.setAttribute(EnumElementAttributeName.DATA_PRICE, product.listed_price);
-                btn_el.setAttribute(EnumElementAttributeName.DATA_DISCOUNTED_PRICE, product.price);
+                btn_el.setAttribute(EnumElementAttributeName.DATA_DISCOUNTED_PRICE, product.discounted_price || product.price);
                 btn_el.setAttribute(EnumElementAttributeName.DATA_IMAGE, product.images[0]?.url || '');
             }
 
@@ -680,6 +680,7 @@ const EnumFlashSaleType = {
                     _country_locale,
                     _currency_code
                 );
+                variant.discounted_price = variant_pricing.discounted_amount
             } else {
                 // Update product price
                 this._updateOMPElementInnerHTML(
@@ -869,11 +870,6 @@ const EnumFlashSaleType = {
         }
 
         _addIncreaseProductQuantityEvent = (total_quantity) => {
-            const _group_quantity_el = this.element_content_builder._queryElementsByAttribute(
-                document,
-                EnumElementAttributeName.DATA_OMP_ELEMENT,
-                EnumPDElementAttributeValue.PRODUCT_GROUP_BUTTON_ACTION
-            );
             const _quantity_warning_el = document.getElementById('quantityWarning');
 
             const _eventHandler = async () => {
