@@ -1082,7 +1082,7 @@ const EnumFlashSaleType = {
                 flash_sale_el.innerHTML = this.content_builder._productFlashSaleBuilder(product_flash_sale, this.page_configs);
                 flash_sale_el.setAttribute('style', 'display: block');
                 this.content_builder._queryElementsByClass(document, 'price-sale', 'h5')?.setAttribute('style', 'display: none');
-                this.global_event.addCountDownEvent(product_flash_sale.flash_sale.discount.end_time);
+                this.global_event.addCountDownEvent(product_flash_sale.flash_sale.end_time);
                 return;
             }
 
@@ -1097,7 +1097,7 @@ const EnumFlashSaleType = {
 
                 fs_upcoming_el.innerHTML = this.content_builder._productFlashSaleUpcomingBuilder();
                 fs_upcoming_el.setAttribute('style', 'display: block');
-                this.global_event.addCountDownEvent(product_flash_sale.upcoming_flash_sale.discount.start_time);
+                this.global_event.addCountDownEvent(product_flash_sale.upcoming_flash_sale.start_time);
             }
         }
 

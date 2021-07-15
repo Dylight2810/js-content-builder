@@ -2,7 +2,7 @@
 
 const API_URL = {
     COLLECTION_PRODUCTS: '/api/v1/products/simple/',
-    FLASH_SALES: '/api/v1/discounts/flash-sales/'
+    FLASH_SALES: '/api/v1/flash-sales/'
 };
 
 const API_LIST_PAGE_SIZE = 10;
@@ -349,7 +349,7 @@ const EBannerImgReferenceLinkType = {
         }
 
         _convertImageLink = (image_config, landing_url) => {
-            let _image_link = '';
+            let _image_link = '#';
 
             switch (image_config.reference_type) {
                 case EBannerImgReferenceLinkType.COLLECTION_DETAIL:
@@ -699,7 +699,20 @@ const EBannerImgReferenceLinkType = {
                 return '';
             }
 
-            return ``
+            let innerHtml = '';
+
+            images_config.forEach((img) => {
+                const _img_link = this._convertImageLink(img, landing_url);
+                innerHtml += `
+                    <a href="${_img_link}">
+                        <img src="${img.url}" alt="${img.url}">
+                    </a>
+                `;
+            })
+
+            return `<div class="omp-wp__two-image">
+                        ${innerHtml}
+                    </div>`
         }
 
         _bannerVideoProductContentBuilder = (title, arr_product) => {
