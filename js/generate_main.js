@@ -62,13 +62,12 @@ const EBannerImgReferenceLinkType = {
 const ECarouselDirection = {
     RIGHT_TO_LEFT: 'right-to-left',
     LEFT_TO_RIGHT: 'left-to-right'
-}
+};
 
 (function (window) {
     class GlobalEvent {
         carousel_interval;
         current_carousel_index = 0;
-
         content_builder = new ElementContentBuilder();
 
         constructor() {
