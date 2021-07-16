@@ -59,10 +59,16 @@ const EBannerImgReferenceLinkType = {
     HARD_LINK: 3
 };
 
+const ECarouselDirection = {
+    RIGHT_TO_LEFT: 'right-to-left',
+    LEFT_TO_RIGHT: 'left-to-right'
+}
+
 (function (window) {
     class GlobalEvent {
         carousel_interval;
         current_carousel_index = 0;
+
         content_builder = new ElementContentBuilder();
 
         constructor() {
@@ -912,6 +918,27 @@ const EBannerImgReferenceLinkType = {
             )
         }
 
+        _resizeCarouselImage = () => {
+            if (!this.page_els || !this.page_els.page_elements || !this.page_els.page_elements.dynamic_elements) {
+                return;
+            }
+
+            const carousel_el_data = this.page_els.page_elements.dynamic_elements
+                .find(e => e.element_name === EnumLandingBlockElementName.DESIGN_CAROUSEL)
+
+            if (!carousel_el_data || !carousel_el_data.config || !carousel_el_data.element_id) return;
+
+            const carousel_el = document.getElementById(carousel_el_data.element_id);
+
+            if (carousel_el_data.config.intrinsic_width && carousel_el_data.config.intrinsic_height) {
+                const _omp_wrapper = document.getElementById('omp_wrapper');
+                carousel_el.setAttribute(
+                    'style',
+                    `height: ${_omp_wrapper.offsetWidth * carousel_el_data.config.intrinsic_height / carousel_el_data.config.intrinsic_width}px`
+                )
+            }
+        }
+
         _appendImageElementInnerHtml = (element, config) => {
             if (!config || !config.config) return;
 
@@ -919,8 +946,16 @@ const EBannerImgReferenceLinkType = {
             switch (config.element_name) {
                 case EnumLandingBlockElementName.DESIGN_CAROUSEL:
                     element.innerHTML = this.content_builder._bannerCarouselContentBuilder(_el_config.images);
+                    if (_el_config.intrinsic_width && _el_config.intrinsic_height) {
+                        const _omp_wrapper = document.getElementById('omp_wrapper');
+                        element.setAttribute(
+                            'style',
+                            `height: ${_omp_wrapper.offsetWidth * _el_config.intrinsic_height / _el_config.intrinsic_width}px`
+                        )
+                    }
                     this.global_event.addAutoCarouselEvent(element);
                     this.global_event.addCarouselTouchEvent(element);
+                    this.global_event._addWindowResizeEvent(this._resizeCarouselImage);
                     break;
                 case EnumLandingBlockElementName.DESIGN_ONE_IMAGE:
                     element.innerHTML = this.content_builder._bannerOneImageContentBuilder(_el_config.images);
@@ -988,8 +1023,6 @@ const EBannerImgReferenceLinkType = {
                 document,
                 _loadMoreProduct
             );
-
-            // this.global_event._addWindowResizeEvent(this._resizeProductImage);
         }
     }
 
