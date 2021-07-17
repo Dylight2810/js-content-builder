@@ -10,7 +10,7 @@ const API_LIST_PAGE_SIZE = 10;
 const DefaultVNLocale = {
     VN_ICU_LOCALE: 'vi-VN',
     VN_CURRENCY_CODE: 'VND'
-}
+};
 
 const ELocaleByCurrencyCode = {
     VND: 'vi-VN',
@@ -20,7 +20,7 @@ const ELocaleByCurrencyCode = {
     PHP: 'en-PH',
     MYR: 'my-MM',
     CNY: 'bo-CN'
-}
+};
 
 const LocalStorageTitle = {
     CART_LOCAL_STORAGE_TITLE: 'omp_cart',
@@ -31,7 +31,7 @@ const LocalStorageTitle = {
     UTM_TAG_STORAGE_TITLE: 'utm_tag',
     REFERRAL_HOST_STORAGE_TITLE: 'referral_host',
     REFERRAL_URL_STORAGE_TITLE: 'referral_url'
-}
+};
 
 const EnumLandingBlockElementName = {
     NONE: '',

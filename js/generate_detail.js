@@ -14,7 +14,17 @@ const EnumLandingBlockElementName = {
 const DefaultVNLocale = {
     VN_ICU_LOCALE: 'vi-VN',
     VN_CURRENCY_CODE: 'VND'
-}
+};
+
+const ELocaleByCurrencyCode = {
+    VND: 'vi-VN',
+    USD: 'en-US',
+    THB: 'th-TH',
+    IDR: 'id-ID',
+    PHP: 'en-PH',
+    MYR: 'my-MM',
+    CNY: 'bo-CN'
+};
 
 const LocalStorageTitle = {
     CART_LOCAL_STORAGE_TITLE: 'omp_cart',
@@ -25,7 +35,7 @@ const LocalStorageTitle = {
     UTM_TAG_STORAGE_TITLE: 'utm_tag',
     REFERRAL_HOST_STORAGE_TITLE: 'referral_host',
     REFERRAL_URL_STORAGE_TITLE: 'referral_url'
-}
+};
 
 const EnumElementAttributeName = {
     DATA_OMP_ELEMENT: 'data-omp-element',
@@ -393,8 +403,8 @@ const EnumFlashSaleType = {
         }
 
         _productFlashSaleBuilder = (product_flash_sale, page_configs) => {
-            const _country_locale = page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE;
-            const _currency_code = page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE;
+            const _country_locale = page_configs.locale;
+            const _currency_code = page_configs.currency;
             const _origin_price = this.formatCurrency(_country_locale, _currency_code, product_flash_sale.before_discount_amount);
             const _flash_sale_price = this.formatCurrency(_country_locale, _currency_code, product_flash_sale.discounted_amount);
             return `
@@ -671,8 +681,8 @@ const EnumFlashSaleType = {
 
         _updateProductInfoFollowVariantSelected = async (variant) => {
             if (!variant) return;
-            const _country_locale = this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE;
-            const _currency_code = this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE;
+            const _country_locale = this.page_configs.locale;
+            const _currency_code = this.page_configs.currency;
 
             const variant_pricing = await this.data_service.getVariantPricingById(variant.id);
             if (variant_pricing.flash_sale) {
@@ -1148,6 +1158,8 @@ const EnumFlashSaleType = {
         }
 
         initPage = () => {
+            this.page_configs.currency = this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
+            this.page_configs.locale = this.page_configs.locale || ELocaleByCurrencyCode[this.page_configs.currency.toUpperCase()]
             this.content_builder._showLoading();
             const _arr_url_split = window.location.href.split('.');
             const _product_id = _arr_url_split[_arr_url_split.length - 1];
@@ -1156,7 +1168,7 @@ const EnumFlashSaleType = {
     }
 
     window.ProductDetail = ProductDetail;
-}(window))
+}(window));
 
 const product_detail_el = new ProductDetail();
 product_detail_el.initPage();
