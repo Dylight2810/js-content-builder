@@ -12,6 +12,16 @@ const DefaultVNLocale = {
     VN_CURRENCY_CODE: 'VND'
 }
 
+const ELocaleByCurrencyCode = {
+    VND: 'vi-VN',
+    USD: 'en-US',
+    THB: 'th-TH',
+    IDR: 'id-ID',
+    PHP: 'en-PH',
+    MYR: 'my-MM',
+    CNY: 'bo-CN'
+}
+
 const LocalStorageTitle = {
     CART_LOCAL_STORAGE_TITLE: 'omp_cart',
     CART_ID_STORAGE_TITLE: 'omp_cart_id',
@@ -755,6 +765,8 @@ const ECarouselDirection = {
         }
 
         initialMainPage = () => {
+            this.page_configs.currency = this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
+            this.page_configs.locale = this.page_configs.locale || ELocaleByCurrencyCode[this.page_configs.currency.toUpperCase()]
             this._getElementConfigs().then();
         }
 
@@ -790,8 +802,8 @@ const ECarouselDirection = {
                 const _all_product_element = this.content_builder._queryElementsById(EnumLandingBlockElementName.LANDING_ALL_PRODUCTS);
                 _all_product_element.innerHTML = this.content_builder._allProductContentBuilder(
                     _products,
-                    this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
-                    this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
+                    this.page_configs.locale,
+                    this.page_configs.currency
                 );
                 this._resizeProductImage(_all_product_element);
             }
@@ -807,8 +819,8 @@ const ECarouselDirection = {
                 const _product_wrapper = this.content_builder._queryElementsByClass('div', 'omp-row', _all_product_element);
                 _product_wrapper.innerHTML += this.content_builder._renderListProduct(
                     _products,
-                    this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
-                    this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE,
+                    this.page_configs.locale,
+                    this.page_configs.currency,
                     'omp-product-col omp-product-wrapper'
                 );
                 this._resizeProductImage(_all_product_element);
@@ -859,8 +871,8 @@ const ECarouselDirection = {
                     element.innerHTML = this.content_builder._outstandingProductContentBuilder(
                         config.element_title,
                         arr_products,
-                        this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
-                        this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
+                        this.page_configs.locale,
+                        this.page_configs.currency
                     );
                     break;
 
@@ -868,8 +880,8 @@ const ECarouselDirection = {
                     element.innerHTML = this.content_builder._newProductContentBuilder(
                         config.element_title,
                         arr_products,
-                        this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
-                        this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
+                        this.page_configs.locale,
+                        this.page_configs.currency
                     )
                     break;
 
@@ -877,8 +889,8 @@ const ECarouselDirection = {
                     element.innerHTML = this.content_builder._bestSellingProductContentBuilder(
                         config.element_title,
                         arr_products,
-                        this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
-                        this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
+                        this.page_configs.locale,
+                        this.page_configs.currency
                     )
                     break;
             }
@@ -912,8 +924,8 @@ const ECarouselDirection = {
                 config.element_title,
                 arr_flash_sales[0],
                 arr_products,
-                this.page_configs.locale || DefaultVNLocale.VN_ICU_LOCALE,
-                this.page_configs.currency || DefaultVNLocale.VN_CURRENCY_CODE
+                this.page_configs.locale,
+                this.page_configs.currency
             )
         }
 
