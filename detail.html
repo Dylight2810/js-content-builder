@@ -55,6 +55,13 @@
         --omp-text-hint: #717171;
         --omp-yellow-rgb: 255 193 7;
         --omp-green-rgb: 23 175 57;
+        --omp-mid-range: #F7AB30;
+        --omp-btn-primary-bg-color: #000000c2;
+        --omp-btn-secondary-bg-color: #f5f6f6;
+        --omp-btn-outline-bg-color: #cdcdcd;
+        --omp-btn-primary-text-color: #fff;
+        --omp-btn-secondary-text-color: #333;
+        --omp-btn-outline-text-color: #333;
     }
 
     @media (min-width: 577px) {
@@ -81,6 +88,7 @@
         margin: 0;
         line-height: 1.6 !important;
         position: relative;
+        background-color: #f6f6f6;
     }
 
     *, *::before, *::after {
@@ -112,14 +120,14 @@
     }
 
     #omp_wrapper small {
-        font-size: 85%;
+        font-size: 90%;
     }
 
     #omp_wrapper [id^=OMP_]:not(:is(#OMP_HEADER, #OMP_MENU_FOOTER, [id^=OMP_CAROUSEL], [id^=OMP_ONE_IMAGE], [id^=OMP_TWO_IMAGE], [id^=OMP_VIDEO])) {
         margin-bottom: calc(var(--omp-space) * 2);
     }
 
-    #omp_wrapper :is([id^=OMP_CAROUSEL], [id^=OMP_ONE_IMAGE], [id^=OMP_TWO_IMAGE], [id^=OMP_VIDEO]) {
+    #omp_wrapper :is([id^=OMP_ONE_IMAGE], [id^=OMP_TWO_IMAGE], [id^=OMP_VIDEO]) {
         height: -webkit-max-content;
         height: max-content;
     }
@@ -361,6 +369,11 @@
         justify-content: flex-end;
     }
 
+    .product-detail--select-quantity #quantityWarning {
+        font-size: 10px;
+        color: var(--omp-red);
+    }
+
     #OMP_PRODUCT_DETAIL .omp-landing-block--content {
         background-color: transparent;
     }
@@ -373,28 +386,34 @@
         align-items: center;
     }
 
+    #OMP_PRODUCT_DETAIL .detail-text-title {
+        font-size: 0.9rem;
+        font-weight: 500 !important;
+    }
+
     .omp-product-detail--image .product-image--wrapper {
         width: 100%;
     }
 
     .product-detail--meta-data,
     .product-detail--select-product,
-    .product-detail--description {
+    .product-detail--description,
+    .product-detail--deal-sock {
         background-color: #ffffff;
-        padding: calc(var(--omp-space) * 2) var(--omp-space);
-        margin-bottom: var(--omp-space);
+        padding: calc(var(--omp-space) * 2);
+        margin-bottom: calc(var(--omp-space) * 2);
     }
 
     .product-detail--flash-sale,
     .product-detail--fs-upcoming {
         display: none;
         background-color: var(--omp-orange);
-        padding: calc(var(--omp-space) * 2) var(--omp-space);
+        padding: calc(var(--omp-space) * 2);
         color: #ffffff;
     }
 
     .product-detail--fs-upcoming {
-        margin-bottom: var(--omp-space);
+        margin-bottom: calc(var(--omp-space) * 2);
     }
 
     :is(.product-detail--flash-sale, .product-detail--fs-upcoming) .omp-container {
@@ -430,6 +449,11 @@
         align-items: center;
     }
 
+    .product-detail--flash-sale .flash-sale--countdown {
+        margin-left: auto;
+        margin-right: 0;
+    }
+
     .product-detail--flash-sale .block-countdown {
         margin-bottom: 0;
     }
@@ -438,7 +462,7 @@
         font-size: 1rem !important;
     }
 
-    :is(.product-detail--meta-data, .product-detail--flash-sale, .product-detail--fs-upcoming) .omp-container {
+    :is(.product-detail--meta-data, .product-detail--flash-sale, .product-detail--fs-upcoming, .product-detail--deal-sock) .omp-container {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -457,10 +481,14 @@
         font-weight: 500 !important;
     }
 
-    .product-detail--meta-data .p-name-price .normal-price {
-        color: var(--omp-dark-light);
-        font-size: 0.7rem;
-        text-decoration: line-through;
+    .product-detail--meta-data .p-name-price .product_name {
+        font-weight: 400 !important;
+    }
+
+    .normal-price {
+        color: var(--omp-dark-light) !important;
+        font-size: 0.8rem !important;
+        text-decoration: line-through !important;
     }
 
     .product-detail--meta-data .p-favorite-action {
@@ -494,15 +522,16 @@
     .product-detail--select-product .p-variant-item {
         padding: var(--omp-space) calc(var(--omp-space) * 4);
         border-radius: 2px;
-        background-color: var(--omp-silver);
+        background-color: var(--omp-btn-secondary-bg-color);
+        color: var(--omp-btn-secondary-text-color);
         margin-right: calc(var(--omp-space) * 2);
         margin-bottom: calc(var(--omp-space) * 2);
         cursor: pointer;
     }
 
     .product-detail--select-product .p-variant-item.active {
-        background-color: var(--omp-green);
-        color: #ffffff;
+        background-color: var(--omp-btn-primary-bg-color);
+        color: var(--omp-btn-primary-text-color);
     }
 
     .product-detail--select-product .p-variant-item.disabled {
@@ -513,32 +542,93 @@
         font-weight: 600;
     }
 
-    .p-quantity .p-quantity-button {
+    .product-detail--deal-sock {
+        display: none;
+        background-color: #ffffff;
+    }
+
+    .product-detail--deal-sock .deal-sock--content {
+        border-bottom: 1px solid var(--omp-silver);
+        padding-bottom: calc(var(--omp-space) * 2);
+    }
+
+    .product-detail--deal-sock .deal-sock--content img {
+        width: var(--omp-landing-header-height);
+        height: var(--omp-landing-header-height);
+    }
+
+    .deal-sock--content .omp-container:nth-child(2) {
+        justify-content: flex-start;
+    }
+
+    .deal-sock--content .omp-container:nth-child(2) > * {
+        margin-right: 1rem;
+    }
+
+    .deal-sock--content .deal-sock--content-plus-btn p {
+        height: var(--omp-landing-header-height);
+        display: flex;
+        align-items: center;
+    }
+
+    .deal-sock--content-related-product {
+        text-align: center;
+    }
+
+    .deal-sock--content-related-product img {
+        margin-bottom: var(--omp-space);
+    }
+
+    .deal-sock--content-related-product p {
+        color: var(--omp-orange-light);
+    }
+
+    .product-detail--deal-sock .deal-sock--footer {
+        margin-top: calc(var(--omp-space) * 2);
+    }
+
+    .deal-sock--footer .deal-sock--footer-price p:first-child {
+        color: var(--omp-orange-light);
+    }
+
+    .deal-sock--footer .omp-container {
+        align-items: center;
+    }
+
+    .deal-sock--footer .omp-btn {
+        height: 2rem !important;
+    }
+
+    .deal-sock--footer .omp-btn-see-cart {
+        display: none;
+    }
+
+    .product-detail--select-quantity .p-quantity .p-quantity-button {
         cursor: pointer;
         padding: calc(var(--omp-space) * 0.5) calc(var(--omp-space) * 1.5);
         border: 1px solid var(--omp-silver);
     }
 
-    .p-quantity .p-quantity-button:first-child {
+    .product-detail--select-quantity .p-quantity .p-quantity-button:first-child {
         border-top-left-radius: 3px;
         border-bottom-left-radius: 3px;
     }
 
-    .p-quantity .p-quantity-button:last-child {
+    .product-detail--select-quantity .p-quantity .p-quantity-button:last-child {
         border-top-right-radius: 3px;
         border-bottom-right-radius: 3px;
     }
 
-    .p-quantity .p-quantity-button:not(:last-child) {
+    .product-detail--select-quantity .p-quantity .p-quantity-button:not(:last-child) {
         margin-right: -1px;
     }
 
-    .p-quantity .p-quantity-number {
+    .product-detail--select-quantity .p-quantity .p-quantity-number {
         width: 3rem;
         text-align: right;
     }
 
-    .p-quantity:not(:nth-child(2)) {
+    .product-detail--select-quantity .p-quantity:not(:nth-child(2)) {
         cursor: pointer;
     }
 
@@ -562,16 +652,13 @@
         height: fit-content;
     }
 
-    [id^=OMP_CAROUSEL] .omp-banner-carousel {
-        height: var(--omp-product-image-height);
-    }
-
     .omp-banner-carousel img {
         width: 100%;
         height: 100%;
     }
 
-    [id^=OMP_ONE_IMAGE] .omp-wp__one-image {
+    [id^=OMP_ONE_IMAGE] .omp-wp__one-image,
+    .omp-wp__two-image {
         height: 100%;
         display: flex;
         justify-content: center;
@@ -579,7 +666,7 @@
         position: relative;
     }
 
-    .omp-wp__one-image img {
+    :is(.omp-wp__one-image, .omp-wp__two-image) img {
         max-width: 100%;
     }
 
@@ -587,22 +674,19 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
         text-decoration: none !important;
+        width: 100%;
+        height: -webkit-max-content;
+        height: max-content;
     }
 
-    .omp-two-image {
-        height: 100%;
-        display: flex;
-    }
-
-    [id^=OMP_TWO_IMAGE] .omp-two-image__content {
-        width: calc((100% - var(--omp-space)) / 2);
-    }
-
-    [id^=OMP_TWO_IMAGE] .omp-two-image__content:not(:last-child) {
-        margin-right: var(--omp-space);
+    .omp-wp__two-image a {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        height: -webkit-max-content;
+        height: max-content;
     }
 
     .omp-banner-video {
@@ -756,7 +840,7 @@
 
     .product--rating-stars svg {
         margin-right: calc(var(--omp-space) / 5);
-        color: var(--omp-yellow);
+        color: var(--omp-mid-range);
         width: 14px !important;
         height: 14px !important;
     }
@@ -822,7 +906,7 @@
     }
 
     .omp-container {
-        padding: 0 var(--omp-space);
+        padding: 0 calc(var(--omp-space) * 2);
     }
 
     .omp-row {
@@ -1015,13 +1099,14 @@
         padding: 0.375rem 0.75rem;
         font-size: 0.81rem;
         line-height: 1.5;
+        border-radius: 6px !important;
         transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     }
 
     .omp-btn-primary {
         color: #fff;
-        background-color: #27AE60;
-        border-color: #27AE60;
+        background-color: var(--omp-btn-primary-bg-color);
+        border-color: var(--omp-btn-primary-bg-color);
     }
 
     .omp-btn-orange {
@@ -1030,10 +1115,34 @@
         border-color: var(--omp-orange);
     }
 
-    .omp-btn-add-to-cart, .omp-btn-checkout {
-        width: 50%;
-        border-radius: unset !important;
+    .omp-landing-detail--footer .omp-btn-add-to-cart {
+        width: 18%;
         height: 3rem;
+        background: var(--omp-btn-secondary-bg-color);
+        border: 1PX solid var(--omp-btn-secondary-bg-color);
+        color: var(--omp-btn-secondary-text-color);
+    }
+
+    .omp-landing-detail--footer .omp-btn-add-to-cart:active {
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px 0px, rgba(0, 0, 0, 0.2) 0px 6px 6px 0px;
+        transform: translate3d(0, 1px, 0);
+    }
+
+    .omp-landing-detail--footer .omp-btn-checkout {
+        width: 80%;
+        height: 3rem;
+        color: var(--omp-btn-primary-text-color);
+        background-color: var(--omp-btn-primary-bg-color);
+        border-color: var(--omp-btn-primary-bg-color);
+    }
+
+    .omp-landing-detail--footer .omp-btn-checkout:active {
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px 0px, rgba(0, 0, 0, 0.2) 0px 6px 6px 0px;
+        transform: translate3d(0, 1px, 0);
+    }
+
+    .omp-landing-detail--footer .omp-landing-detail--footer-button {
+        padding: 8px !important;
     }
 
     h5, .h5 {
@@ -1264,6 +1373,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        height: 100%;
     }
 
     .ompi-carousel {
@@ -1388,8 +1498,14 @@
 
     #fsStatusText {
         margin-top: 1px;
-        margin-right: 10px;
+        margin-right: var(--omp-space);
         text-transform: uppercase;
+    }
+
+    @media (min-width: 577px) {
+        #fsStatusText {
+            margin-right: calc(var(--omp-space) * 4);
+        }
     }
     </style>
 </head>
@@ -1428,11 +1544,10 @@
                 <div class="product-detail--meta-data">
                     <div class="omp-container">
                         <div class="p-name-price">
-                            <h5 data-omp-element="product-name">{{product_name}}</h5>
+                            <h5 data-omp-element="product-name" class="product_name">{{product_name}}</h5>
                             <h5 class="price-sale">
-                                <span data-omp-element="product-listed-price">{{product_price}}</span>
-                                <span class="normal-price"
-                                      data-omp-element="product-price">{{product_listed_price}}</span>
+                                <span data-omp-element="product-price">{{product_price}}</span>
+                                <span class="normal-price" data-omp-element="product-listed-price">{{product_listed_price}}</span>
                             </h5>
                         </div>
                         <div class="p-favorite-action">
@@ -1463,18 +1578,20 @@
                             </svg>
                         </div>
 
-                        <div class="product--rating-results">
+                        <!--<div class="product--rating-results">
                             <span class="rating-result--number">5.0</span>
                             <span class="rating-result--text">Đánh giá tốt</span>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
                 <div class="product-detail--fs-upcoming" data-omp-element="product-fs-upcoming"></div>
+                <div class="product-detail--deal-sock" data-omp-element="product-deal-sock">
+                </div>
                 <div class="product-detail--select-product" data-omp-element="variant-select">
                 </div>
                 <div class="product-detail--description">
                     <div class="omp-container display-flex omp-mb-3">
-                        <p class="fw-600">Mô tả sản phẩm</p>
+                        <p class="detail-text-title">Mô tả sản phẩm</p>
                         <div class="p-description" data-omp-element="product-description">
                             {{product_description}}
                         </div>
@@ -1494,11 +1611,15 @@
                 </div>
                 <div class="omp-container" id="quantityWarning"></div>
             </div>
-            <div class="display-flex">
-                <button class="omp-btn omp-btn-primary omp-btn-add-to-cart" data-action="add_to_cart">
-                    Thêm vào giỏ hàng
+            <div class="display-flex omp-landing-detail--footer-button">
+                <button class="omp-btn omp-btn-add-to-cart" data-action="add_to_cart">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-cart-plus" viewBox="0 0 16 16">
+                        <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"></path>
+                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+                    </svg>
                 </button>
-                <button class="omp-btn omp-btn-orange omp-btn-checkout" data-action="checkout">
+                <button class="omp-btn omp-btn-checkout" data-action="checkout">
                     Mua ngay
                 </button>
             </div>
@@ -1521,7 +1642,7 @@
         <div></div>
     </div>
 </div>
-<div class="omp-notify--backdrop"></div>
+<div class="omp-backdrop"></div>
 <div class="omp-notify-content">
     <p>
         <i class="bi bi-info-circle"></i>
@@ -1547,7 +1668,7 @@ window.page_configs = {
     "domain": "landing2.guds.asia",
     "created_time": 1619410821,
     "sync_integration": false,
-    "last_released_time": 1626165838,
+    "last_released_time": 1626518085,
     "access_token": "CmGLLXPN8JBgw2JjwJMaqrsJo",
     "language": "vi",
     "currency": "VND",

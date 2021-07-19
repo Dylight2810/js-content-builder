@@ -447,7 +447,7 @@ const ECarouselDirection = {
             let innerHtml = '';
 
             arr_product.forEach(p => {
-                const sale_price = this._formatCurrency(country, currency, p.listed_price);
+                const listed_price = this._formatCurrency(country, currency, p.listed_price);
                 const price = this._formatCurrency(country, currency, p.price);
                 const cart_premium_content = product_tag ? `<span class="product-card--premium">${product_tag}</span>` : '';
                 const image = p.avatar_image ? p.avatar_image : p.images.length ? p.images[0] : '';
@@ -460,9 +460,9 @@ const ECarouselDirection = {
                                     <div class="omp-product-card__bottom">
                                         <div class="omp-product-card--name">${p.name}</div>
                                         <div class="omp-product-card--price">
-                                            <p class="omp-mr-1 omp-mb-0">${sale_price}</p>
+                                            <p class="omp-mr-1 omp-mb-0">${price}</p>
                                             <small>
-                                                <del>${price}</del>
+                                                <del>${listed_price}</del>
                                             </small>
                                         </div>
                                         <div class="omp-product-card--sold">Đã bán 0</div>

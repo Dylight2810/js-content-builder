@@ -3,7 +3,8 @@
 const API_URL = {
     PRODUCT_DETAIL: '/api/v1/products/',
     PRODUCT_FLASH_SALE: '/flash-sales/',
-    VARIANT_PRICING: '/variant/pricing'
+    VARIANT_PRICING: '/variant/pricing',
+    ADD_ON_DEAL: '/api/v1/add-on-deals/'
 };
 
 const EnumLandingBlockElementName = {
@@ -53,6 +54,7 @@ const EnumElementAttributeName = {
 const EnumPDElementAttributeValue = {
     PRODUCT_FLASH_SALE: 'product-flash-sale',
     PRODUCT_FS_UPCOMING: 'product-fs-upcoming',
+    PRODUCT_DEAL_SOCK: 'product-deal-sock',
     PRODUCT_IMAGE: 'product-image',
     PRODUCT_NAME: 'product-name',
     PRODUCT_LISTED_PRICE: 'product-listed-price',
@@ -270,7 +272,8 @@ const EnumFlashSaleType = {
         getProductDetailById = async (product_id) => {
             const request_urls = [
                 `${this.api_domain}${API_URL.PRODUCT_DETAIL}${product_id}/`,
-                `${this.api_domain}${API_URL.PRODUCT_DETAIL}${product_id}${API_URL.PRODUCT_FLASH_SALE}`
+                `${this.api_domain}${API_URL.PRODUCT_DETAIL}${product_id}${API_URL.PRODUCT_FLASH_SALE}`,
+                `${this.api_domain}${API_URL.ADD_ON_DEAL}?product_id=${product_id}&group=upcoming`
             ];
             return await this._createMultiRequest(request_urls);
         }
@@ -295,7 +298,7 @@ const EnumFlashSaleType = {
             const _this = this;
             _this.product_wrapper_el = document.getElementById(EnumLandingBlockElementName.LANDING_PRODUCT_DETAIL);
             _this.loading_element = document.getElementsByClassName('omp-loading')[0];
-            _this.notify_backdrop_el = document.getElementsByClassName('omp-notify--backdrop')[0];
+            _this.notify_backdrop_el = document.getElementsByClassName('omp-backdrop')[0];
             _this.notify_content_el = document.getElementsByClassName('omp-notify-content')[0];
         }
 
@@ -310,6 +313,7 @@ const EnumFlashSaleType = {
         }
 
         _hideLoading = () => {
+
             if (this.loading_element.classList.contains('show')) {
                 this.loading_element.classList.remove('show');
             }
@@ -356,8 +360,9 @@ const EnumFlashSaleType = {
             return parent_node.querySelectorAll(`${_tag}[class=${class_name}]`)[0];
         }
 
-        _queryElementsLikeClassName = (parent_node, class_name) => {
-            return parent_node.querySelectorAll(`div[class^=${class_name}]`);
+        _queryElementsLikeClassName = (parent_node, class_name, element_tag) => {
+            const _tag = element_tag || 'div';
+            return parent_node.querySelectorAll(`${_tag}[class^=${class_name}]`);
         }
 
         _generateFlashSaleCountdown = (fs_text) => {
@@ -445,6 +450,90 @@ const EnumFlashSaleType = {
                     </div>
                 </div>
             `
+        }
+
+        _addOnDealContentBuilder = (add_on_deal, main_product, _arr_related_product, _country_locale, _currency_code) => {
+            let _related_product_html = '';
+
+            _arr_related_product.forEach(p => {
+                _related_product_html += `
+                    <div class="deal-sock--content-plus-btn">
+                        <p class="omp-mb-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
+                            </svg>
+                        </p>
+                    </div>
+                    <div class="deal-sock--content-related-product">
+                        <img src="${p.product.image || p.product.avatar_image}" alt="${p.product.name}">
+                        <p class="omp-mb-0 normal-price">${this.formatCurrency(_country_locale, _currency_code, p.product.price)}</p>
+                        <p class="omp-mb-0">${this.formatCurrency(_country_locale, _currency_code, p.discount_amount)}</p>
+                    </div>
+                `
+            })
+
+            return `
+                <div class="deal-sock--content">
+                    <div class="omp-container">
+                        <p class="detail-text-title">${add_on_deal.promotion_type_display}</p>
+                    </div>
+                    <div class="omp-container">
+                        <div class="deal-sock--content-main-product">
+                            <img src="${main_product.product.avatar_image}" alt="${main_product.product.name}">
+                        </div>
+                        ${_related_product_html}
+                    </div>
+                </div>
+            `
+        }
+
+        _addOnDealFooterBuilder = (_total_pricing) => {
+            return `
+                <div class="deal-sock--footer">
+                    <div class="omp-container">
+                        <div class="deal-sock--footer-price">
+                            <p class="omp-mb-0">Tiết kiệm: ${_total_pricing}</p>
+                            <p class="omp-mb-0">(So với giá mua lẻ)</p>
+                        </div>
+                        <button class="omp-btn-add-deal-sock omp-btn omp-btn-primary">
+                            Bấm mua Deal Sốc
+                        </button>
+                        <button class="omp-btn-see-cart omp-btn omp-btn-primary">
+                            Xem giỏ hàng
+                        </button>
+                    </div>
+                </div>
+            `
+        }
+
+        _addOnDealBuilder = (add_on_deal, product_id, page_configs) => {
+            const _country_locale = page_configs.locale;
+            const _currency_code = page_configs.currency;
+            const _arr_related_product = [];
+
+            const main_product = add_on_deal.main_items.find(p => p.product?.id === product_id);
+            let _total_pricing = 0;
+
+            add_on_deal.sub_items.forEach(item => {
+                let _pTmp = item
+
+                if (item.variants && item.variants.length) {
+                    const {discount_amount, max_sellable, purchase_limit} = item.variants[0]
+
+                    _pTmp = Object.assign({}, _pTmp, {discount_amount, max_sellable, purchase_limit})
+                    _pTmp.product.price = item.variants[0].product.price
+                }
+
+                _total_pricing += _pTmp.discount_amount;
+                _arr_related_product.push(_pTmp);
+            })
+
+            return new Promise(resolve => {
+                resolve(`
+                    ${this._addOnDealContentBuilder(add_on_deal, main_product, _arr_related_product, _country_locale, _currency_code)}
+                    ${this._addOnDealFooterBuilder(this.formatCurrency(_country_locale, _currency_code, _total_pricing))}
+                `)
+            })
         }
 
         _productImageCarouselBuilder = (arr_images) => {
@@ -1118,6 +1207,65 @@ const EnumFlashSaleType = {
             this._handleGenerateFlashSaleForSingleProduct(product_flash_sale);
         }
 
+        _generateAddOnDeal = async (add_on_deal, product_id) => {
+            if (!add_on_deal || !add_on_deal.sub_items || !add_on_deal.sub_items.length) return;
+
+            const add_on_deal_el = this.content_builder._queryElementsByAttribute(
+                document,
+                EnumElementAttributeName.DATA_OMP_ELEMENT,
+                EnumPDElementAttributeValue.PRODUCT_DEAL_SOCK
+            );
+
+            if (!add_on_deal_el) return;
+
+            add_on_deal_el.innerHTML = await this.content_builder._addOnDealBuilder(add_on_deal, product_id, this.page_configs);
+            add_on_deal_el.setAttribute('style', 'display: block');
+
+            const add_deal_into_cart_btn = this.content_builder._queryElementsLikeClassName(
+                document,
+                'omp-btn-add-deal-sock',
+                'button'
+            )[0];
+            const see_cart_btn = this.content_builder._queryElementsLikeClassName(
+                document,
+                'omp-btn-see-cart',
+                'button'
+            )[0];
+
+            console.log(add_on_deal.sub_items);
+
+            const _eventHandler = (btn_add_deal_into_cart) => {
+                const _arr_cart_items = localStorage.getItem(LocalStorageTitle.CART_LOCAL_STORAGE_TITLE)
+                    ? JSON.parse(localStorage.getItem(LocalStorageTitle.CART_LOCAL_STORAGE_TITLE)) : [];
+
+                for (let i = 0; i <= add_on_deal.sub_items.length; i++) {
+                    const p = add_on_deal.sub_items[i];
+
+                    if (!p) break;
+
+                    const _pTemp = {
+                        added_time: (new Date()).getTime() / 1000,
+                        discounted_price: p.variants?.length ? p.variants[0].discount_amount : p.discount_amount,
+                        image: p.product?.image || p.product?.avatar_image,
+                        name: p.variants?.length ? p.variants[0].product?.name : p.product?.name,
+                        price: p.variants?.length ? p.variants[0].product?.price : p.product?.price,
+                        quantity: 1,
+                        product_id: p.variants?.length ? p.variants[0].product?.id : p.product?.id,
+                        sku: p.variants?.length ? p.variants[0].product?.id : p.product?.id
+                    };
+
+                    if (i >= 2) break;
+                    _arr_cart_items.push(_pTemp);
+                }
+
+                localStorage.setItem(LocalStorageTitle.CART_LOCAL_STORAGE_TITLE, JSON.stringify(_arr_cart_items));
+                btn_add_deal_into_cart.setAttribute('style', 'display: none');
+                see_cart_btn.setAttribute('style', 'display: block');
+            }
+
+            add_deal_into_cart_btn.addEventListener('click', _eventHandler);
+        }
+
         _updateCartCount = () => {
             const _cart_el = this.content_builder._queryElementsByClass(document, 'cart-item-count', 'span');
             const _local_cart = localStorage.getItem(LocalStorageTitle.CART_LOCAL_STORAGE_TITLE)
@@ -1129,10 +1277,12 @@ const EnumFlashSaleType = {
             const responses = await this.data_service.getProductDetailById(product_id);
             let product_detail;
             let product_flash_sale;
+            let add_on_deal;
 
             if (responses.length) {
                 product_detail = this._addVariantAttributesId(responses[0]);
                 product_flash_sale = responses[1];
+                add_on_deal = responses[2] && responses[2].results && responses[2].results.length ? responses[2].results[0] : null;
             }
 
             if (!product_detail) {
@@ -1144,6 +1294,9 @@ const EnumFlashSaleType = {
 
             // Generate product Flash Sale
             this._generateProductFlashSale(product_flash_sale);
+
+            // Generate Add On Deal
+            this._generateAddOnDeal(add_on_deal, product_detail.id).then();
 
             // Generate product detail element content
             this._generateProductSelectVariant(product_detail);
@@ -1163,7 +1316,7 @@ const EnumFlashSaleType = {
             this.content_builder._showLoading();
             const _arr_url_split = window.location.href.split('.');
             const _product_id = _arr_url_split[_arr_url_split.length - 1];
-            this._getProductDetailById(_product_id).then();
+            this._getProductDetailById(5).then();
         }
     }
 
