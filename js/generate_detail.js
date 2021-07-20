@@ -789,9 +789,6 @@ const EnumFlashSaleType = {
                 );
             }
 
-            // Update product name
-            this._updateOMPElementInnerHTML(EnumPDElementAttributeValue.PRODUCT_NAME, `${variant.name}`);
-
             // Update product listed price
             this._updateOMPElementInnerHTML(
                 EnumPDElementAttributeValue.PRODUCT_LISTED_PRICE,
@@ -1128,6 +1125,15 @@ const EnumFlashSaleType = {
         }
 
         _generateProductImageCarousel = (arr_images) => {
+            const product_wrapper_el = this.content_builder._queryElementsByClass(
+                document,
+                'product-image--wrapper ompi-carousel--wrapper'
+            )
+
+            const carousel_height = window.innerWidth <= 500 ? window.innerWidth : 500;
+            const carousel_width = window.innerWidth <= 500 ? '100%' : '500px';
+            product_wrapper_el.setAttribute('style', `height: ${carousel_height}; width: ${carousel_width}`);
+
             const product_image_el = this.content_builder._queryElementsByAttribute(
                 document,
                 EnumElementAttributeName.DATA_OMP_ELEMENT,
