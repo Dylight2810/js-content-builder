@@ -1232,8 +1232,6 @@ const EnumFlashSaleType = {
                 'button'
             )[0];
 
-            console.log(add_on_deal.sub_items);
-
             const _eventHandler = (btn_add_deal_into_cart) => {
                 const _arr_cart_items = localStorage.getItem(LocalStorageTitle.CART_LOCAL_STORAGE_TITLE)
                     ? JSON.parse(localStorage.getItem(LocalStorageTitle.CART_LOCAL_STORAGE_TITLE)) : [];
